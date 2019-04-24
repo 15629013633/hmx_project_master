@@ -72,5 +72,6 @@
 	  	<module>hmx-core</module>
 		<module>hmx-user</module>
 		<module>hmx-admin</module>
+		<module>hmx-manager</module>
 	  </modules>
 </project>

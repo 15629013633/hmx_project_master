@@ -1,0 +1,101 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>hmx-manager</artifactId>
+  <packaging>war</packaging>
+		  <parent>
+			    <groupId>com.hmx</groupId>
+			    <artifactId>hmx-project-master</artifactId>
+			    <version>0.0.1-SNAPSHOT</version>
+		  </parent>
+	  <dependencies>
+	  		<dependency>
+	  			<groupId>com.hmx</groupId>
+	  			<artifactId>hmx-core</artifactId>
+	  			<version>0.0.1-SNAPSHOT</version>
+	  		</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-webflux</artifactId>
+			</dependency>
+			<!-- mysql数据库组件 -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+			</dependency>
+			<!-- mybatis -->
+			<dependency>
+	            <groupId>org.mybatis.spring.boot</groupId>
+	            <artifactId>mybatis-spring-boot-starter</artifactId>
+	            <version>1.3.0</version>
+	        </dependency>
+				
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-aop</artifactId>
+			</dependency>
+			<!-- 添加内置tomcat web <scope>test</scope> 添加此属性会导致HttpServletRequest获取不到-->
+			<!-- <dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+				<scope>compile</scope>
+			</dependency> -->
+			<!-- 添加内置tomcat -->
+			
+			<!--禁用内置tomcat  web <scope>test</scope> 添加此属性会导致HttpServletRequest获取不到-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-web</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-tomcat</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-tomcat</artifactId>
+				<scope>provided</scope>
+			</dependency>
+			<!-- 禁用内置tomcat-->
+			<dependency>
+	            <groupId>javax.servlet</groupId>
+	            <artifactId>javax.servlet-api</artifactId>
+	        </dependency>
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+	        <!-- 
+		    <dependency>
+			      <groupId>org.springframework.security</groupId>
+			      <artifactId>spring-security-web</artifactId>
+		    </dependency>
+		     -->
+		     <!-- <dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+			</dependency> -->
+		</dependencies>  
+		<build>
+			<finalName>hmx-manager</finalName>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<mainClass>com.hmx</mainClass>
+					</configuration>
+				</plugin>
+			</plugins>
+		</build>
+</project>
