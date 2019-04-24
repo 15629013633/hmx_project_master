@@ -1,0 +1,48 @@
+<!--搜索条件 start -->
+<div class="panel panel-default">
+    <div class="panel-heading">查询条件</div>
+    <div class="panel-body">
+        <div class="form-inline searchCon">
+            <div class="form-group">
+                <label for="personName">姓名:</label>
+                <input type="text" class="form-control" id="personName" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label for="openID">身份证号:</label>
+                <input type="text" class="form-control" id="openID" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label for="mobileNum">手机号码:</label>
+                <input type="text" class="form-control" id="mobileNum" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label>创建时间:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control form_datetime"  id="startDate" readonly/>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                -
+                <div class="input-group">
+                    <input type="text" class="form-control form_datetime" id="endDate" readonly/>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <button href="#" class="btn btn-info" onclick="searchList()">搜索</button>
+                <button href="#" class="btn btn-default" onclick="searchClear()">清空</button>
+                <button href="#" class="btn btn-default" onclick="exportPersonInfo()">导出</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--搜索条件  end-->
+
+<!--健康档案列表  start-->
+<table class="table table-bordered" id="healthPersonList">
+
+</table>
+<!--健康档案列表  start-->
+<script type="text/javascript" src="/js/common/bootstrap3.3.7/js/bootstrap-editable.js"></script>
+<script type="text/javascript" src="/js/common/bootstrap3.3.7/js/bootstrap-table-editable.js"></script>
+<script type="text/javascript" src="js/house/personInfo/list.js"></script>

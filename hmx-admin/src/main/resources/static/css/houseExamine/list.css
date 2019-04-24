@@ -1,0 +1,69 @@
+.statistics-wrapper>div{
+    /*padding-right: 0;*/
+}
+.statistics-block{
+    color: rgb(255,255,255);
+    border-radius: 4px;
+}
+.statistics-block .row{
+    margin:0;
+    display: flex;
+}
+.statistics-block .head{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bg-blue{
+    background-color: #5d9cec;
+}
+.bg-purple{
+    background-color: #7266ba;
+}
+.bg-green{
+    background-color: #37bc9b;
+}
+.bg-yellow{
+    background-color: #fad732;
+}
+.bg-blue .head{
+    background-color: #2f80e7;
+}
+.bg-purple .head{
+    background-color: #564aa3;
+}
+.bg-green .head{
+    background-color: #2b957a;
+}
+.bg-yellow .head{
+    background-color: #f3ca06;
+}
+
+.table-list{
+    /*margin-top:2em;*/
+    white-space: nowrap;
+    /*border:1px solid #ddd;*/
+}
+.table-list>tbody>tr>td,
+.table-list>tbody>tr>th,
+.table-list>tfoot>tr>td,
+.table-list>tfoot>tr>th,
+.table-list>thead>tr>td,
+.table-list>thead>tr>th{
+    vertical-align: middle;
+    /*text-align: center;*/
+    /*color: #666;*/
+}
+.table-list>tbody>tr>td:first-child,
+.table-list>thead>tr>th:first-child{
+    text-align: left;
+}
+.table-list h4{
+    font-size:16px;
+    margin:5px 0;
+}
+.table-list small{
+    margin-left: 10px;
+}

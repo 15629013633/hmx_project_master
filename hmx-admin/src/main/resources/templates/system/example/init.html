@@ -1,0 +1,340 @@
+<link href="lib/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet"/>
+<link href="lib/select2/css/select2.min.css" rel="stylesheet"/>
+<div class="col-sm-12">
+    <!--图表-->
+    <div class="col-sm-6">
+        <h3>图表</h3>
+        <p>引入js  &lt;script src="js/lib/echarts/echarts.common.min.js"&gt;&lt;script&gt; </p>
+        <div id="chearts" style="min-height:300px;"></div><br/>
+        <div id="line" style="min-height:300px;"></div>
+    </div>
+    <!--时间 下拉select-->
+    <div class="col-sm-6">
+        <h3>时间 下拉select</h3>
+        <div class="form-inline searchCon">
+            <div class="form-group">
+                <label for="">选择时间:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control form_datetime" value="2018-06-22" id="" readonly/>
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <select name="" id="e1" class="form-control">
+                    <option>请选择</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--树-->
+    <div class="col-sm-6">
+        <h3>树</h3>
+        <p>&lt;link href="js/lib/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet"/&gt;<br/>
+        &lt;script src="js/lib/zTree/js/jquery.ztree.core.js"&gt;&lt;/script&gt;<br/>
+        &lt;script src="js/lib/zTree/js/jquery.ztree.excheck.min.js"&gt;&lt;/script&gt;</p>
+        <ul id="tree" class="ztree" style="width:230px; overflow:auto;"></ul>
+    </div>
+
+    <!--弹调框-->
+    <div class="col-sm-6">
+        <button class="btn message-success">成功消息框</button>
+        <button class="btn message-error">失败消息框</button>
+        <button class="btn message-warning">警告框消息框</button>
+        <button class="btn modal1">模态框一</button>
+        <button class="btn modal2">模态框二</button>
+    </div>
+
+    <!--表格-->
+    <div class="col-sm-6">
+        <h3>表格</h3>
+        <table id="table"></table>
+    </div>
+</div>
+<script src="lib/echarts/echarts.common.min.js"></script>
+<script src="lib/zTree/js/jquery.ztree.core.js"></script>
+<script src="lib/zTree/js/jquery.ztree.excheck.min.js"></script>
+<script src="lib/select2/select2.min.js"></script>
+<script>
+    // 图表
+    function eChart(){
+        var option = {
+            backgroundColor: 'rgb(14, 50, 62)',
+            borderRadius:10,
+            textStyle: {
+                color: 'rgba(255, 255, 255, 0.3)'
+            },
+            title : {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x:'center',
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                top:'10',
+                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
+                textStyle: {
+                    color: 'rgba(255, 255, 255, 0.3)'
+                }
+            },
+            series : [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'直接访问'},
+                        {value:310, name:'邮件营销'},
+                        {value:234, name:'联盟广告'},
+                        {value:135, name:'视频广告'},
+                        {value:1548, name:'搜索引擎'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chearts'));
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        var options = {
+            title: {
+                text: '未来一周气温变化',
+                subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['最高气温','最低气温']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis:  {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一','周二','周三','周四','周五','周六','周日']
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
+            },
+            series: [
+                {
+                    name:'最高气温',
+                    type:'line',
+                    data:[11, 11, 15, 13, 12, 13, 10],
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'}
+                        ]
+                    }
+                },
+                {
+                    name:'最低气温',
+                    type:'line',
+                    data:[1, -2, 2, 5, 3, 2, 0],
+                    markPoint: {
+                        data: [
+                            {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'},
+                            [{
+                                symbol: 'none',
+                                x: '90%',
+                                yAxis: 'max'
+                            }, {
+                                symbol: 'circle',
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '最大值'
+                                    }
+                                },
+                                type: 'max',
+                                name: '最高点'
+                            }]
+                        ]
+                    }
+                }
+            ]
+        };
+        var myCharta = echarts.init(document.getElementById('line'));
+        myCharta.setOption(options);
+
+        window.onresize = function(){
+            myChart.resize();
+            myCharta.resize();
+        }
+    }
+
+    function initDate(){
+        $(".form_datetime").datetimepicker({
+            language: 'zh-CN',//显示中文
+            format: 'yyyy-mm-dd',//显示格式
+            minView: "month",//设置只显示到月份
+            autoclose: true,//选中自动关闭
+            todayBtn: true,//显示今日按钮
+        });
+    } //时间的初始化
+
+    function select2() {
+        $("#e1").select2({
+            placeholder: "Select report type",
+            data: [{id: 0, text: 'story'},{id: 1, text: 'bug'},{id: 2, text: 'task'}]
+        });  // 下拉框 提示
+    }
+    
+    function zTree() {
+        var zTreeObj,
+            setting = {
+                view: {
+                    selectedMulti: false //是否允许同时选中多个节点
+                },
+                data: {
+                    simpleData: { //简单 JSON 数据配置
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: 0
+                    }
+                },
+                check:{
+                    enable:true,
+                    autoCheckTrigger: true,
+                    chkStyle: "checkbox"
+                },
+                callback:{
+                    onClick: zTreeOnClick,
+                    onCheck: zTreeOnCheck
+                }
+            },
+            data1 = [ //简单 JSON 数据
+                {"id":1, "pId":0, "name":"父节点1"},
+                {"id":2, "pId":0, "name":"父节点2"},
+                {"id":3, "pId":1, "name":"子节点1"},
+                {"id":4, "pId":1, "name":"子节点2"},
+                {"id":5, "pId":2, "name":"子节点1"},
+                {"id":6, "pId":2, "name":"子节点2"}
+            ],
+            data2 = [ //标准 JSON 数据
+                {
+                    name: "父节点1", children: [
+                    {name: "子节点1"},
+                    {name: "子节点2"}
+                ]},{
+                    name: "父节点2", children: [{name: "子节点1"}]
+                }
+            ];
+
+        zTreeObj = $.fn.zTree.init($("#tree"), setting, data1);
+        var nodes = zTreeObj.getNodes();
+        zTreeObj.expandNode(nodes[0], true, true, false);
+    } //树的初始化
+
+    function zTreeOnClick(event, treeId, treeNode){ //树的单节点点击事件
+        console.log(treeNode.id + ", " + treeNode.name);
+    }
+
+    function zTreeOnCheck(event, treeId, treeNode) { //树的checkbox点击事件
+        console.log(treeNode.id + ", " + treeNode.name + "," + treeNode.checked);
+    }
+
+    function initTable(){
+        var option = {
+            url: '/healthRecord/getPersonLists',
+            queryParams: function (params) {
+                var param = {};
+                param.page=params.pageNumber-1;
+                param.size=params.pageSize;
+                return param;
+            },//传递参数
+            columns: [
+                {
+                    field: 'id',
+                    title: '序号'
+                },{
+                    field: 'name',
+                    title: '姓名'
+                },{
+                    field: 'id',
+                    title: '档案编号'
+                },{
+                    field: 'gender',
+                    title: '性别'
+                },{
+                    field: 'mobilePhone',
+                    title: '电话号码'
+                },{
+                    title: '操作',
+                    formatter: function (value, row, index) {}
+                }
+            ]
+        };
+
+        $('#table').bootstrapTable($.initTableArg(option));
+    } //表格
+
+    function alertModal(){
+        $('.message-success').click(function(){
+            $.fn.messageBox('success', 'success');
+        })
+        $('.message-error').click(function(){
+            $.fn.messageBox('error', 'error');
+        })
+        $('.message-warning').click(function(){
+            $.fn.messageBox('warning', 'warning');
+        })
+        $('.modal1').click(function(){
+            $(this).showWindow({title:'title'}, '/healthRecord/initList');
+        })
+        $('.modal2').click(function(){
+            $(this).popWindow({title:'健康档案详情',width:'50%'}, '/healthRecord/initList')
+        })
+    } //模态框
+
+    $(document).ready(function(){
+        eChart();
+        initDate();
+        select2();
+        zTree();
+        initTable();
+        alertModal();
+    })
+</script>

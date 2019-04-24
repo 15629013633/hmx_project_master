@@ -1,0 +1,45 @@
+<style>
+    .check-camra{
+        padding-left: 15px;
+    }
+    video{max-width: 1200px;width: 100%; height:auto;}
+    video::-webkit-media-controls-enclosure{ overflow: hidden; }
+    .col-md-4:first-of-type{
+        /*padding-left:15px;*/
+    }
+    .col-md-4{
+        padding-bottom: 20px;
+        padding-left:0;
+    }
+    p{
+        background-color: #57b3ed;
+        color: #fff;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .tip{
+        text-align: center;
+        font-size: 30px;
+        margin: 20px auto;
+        color: #ddd;
+    }
+</style>
+    <div class="form-group" style="margin-top:15px">
+        <video src="${movieUrl!}" controls="controls">
+            您的浏览器不支持 video 标签。
+        </video>
+    </div>
+
+<!--<script src="lib/bootStrap/js/bootstrapValidator.js"></script>-->
+<!--<script src="js/category/eidt.js"></script>-->
+<script>
+//    var videos = document.getElementsByTagName('video');
+//    var obj = [];
+//    Array.prototype.slice.call(videos, 0).forEach(function (item, i) {
+//        obj[i] = new EZUIPlayer(item.id);
+//        obj[i].on('error', function(){
+//            console.log(this);
+//            this.load()
+//        });
+//    })
+</script>

@@ -1,0 +1,43 @@
+<style>
+    .check-camra{
+        padding-left: 15px;
+    }
+    video{max-width: 1200px;width: 100%; height:auto;}
+    video::-webkit-media-controls-enclosure{ overflow: hidden; }
+    .col-md-4:first-of-type{
+        /*padding-left:15px;*/
+    }
+    .col-md-4{
+        padding-bottom: 20px;
+        padding-left:0;
+    }
+    p{
+        background-color: #57b3ed;
+        color: #fff;
+        text-align: center;
+        font-weight: bolder;
+    }
+    .tip{
+        text-align: center;
+        font-size: 30px;
+        margin: 20px auto;
+        color: #ddd;
+    }
+</style>
+    <div class="form-group" style="margin-top:13px">
+        <audio src="img/testMusic.mp3" controls="controls">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <div class="row">
+        <label class="control-label col-sm-1" for="name">名称</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" name="categoryName" id="name" value="声腔研究">
+        </div>
+        <label class="control-label col-sm-1" for="isClose">对应内容</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" name="isClose" id="isClose" value="测试内容">
+        </div>
+    </div>
+<script>
+</script>

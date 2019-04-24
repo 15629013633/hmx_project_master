@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hmx.category.dao.HmxCategoryMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hmx.category.entity.HmxCategory" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+  	<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+  	<result column="category_type" property="categoryType" jdbcType="INTEGER" />
+  	<result column="sort" property="sort" jdbcType="INTEGER" />
+  	<result column="is_close" property="isClose" jdbcType="INTEGER" />
+  	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  	<result column="new_time" property="newTime" jdbcType="TIMESTAMP" />
+  	<result column="state" property="state" jdbcType="INTEGER" />
+  	<result column="version" property="version" jdbcType="INTEGER" />
+  	<result column="createid" property="createid" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+      	<if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+          </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.category.entity.HmxCategoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hmx_category 
+    
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hmx_category 
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hmx_category 
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.hmx.category.entity.HmxCategoryExample" >
+    delete from hmx_category 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.hmx.category.entity.HmxCategory" keyProperty="categoryId" useGeneratedKeys="true">
+    insert into hmx_category  (category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid)
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryType,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{isClose,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.hmx.category.entity.HmxCategory" keyProperty="categoryId" useGeneratedKeys="true"  >
+    insert into hmx_category 
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="categoryType != null" >
+        category_type,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="isClose != null" >
+        is_close,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="newTime != null" >
+        new_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createid != null" >
+        createid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryType != null" >
+        #{categoryType,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="isClose != null" >
+        #{isClose,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newTime != null" >
+        #{newTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createid != null" >
+        #{createid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update  id="updateByExample" parameterType="map" >
+    update hmx_category 
+    set category_id = #{categoryId,jdbcType=INTEGER},
+category_name = #{categoryName,jdbcType=VARCHAR},
+category_type = #{categoryType,jdbcType=INTEGER},
+sort = #{sort,jdbcType=INTEGER},
+is_close = #{isClose,jdbcType=INTEGER},
+create_time = #{createTime,jdbcType=TIMESTAMP},
+new_time = #{newTime,jdbcType=TIMESTAMP},
+state = #{state,jdbcType=INTEGER},
+version = #{version,jdbcType=INTEGER},
+createid = #{createid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="countByExample" parameterType="com.hmx.category.entity.HmxCategoryExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_category 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.category.entity.HmxCategory" >
+    update hmx_category
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER} ,
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR} ,
+      </if>
+       <if test="categoryType != null" >
+        category_type = #{categoryType,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER} ,
+      </if>
+      <if test="isClose != null" >
+        is_close = #{isClose,jdbcType=INTEGER} ,
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP} ,
+      </if>
+      <if test="newTime != null" >
+        new_time = #{newTime,jdbcType=TIMESTAMP} ,
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER} ,
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER} ,
+      </if>
+      <if test="version == null" >
+        version = version+1 ,
+      </if>
+      <if test="createid != null" >
+        createid = #{createid,jdbcType=INTEGER} ,
+      </if>
+    </set >
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.hmx.category.entity.HmxCategory" >
+    update hmx_category
+    set category_id = #{categoryId,jdbcType=INTEGER},
+category_name = #{categoryName,jdbcType=VARCHAR},
+category_type = #{categoryType,jdbcType=INTEGER},
+sort = #{sort,jdbcType=INTEGER},
+is_close = #{isClose,jdbcType=INTEGER},
+create_time = #{createTime,jdbcType=TIMESTAMP},
+new_time = #{newTime,jdbcType=TIMESTAMP},
+state = #{state,jdbcType=INTEGER},
+version = #{version,jdbcType=INTEGER},
+createid = #{createid,jdbcType=INTEGER},
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 首页分类查询  ↓-->
+   <select id="selectCategoryAndContentList" resultMap="selectCategoryAndContentListResultMap">
+   select c.category_id,c.category_id as 'categoryId',c.category_type as 'categoryType',
+          c.category_name as 'categoryName',c.sort as 'sort' 
+    from hmx_category c 
+	where c.is_close=0 and c.state=0 
+	ORDER BY c.sort
+   </select>
+   <resultMap type="Map" id="selectCategoryAndContentListResultMap">
+   		<collection property="contentList" column="category_id" ofType="ArrayList" select="selectContentListByCategoryId"/>
+   </resultMap>
+   <select id="selectContentListByCategoryId" resultType="Map">
+   select cc.category_content_id as 'categoryContentId',
+          cc.category_title as 'categoryTitle',cc.content_type as 'contentType',
+          cc.content_images as 'contentImages',DATE_FORMAT(cc.create_time,'%Y-%d-%m-%H:%i') as 'createTime',
+          cc.category_content as 'categoryContent' 
+    from hmx_category_content cc 
+    where cc.category_id=#{category_id} and cc.state=0
+	ORDER BY cc.create_time desc
+   </select>
+   <!-- ↑ -->
+   
+   <!-- 查询分类名是否重复 ↓ -->
+   <select id="selectIsCategoryName" resultType="Integer">
+   select count(*) 
+   from hmx_category 
+   <where> 
+   	<trim suffixOverrides="and">
+   	   <if test="categoryName != null">
+	    category_name=#{categoryName} and 
+	   </if>
+	   <if test="categoryId != null">
+	    category_id &lt;&gt; #{categoryId} and 
+	   </if>
+	   <if test="state != null">
+	    state=#{state} and 
+	   </if>
+	</trim>
+   </where> 
+   </select>
+   <!-- ↑ -->
+   
+   <!-- 分类在首页显示模块排序 ↓ -->
+   <select id="selectCategoryMaxSort" resultType="Integer">
+   select IFNULL(max(sort),0) from hmx_category where state=0
+   </select>
+   <!-- ↑ -->
+   
+   <!-- 分类列表信息查询 ↓ -->
+   <select id="selectCategoryTable" resultType="Map">
+   select category_id as 'categoryId',category_name as 'categoryName',
+          sort as 'sort',is_close as 'isClose',create_time as 'createTime',
+          new_time as 'newTime',createid as 'createid',category_type as 'categoryType' 
+    from hmx_category
+	<where>
+		<trim suffixOverrides="and">
+		  <if test="state != null">
+		   state=#{state} and 
+		  </if>
+		  <if test="beginDate != null">
+		   create_time &gt;= #{beginDate} and 
+		  </if>
+		  <if test="endDate != null">
+		   create_time &lt;= #{endDate} and 
+		  </if>
+		  <if test="isClose">
+		   is_close = #{isClose} and 
+		  </if>
+		  <if test="categoryName != null">
+		   category_name like concat("%",#{categoryName},"%") and 
+		  </if>
+		</trim>
+	</where>
+	ORDER BY sort
+		<if test="limit != null" >
+	      <if test="offset != null" >
+	        limit ${offset}, ${limit}
+	      </if>
+	      <if test="offset == null" >
+	        limit ${limit}
+	      </if>
+	    </if>
+   </select>
+   <select id="countCategoryTable" resultType="Integer">
+   select count(*) 
+    from hmx_category
+	<where>
+		<trim suffixOverrides="and">
+		  <if test="state != null">
+		   state=#{state} and 
+		  </if>
+		  <if test="beginDate != null">
+		   create_time &gt;= #{beginDate} and 
+		  </if>
+		  <if test="endDate != null">
+		   create_time &lt;= #{endDate} and 
+		  </if>
+		  <if test="isClose">
+		   is_close = #{isClose} and 
+		  </if>
+		  <if test="categoryName != null">
+		   category_name like concat("%",#{categoryName},"%") and 
+		  </if>
+		</trim>
+	</where>
+   </select>
+   <!-- ↑ -->
+</mapper>

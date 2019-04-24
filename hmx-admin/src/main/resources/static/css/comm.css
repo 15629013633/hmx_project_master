@@ -1,0 +1,177 @@
+/*搜素条件 style*/
+.searchCon .form-group{
+    margin-right:10px;
+    margin-bottom: 10px;
+}
+.searchCon .input-group{
+    margin:0;
+}
+
+/*alert*/
+.msgBox{
+    position: fixed;
+    top:15%;
+    left:0;
+    right:0;
+    margin:0 auto;
+    width: 300px;
+    z-index:10000;
+    background:#ffffff;
+    box-shadow: 0 1px 9px rgba(0,0,0,.5);
+    border-radius: 6px;
+    opacity: 0;
+}
+.msgBox .msg-header{
+    padding: 15px 15px 10px;
+}
+.msgBox .msg-header h4{
+    font-size:18px;
+    color: #aaa;
+    margin:0;
+}
+.msgBox .msg-header i{
+    color: #5cb85c;
+    font-size: 25px;
+    vertical-align: top;
+    margin-right: 10px;
+}
+.msgBox .msg-header .error{
+    color:#d9534f;
+}
+.msgBox .msg-header .warning{
+    border: 3px solid #f0ad4e;
+    padding: 2px 7px;
+    border-radius: 100%;
+    color: #f0ad4e;
+    font-size: 16px;
+}
+.msgBox .msg-header .close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+    cursor: pointer;
+}
+.msg-title {
+    margin: 0;
+    line-height: 1.42857143;
+}
+.msgBox .msg-body {
+    position: relative;
+    padding: 15px 15px 10px;
+}
+.msgBox .msg-body p{
+    margin:0;
+}
+.msgBox .msg-footer {
+    padding: 5px 15px 10px;
+    text-align: right;
+}
+.msgBox .msg-footer button:first-child+button{
+    margin-left:10px;
+}
+
+/*modal style*/
+/*左右弹出窗口*/
+.container-edit {
+    display: none;
+    position: fixed;
+    z-index: 1051;
+    top: 50px;
+    right:0;
+    width: 0;
+    background-color: #fff;
+    bottom: 0px;
+    border: 1px solid #d5d5d5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 3px 8px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 3px 8px;
+    transition: width .2s ease-out;
+    -moz-transition: width .2s ease-out; /* Firefox 4 */
+    -webkit-transition: width .2s ease-in-out; /* Safari 和 Chrome */
+    -o-transition: width .2s ease-out; /* Opera */
+
+}
+.container-edit .panel-heading {
+    background-color: #f5f5f5;
+    border-radius: 0px;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 15px;
+}
+.container-edit .container-body {
+    padding: 15px;
+}
+.container-edit .panel-title {
+    margin-top: 6px;
+}
+.container-edit .error {
+    background-color: transparent;
+    font-size: .9em;
+    color: #a94442;
+    padding-left: 10px;
+}
+.alert-backdrop,
+.modal-backdrops{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color:rgba(255,255,255,0);
+}
+.modal-show{
+    margin:auto;
+}
+.modal-show .modal-body{
+    max-height:600px;
+    overflow-y: auto;
+}
+
+/*table style*/
+table a{
+    text-decoration: none;
+    cursor: pointer;
+    color: blue;
+    margin-right:10px;
+}
+
+/*select2*/
+.select2-container .select2-selection--single {
+    border: 1px solid #ccc!important;
+    height: 34px!important;
+}
+.select2-container .select2-selection__rendered,
+.select2-container .select2-selection__arrow{
+    height: 34px!important;
+    line-height: 33px!important;
+}
+
+/*loading*/
+.progress-parent .show-progress{
+    position: absolute;
+    top: 20%;
+    left: 55%;
+    z-index:2000;
+}
+
+/*btn*/
+.btn-main{
+    color: #fff;
+    background-color: #57b3ed;
+    border-color: #449cd4;
+}
+.btn.btn-main:hover,
+.btn-main:focus{
+    color: #fff;
+    background-color: #449cd4;
+}
+
+@media only screen and (max-width: 768px) {
+    .container-edit{
+        top:100px;
+    }
+}

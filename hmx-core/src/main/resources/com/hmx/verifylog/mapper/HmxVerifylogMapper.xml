@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hmx.verifylog.dao.HmxVerifylogMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hmx.verifylog.entity.HmxVerifylog" >
+    <id column="verify_log_id" property="verifyLogId" jdbcType="INTEGER" />
+  	<result column="verify_type" property="verifyType" jdbcType="INTEGER" />
+  	<result column="verify_code" property="verifyCode" jdbcType="VARCHAR" />
+  	<result column="verify_object" property="verifyObject" jdbcType="VARCHAR" />
+  	<result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+  	<result column="is_verify" property="isVerify" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+      	<if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+          </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    verify_log_id,verify_type,verify_code,verify_object,add_time,is_verify
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.verifylog.entity.HmxVerifylogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hmx_verifylog 
+    
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hmx_verifylog 
+    where verify_log_id = #{verifyLogId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hmx_verifylog 
+    where verify_log_id = #{verifyLogId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.hmx.verifylog.entity.HmxVerifylogExample" >
+    delete from hmx_verifylog 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.hmx.verifylog.entity.HmxVerifylog" keyProperty="verifyLogId" useGeneratedKeys="true">
+    insert into hmx_verifylog  (verify_log_id,verify_type,verify_code,verify_object,add_time,is_verify)
+    values (#{verifyLogId,jdbcType=INTEGER}, #{verifyType,jdbcType=INTEGER}, #{verifyCode,jdbcType=VARCHAR}, #{verifyObject,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{isVerify,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.hmx.verifylog.entity.HmxVerifylog" keyProperty="verifyLogId" useGeneratedKeys="true"  >
+    insert into hmx_verifylog 
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="verifyLogId != null" >
+        verify_log_id,
+      </if>
+      <if test="verifyType != null" >
+        verify_type,
+      </if>
+      <if test="verifyCode != null" >
+        verify_code,
+      </if>
+      <if test="verifyObject != null" >
+        verify_object,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="isVerify != null" >
+        is_verify,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="verifyLogId != null" >
+        #{verifyLogId,jdbcType=INTEGER},
+      </if>
+      <if test="verifyType != null" >
+        #{verifyType,jdbcType=INTEGER},
+      </if>
+      <if test="verifyCode != null" >
+        #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyObject != null" >
+        #{verifyObject,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isVerify != null" >
+        #{isVerify,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update  id="updateByExample" parameterType="map" >
+    update hmx_verifylog 
+    set verify_log_id = #{verifyLogId,jdbcType=INTEGER},
+verify_type = #{verifyType,jdbcType=INTEGER},
+verify_code = #{verifyCode,jdbcType=VARCHAR},
+verify_object = #{verifyObject,jdbcType=VARCHAR},
+add_time = #{addTime,jdbcType=TIMESTAMP},
+is_verify = #{isVerify,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="countByExample" parameterType="com.hmx.verifylog.entity.HmxVerifylogExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_verifylog 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.verifylog.entity.HmxVerifylog" >
+    update hmx_verifylog
+    <set >
+      <if test="verifyLogId != null" >
+        verify_log_id = #{verifyLogId,jdbcType=INTEGER} ,
+      </if>
+      <if test="verifyType != null" >
+        verify_type = #{verifyType,jdbcType=INTEGER} ,
+      </if>
+      <if test="verifyCode != null" >
+        verify_code = #{verifyCode,jdbcType=VARCHAR} ,
+      </if>
+      <if test="verifyObject != null" >
+        verify_object = #{verifyObject,jdbcType=VARCHAR} ,
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP} ,
+      </if>
+      <if test="isVerify != null" >
+        is_verify = #{isVerify,jdbcType=INTEGER} ,
+      </if>
+    </set >
+    where verify_log_id = #{verifyLogId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.hmx.verifylog.entity.HmxVerifylog" >
+    update hmx_verifylog
+    set verify_log_id = #{verifyLogId,jdbcType=INTEGER},
+verify_type = #{verifyType,jdbcType=INTEGER},
+verify_code = #{verifyCode,jdbcType=VARCHAR},
+verify_object = #{verifyObject,jdbcType=VARCHAR},
+add_time = #{addTime,jdbcType=TIMESTAMP},
+is_verify = #{isVerify,jdbcType=INTEGER}
+    where verify_log_id = #{verifyLogId,jdbcType=INTEGER}
+  </update>
+   <!-- 获取最新一条验证码记录  -->
+   <select id="selectNewVerifylog" resultMap="BaseResultMap">
+   select <include refid="Base_Column_List" /> 
+	from hmx_verifylog  
+	where verify_object=#{verifyObject}
+	ORDER BY verify_log_id desc
+	LIMIT 1
+   </select>
+</mapper>

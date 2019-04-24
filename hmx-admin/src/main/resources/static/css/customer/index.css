@@ -1,0 +1,40 @@
+.navbar-customer{
+    background-color: #57b3ed;
+    border-color: #e7e7e7;
+}
+.navbar-customer .navbar-header img{
+    width: 47px;
+    vertical-align: top;
+}
+.navbar-customer .navbar-header a{
+    display: inline-block;
+    color: white;
+    font-weight: bolder;
+    font-size: 2em;
+    line-height: 50px;
+    padding-left: 17px;
+}
+.customer-con{
+    margin-top:50px;
+    padding:15px 0;
+}
+#customer_con{
+
+
+}
+.navbar-customer .navbar-right a{
+    color:#fff;
+}
+.navbar-customer .navbar-right a:hover,
+.navbar-customer .navbar-right a:focus{
+    background-color: transparent;
+}
+
+.navbar-customer .navbar-header a:focus,
+.navbar-customer .navbar-header a:hover{
+    text-decoration: none;
+}
+/*导航路径*/
+.breadcrumb{
+    background: #e5e5e5;
+}

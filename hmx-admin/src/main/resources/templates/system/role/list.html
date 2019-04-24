@@ -1,0 +1,47 @@
+<!--表格-->
+<div class="col-sm-6">
+    <h3 style="margin: 20px 0;">角色信息
+        <button class="btn btn-primary btn" data-toggle="modal" data-target="#roleModal"
+                style="float: right;margin-right: 5px;font-size: 10px;">
+            <span class="glyphicon glyphicon-plus"> 新增</span>
+        </button>
+    </h3>
+    <table id="roleTable"></table>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    角色
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <label for="name">名称:</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="请使用“ROLE_**”模式填写"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="detail">描述:</label>
+                        <input type="text" class="form-control"name="detail" id="detail" placeholder="请输入"/>
+                    </div>
+                </form>
+                <input type="text" value="" id="roleId" hidden="true">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="updateRole()">
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/system/role/list.js"></script>

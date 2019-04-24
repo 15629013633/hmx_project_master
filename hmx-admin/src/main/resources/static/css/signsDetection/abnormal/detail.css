@@ -1,0 +1,43 @@
+.healthReport{
+    border:1px solid #000;
+    margin-bottom:30px;
+    width:100%;
+}
+.healthReport h3{
+    padding-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: 0;
+    line-height: 30px;
+}
+.healthReport h3 a{
+    font-size:14px;
+    padding-right:15px;
+}
+.healthReport .table{
+    margin-top:2em;
+    margin-bottom: 0;
+}
+.healthReport .table>tbody>tr>.padSty{
+    padding:3px;
+}
+.healthReport .table>tbody>tr>td input{
+    height:30px;
+}
+.healthReport .table>tbody>tr>td:last-child,
+.healthReport .table>tbody>tr>th:last-child{
+    border-right: none;
+}
+.healthReport .table>tbody>tr>td,
+.healthReport .table>tbody>tr>th{
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    vertical-align: middle;
+}
+.healthReport .table>tbody>tr>th{
+    font-size: 16px;
+}
+.healthReport .table .title:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+

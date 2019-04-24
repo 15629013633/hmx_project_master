@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>hmx-core</artifactId>
+  <packaging>jar</packaging>
+		  <parent>
+			    <groupId>com.hmx</groupId>
+			    <artifactId>hmx-project-master</artifactId>
+			    <version>0.0.1-SNAPSHOT</version>
+		  </parent>
+		  
+		  <dependencies>
+    			<!-- mysql数据库组件 -->
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</dependency>
+				<!-- mybatis -->
+				<dependency>
+		            <groupId>org.mybatis.spring.boot</groupId>
+		            <artifactId>mybatis-spring-boot-starter</artifactId>
+		            <version>1.3.0</version>
+		        </dependency>
+		        <dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-aop</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-test</artifactId>
+					<scope>test</scope>
+				</dependency>
+			  <dependency>
+				  <groupId>org.mybatis.generator</groupId>
+				  <artifactId>mybatis-generator-core</artifactId>
+				  <version>1.3.7</version>
+			  </dependency>
+				<!-- 
+			    <dependency>
+				      <groupId>org.springframework.security</groupId>
+				      <artifactId>spring-security-web</artifactId>
+			    </dependency>
+			     -->
+			    <dependency>
+	                <groupId>com.google.code.gson</groupId>
+	                <artifactId>gson</artifactId>
+            	</dependency>
+            	<dependency>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+					<version>18.0</version>
+				</dependency>
+            	<dependency>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</dependency>
+
+<!-- 			  <dependency> -->
+<!-- 				  <groupId>org.springframework.boot</groupId> -->
+<!-- 				  <artifactId>spring-boot-starter-security</artifactId> -->
+<!-- 			  </dependency> -->
+			  <dependency>
+				  <groupId>org.springframework.boot</groupId>
+				  <artifactId>spring-boot-starter-freemarker</artifactId>
+			  </dependency>
+			  <dependency>
+				  <groupId>org.thymeleaf.extras</groupId>
+				  <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+			  </dependency>
+			  <dependency>
+				  <groupId>org.springframework.security</groupId>
+				  <artifactId>spring-security-test</artifactId>
+				  <scope>test</scope>
+			  </dependency>
+			  <dependency>
+				  <groupId>org.springframework.security</groupId>
+				  <artifactId>spring-security-taglibs</artifactId>
+			  </dependency>
+<!-- 			  <dependency> -->
+<!-- 				  <groupId>javax.servlet.jsp.jstl</groupId> -->
+<!-- 				  <artifactId>jstl-api</artifactId> -->
+<!-- 				  <version>1.2</version> -->
+<!-- 			  </dependency> -->
+			  <dependency>
+				  <groupId>org.apache.tomcat.embed</groupId>
+				  <artifactId>tomcat-embed-core</artifactId>
+				  <scope>compile</scope>
+			  </dependency>
+			  <!-- 阿里上传依赖 -->
+			  <dependency>
+			    <groupId>com.aliyun</groupId>
+			    <artifactId>aliyun-java-sdk-core</artifactId>
+			    <version>4.3.3</version>
+			  </dependency>
+			  <dependency>
+			    <groupId>com.aliyun</groupId>
+			    <artifactId>aliyun-java-sdk-vod</artifactId>
+			    <version>2.15.1</version>
+			  </dependency>
+			  
+		      <dependency>
+		        <groupId>com.aliyun.oss</groupId>
+		        <artifactId>aliyun-sdk-oss</artifactId>
+		        <version>3.1.0</version>
+		      </dependency>
+		      <dependency>
+		        <groupId>com.alibaba</groupId>
+		        <artifactId>fastjson</artifactId>
+		        <version>1.2.28</version>
+		      </dependency>
+	   		  <dependency>
+		        <groupId>org.json</groupId>
+		        <artifactId>json</artifactId>
+		        <version>20170516</version>
+		      </dependency>
+		      <dependency>
+			    <groupId>com.aliyun</groupId>
+			    <artifactId>aliyun-java-vod-upload</artifactId>
+				<version>1.4.6</version>
+	  		</dependency>
+	  		
+	  		<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+			</dependency>
+			
+		  </dependencies>
+		  <build>
+			<finalName>hmx-core</finalName>
+			  <plugins>
+				  <plugin>
+					  <groupId>org.mybatis.generator</groupId>
+					  <artifactId>mybatis-generator-maven-plugin</artifactId>
+					  <dependencies>
+						  <dependency>
+							  <groupId> mysql</groupId>
+							  <artifactId> mysql-connector-java</artifactId>
+							  <version>5.1.46</version>
+						  </dependency>
+						  <dependency>
+							  <groupId>org.mybatis.generator</groupId>
+							  <artifactId>mybatis-generator-core</artifactId>
+							  <version>1.3.7</version>
+						  </dependency>
+					  </dependencies>
+					  <executions>
+						  <execution>
+							  <id>Generate MyBatis Artifacts</id>
+							  <phase>package</phase>
+							  <goals>
+								  <goal>generate</goal>
+							  </goals>
+						  </execution>
+					  </executions>
+					  <configuration>
+						  <!-- 允许移动生成的文件 -->
+						  <verbose>true</verbose>
+						  <!-- 是否覆盖 -->
+						  <overwrite>false</overwrite>
+						  <!-- 自动生成的配置 -->
+						  <configurationFile>
+							  src/main/resources/mybatis-generator.xml</configurationFile>
+					  </configuration>
+				  </plugin>
+			  </plugins>
+		  </build>
+</project>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Document</title>
+    <link href="/lib/bootStrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/bootStrap/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .entrance-wrapper {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            background: url("/img/login-bg.jpg") center center no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .entrance-wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            background-color: rgba(255, 255, 255, .3);
+            border-radius: 4px;
+
+            padding: 20px 35px 35px;
+
+            box-shadow: 0 0 10px #cac6c6;
+
+            transform: translate(-50%, -70%);
+        }
+
+        .entrance-wrap input,
+        .entrance-wrap .input-group-addon {
+            background: rgba(255, 255, 255, .3);
+            height: 40px;
+        }
+
+        .entrance-wrap input[type="checkbox"] {
+            height: auto;
+        }
+
+        .entrance-wrap .form-group {
+            margin-bottom: 20px;
+        }
+
+        .entrance-wrap .title {
+            margin-bottom: 28px;
+        }
+
+        .btn-aio {
+            color: #fff;
+            height: 40px;
+            line-height:25px;
+            border-color: #55a8dc;
+            background: #57b3ed;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-aio:focus, .btn-aio:hover {
+            color: #fff;
+            background: #55a8dc;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="entrance-wrapper">
+    <!--<img src="img/1.png" class="img-responsive center-block" />-->
+    <div class="entrance-wrap">
+        <!--终端查询-->
+        <form class="text-center" name="form" action="/customer/latestReport" method="POST">
+            <div class="form-group title">
+                <h4 class="text-center">个人检测报告查询</h4>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-mobile" aria-hidden="true" style="font-size: 20px;"></i></div>
+                    <input type="text" class="form-control" name="mobilePhone" autocomplete="off" placeholder="请输入手机号码">
+                </div>
+                <p class="text-right" style="color:red; padding-top: 10px;margin:0;">${message ? default('')}</p>
+            </div>
+
+            <button type="submit"  class="btn btn-aio">查询</button>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+
+</script>
+</html>

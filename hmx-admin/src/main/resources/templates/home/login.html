@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>黄梅戏管理后台</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/home/login.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container content-wrap">
+         <div class="logo-wrap">
+              <div style="padding-left:37%; padding-top:120px">
+                   <img src="img/Logo.png" style="width:75px;"/>
+                   <span>黄梅戏管理后台</span>
+              </div>
+         </div>
+    </div>
+    <div class="container-fluid">
+        <div class="login-wrap">
+            <form class="text-center" name="form" action="/login" method="POST">
+                <div class="form-group title">
+                    <h4 class="text-center">用户登录</h4>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user" ></span></div>
+                        <input type="text" class="form-control" name="username" value="" placeholder="账号/手机号码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                        <input type="password" class="form-control" name="password" placeholder="密码">
+                    </div>
+                    <p style="color: red;margin-top: 10px;float: right;">${isError!}</p>
+                </div>
+                <div class="checkbox text-left">
+                    <label>
+                        <input type="checkbox"> 记住我
+                    </label>
+                </div>
+                <button type="submit"  class="btn btn-aio">登录</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

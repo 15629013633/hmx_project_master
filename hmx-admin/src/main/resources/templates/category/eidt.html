@@ -1,0 +1,96 @@
+<style>
+    .form-control {
+        margin: 15px 0px;
+    }
+
+    .form-control-feedback {
+        margin: 15px 0px;
+    }
+
+    .control-label {
+        margin: 15px 0px;
+    }
+
+    .row {
+        width: 100%;
+    }
+</style>
+<form id="formUpdate" class="form-horizontal">
+    <input id="categoryId" type="hidden" value="${category.categoryId!}">
+    <div class="form-group" style="margin-top:15px">
+        <div class="row">
+            <label class="control-label col-sm-1" for="categoryName">分类名称</label>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" name="categoryName" id="categoryName" value="${category.categoryName!}">
+            </div>
+            <label class="control-label col-sm-1" for="isClose">是否首页展示</label>
+            <div class="col-lg-4">
+                <select class="form-control" name="isClose" id="isClose">
+                <#if category.isClose?? && category.isClose==0>
+                        <option value="">请选择</option>
+                        <option value="0" selected>是</option>
+                        <option value="1">否</option>
+                    <#elseif category.isClose?? && category.isClose==1>
+                        <option value="">请选择</option>
+                        <option value="0">是</option>
+                        <option value="1" selected>否</option>
+                    <#else>
+                        <option value="">请选择</option>
+                        <option value="0">是</option>
+                        <option value="1">否</option>
+                </#if>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <label class="control-label col-sm-1" for="version">版本编号</label>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" name="version" id="version" value="${category.version!}">
+            </div>
+            <label class="control-label col-sm-1" for="version">展示列表</label>
+            <div class="col-lg-4">
+                <select class="form-control" name="categoryType" id="categoryType">
+                    <#if category.categoryType?? && category.categoryType==1>
+                            <option value="">请选择</option>
+                            <option value="1" selected>文本</option>
+                            <option value="2">图片</option>
+                            <option value="3">视频</option>
+                        <#elseif category.categoryType?? && category.categoryType==2>
+                            <option value="">请选择</option>
+                            <option value="1">文本</option>
+                            <option value="2" selected>图片</option>
+                            <option value="3">视频</option>
+                        <#elseif category.categoryType?? && category.categoryType==3>
+                            <option value="">请选择</option>
+                            <option value="1">文本</option>
+                            <option value="2">图片</option>
+                            <option value="3" selected>视频</option>
+                        <#else>
+                            <option value="">请选择</option>
+                            <option value="1">文本</option>
+                            <option value="2">图片</option>
+                            <option value="3">视频</option>
+                    </#if>
+
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="col-lg-10" style="text-align:right">
+            <#if category.categoryName??>
+                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary"
+                            onclick="updateCategory(2)">提交
+                    </button>
+                <#else>
+                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary"
+                            onclick="updateCategory(1)">提交
+                    </button>
+            </#if>
+        </div>
+    </div>
+</form>
+
+<script src="lib/bootStrap/js/bootstrapValidator.js"></script>
+<script src="js/category/eidt.js"></script>

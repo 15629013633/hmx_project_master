@@ -1,0 +1,209 @@
+<!--查看最近检测明细-->
+<link href="/lib/bootStrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/signsDetection/abnormal/detail.css" rel="stylesheet" />
+<ol class="breadcrumb">
+    <li>最新体检报告</li>
+    <li><a href="#" url="/customer/initDate">历史体检报告日期</a></li>
+    <li class="active">个人体检报告</li>
+</ol>
+<div class="container healthReport" id="ele1">
+    <div class="row">
+        <h3 class="text-center">个人基本检测报告
+            <a href="javascript:void(0);" class="pull-right" onclick="jQuery('#ele1').print()">
+                     <i class="fa fa-print" aria-hidden="true"></i> 打印
+            </a></h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">姓名：<span name="name">${person.name? default('')}</span></div>
+        <div class="col-sm-3">性别：<span name="gender">${person.gender?string("男", "女")}</span>
+        </div>
+        <div class="col-sm-3">年龄：<span name="age">${person.age? default('')}</span></div>
+        <div class="col-sm-3">报告生成日期：<span name="createDate">${(examinationModel.createDate ? string("yyyy-MM-dd"))!}</span></div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <tbody>
+            <tr class="">
+                <th colspan="2">检测项目</td>
+                <th colspan="2">检测结果</td>
+                <th colspan="2">参考范围</td>
+            </tr>
+            <tr>
+                <td colspan="2">收缩压（mmHg）</td>
+                <td colspan="2" class="padSty" name="sbp">${examinationModel.sbp ? default('')}</td>
+                <td colspan="2">90-140</td>
+            </tr>
+            <tr>
+                <td colspan="2"">舒张压（mmHg）</td>
+                <td colspan="2" class="padSty" name="dbp">${examinationModel.dbp ? default('')}</td>
+                <td colspan="2">60-90</td>
+            </tr>
+            <tr>
+                <td colspan="2">空腹血糖（mmol/L）</td>
+                <td colspan="2" class="padSty" name="fastingGlucose">${examinationModel.fastingGlucose ? default('')}</td>
+                <td colspan="2">3.9-6.1</td>
+            </tr>
+            <tr>
+                <td colspan="2">餐后血糖（mmol/L）</td>
+                <td colspan="2" class="padSty" name="postprandialGlucose">${examinationModel.postprandialGlucose ? default('')}</td>
+                <td colspan="2"><7.8</td>
+            </tr>
+            <tr>
+                <td colspan="2">血氧饱和度（%）</td>
+                <td colspan="2" class="padSty" name="oxygenSaturation">${examinationModel.oxygenSaturation ? default('')}</td>
+                <td colspan="2">95-100</td>
+            </tr>
+            <tr>
+                <td colspan="2">常规心电图</td>
+                <td colspan="2" class="padSty" name="ecg">${examinationModel.ecg ? default('')}</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2">心率（bpm）</td>
+                <td colspan="2" class="padSty" name="heartRateMax">${examinationModel.heartRateMax ? default('')}</td>
+                <td colspan="2">60-100</td>
+            </tr>
+            <tr>
+                <td colspan="2">体温（℃）</td>
+                <td colspan="2" class="padSty">${examinationModel.temperature ? default('')}</td>
+                <td colspan="2">36-37</td>
+            </tr>
+            <tr>
+                <td colspan="2">尿酸（umol/L）</td>
+                <td colspan="2" class="urine">${examinationModel.urine ? default('')}</td>
+                <td colspan="2">男士：149-416 &nbsp;&nbsp;女士：89-357</td>
+            </tr>
+            <tr>
+                <td colspan="2">体重（kg）</td>
+                <td colspan="2" class="weight">${examinationModel.weight ? default('')}</td>
+                <td colspan="2">36-37</td>
+            </tr>
+            <tr>
+                <td colspan="2">身高（cm）</td>
+                <td colspan="2" class="height">${examinationModel.height ? default('')}</td>
+                <td colspan="2">36-37</td>
+            </tr>
+            <tr>
+                <td colspan="2">矫正视力-左</td>
+                <td colspan="2" class="correctedVisionLeft">${examinationModel.correctedVisionLeft ? default('')}</td>
+                <td colspan="2">1.0</td>
+            </tr>
+            <tr>
+                <td colspan="2">矫正视力-右</td>
+                <td colspan="2" class="correctedVisionRight">${examinationModel.correctedVisionRight ? default('')}</td>
+                <td colspan="2">1.0</td>
+            </tr>
+            <tr>
+                <td colspan="2">裸眼视力-左</td>
+                <td colspan="2" class="nakedVisionLeft">${examinationModel.nakedVisionLeft ? default('')}</td>
+                <td colspan="2">1.0</td>
+            </tr>
+            <tr>
+                <td colspan="2">裸眼视力-右</td>
+                <td colspan="2" class="nakedVisionRight">${examinationModel.nakedVisionRight ? default('')}</td>
+                <td colspan="2">1.0</td>
+            </tr>
+            <tr>
+                <td colspan="2">胸围（cm）</td>
+                <td colspan="2" class="bust">${examinationModel.bust ? default('')}</td>
+                <td colspan="2">84</td>
+            </tr>
+            <tr>
+                <td colspan="2">臀围（cm）</td>
+                <td colspan="2" class="hipline">${examinationModel.hipline ? default('')}</td>
+                <td colspan="2">86</td>
+            </tr>
+            <tr>
+                <td colspan="2">腰围（cm）</td>
+                <td colspan="2" class="waist">${examinationModel.waist ? default('')}</td>
+                <td colspan="2">62</td>
+            </tr>
+            <tr>
+                <th>血脂检测</th>
+                <th>检测结果</th>
+                <th>参考范围</th>
+                <th>血脂检测</th>
+                <th>检测结果</th>
+                <th>参考范围</th>
+            </tr>
+            <tr>
+                <td>总胆固醇（mmol/L）</td>
+                <td class="totalCholesterol">${examinationModel.totalCholesterol ? default('')}</td>
+                <td>2.8-5.17</td>
+                <td>甘油三酯（mmol/L）</td>
+                <td class="triglyceride">${examinationModel.triglyceride ? default('')}</td>
+                <td>0.56-1.7</td>
+            </tr>
+            <tr>
+                <td>高密度脂蛋白（mmol/L）</td>
+                <td class="highLipoprotein">${examinationModel.highLipoprotein ? default('')}</td>
+                <td>0.9-1.55</td>
+                <td>低密度脂蛋白（mmol/L）</td>
+                <td class="lowLipoprotein">${examinationModel.lowLipoprotein ? default('')}</td>
+                <td>0-3.1</td>
+            </tr>
+            <!--<tr>-->
+                <!--<td>白细胞（cells/uL）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+                <!--<td>亚硝酸盐</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>尿胆原（umol/L）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+                <!--<td>蛋白质（g/L）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>酸碱度</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>4.6-8.0</td>-->
+                <!--<td>潜血（cells/uL）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>比重</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>1.015-1.025</td>-->
+                <!--<td>酮体（mmol/L）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>胆红素</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+                <!--<td>葡萄糖（mmol/L）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>维生素C（mmol/L）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+                <!--<td>蛋白质（g/L）</td>-->
+                <!--<td class="padSty"><input class="form-control"/></td>-->
+                <!--<td>阴性</td>-->
+            <!--</tr>-->
+            <tr>
+                <th colspan="6">结论及建议</th>
+            </tr>
+            <tr>
+                <td colspan="6">${examinationModel.remark ? default('&nbsp;')}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/js/jQuery.print.js"></script>
+<script>
+    $('.breadcrumb').on('click', 'li>a', function(){
+        var url = $(this).attr('url');
+        $('#customer_con').load(url);
+    })
+</script>

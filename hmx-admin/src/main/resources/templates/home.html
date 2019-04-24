@@ -1,0 +1,27 @@
+<#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
+<link href="css/home/home.css" rel="stylesheet" />
+<div class="home">
+    <div class="col-sm-6 home-wrap">
+        <div class="home-con">
+            <span class="fa fa-circle fa-stack">
+                <i class="fa fa-file-video-o fa-stack-2x"></i>
+            </span>
+            <h3 name="">电影数量统计</h3>
+        </div>
+        <div class="home-num">
+            ${movieCount!} <span>部</span>
+        </div>
+    </div>
+    <div class="col-sm-6 home-wrap">
+        <div class="home-con">
+            <span class="fa fa-circle fa-stack">
+                <i class="fa fa-bar-chart fa-stack-2x"></i>
+            </span>
+            <h3 name="">用户数量统计</h3>
+        </div>
+        <div class="home-num">
+            ${userCount!} <span>位</span>
+        </div>
+    </div>
+</div>
+<script></script>

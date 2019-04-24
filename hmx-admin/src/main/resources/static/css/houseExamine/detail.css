@@ -1,0 +1,67 @@
+.pdf-container>div{
+    padding:0 2em 0;
+    box-sizing: border-box;
+}
+.main-container{
+    text-align: center;
+}
+.main-head h1{
+    font-weight: bolder;
+    font-size: 30px;
+}
+.main-info{
+    margin-top: 3em;
+    text-align: left;
+    border-bottom: 1px solid #666;
+    padding:0;
+}
+.dl-horizontal{
+    margin-bottom: 5px;
+    padding-left:0;
+}
+.dl-horizontal dt{
+    width:auto;
+    font-weight: normal;
+}
+.dl-horizontal dd{
+   margin: 0;
+}
+
+.content-container{
+    /*background-color:#67B168;*/
+}
+.table{
+    margin: 20px 0;
+    border: 1px solid #666;
+}
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th{
+    border-top: 0;
+}
+.table>thead>tr>th {
+    color: #0000ff;
+    border-bottom: 1px solid blue;
+    /*border-top: 1px solid blue!important;*/
+}
+.table>tbody>tr:last-of-type>th,
+.table>tbody>tr:last-of-type>td{
+    /*border-bottom: 0.5px solid #666;*/
+}
+.table-condensed>tfoot>tr>td,
+.table-condensed>tfoot>tr>th{
+    padding: 0;
+}
+
+.editor{
+    border-top: 1px solid #666;
+    padding-top: 15px;
+    margin-top: 1em;
+}
+.editor textarea{
+    border: 1px solid #666;
+    margin-bottom: 10px;
+}
