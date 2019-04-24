@@ -8,9 +8,9 @@ spring:
     application:
         name: admin
     datasource:
-        url: jdbc:mysql://47.106.117.240:3306/hmx_schema
+        url: jdbc:mysql://47.107.170.192:3306/hmx_schema
         username: root
-        password: 1234
+        password: 2019_Hmx_$
         # 使用druid数据源
         #type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
