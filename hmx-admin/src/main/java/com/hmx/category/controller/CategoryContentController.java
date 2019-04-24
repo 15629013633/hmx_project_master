@@ -12,11 +12,7 @@ import com.hmx.category.service.HmxCategoryService;
 import com.hmx.utils.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.druid.util.StringUtils;
 import com.hmx.category.dto.HmxCategoryContentDto;
@@ -37,13 +33,21 @@ public class CategoryContentController {
 	private HmxCategoryService hmxCategoryService;
 
 
+//	@RequestMapping("/init")
+//	public ModelAndView init() {
+//		ModelAndView modelAndView = new ModelAndView();
+//		List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
+//		modelAndView.setViewName("/categoryContent/list");
+//		modelAndView.addObject("category",hmxCategoryList);
+//		return modelAndView;
+//	}
+
 	@RequestMapping("/init")
-	public ModelAndView init() {
-		ModelAndView modelAndView = new ModelAndView();
+	@ResponseBody
+	public List<HmxCategory> init() {
+		//ModelAndView modelAndView = new ModelAndView();
 		List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-		modelAndView.setViewName("/categoryContent/list");
-		modelAndView.addObject("category",hmxCategoryList);
-		return modelAndView;
+		return hmxCategoryList;
 	}
 
 	@RequestMapping("/selectPic")
