@@ -146,6 +146,15 @@ public class HmxImagesExample{
             return (Criteria) this;
         }
 
+        public Criteria andCategoryContentIdIsNotNull() {
+            addCriterion("category_content_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCategoryContentIdEqualTo(Integer value) {
+            addCriterion("category_content_id =", value, "categoryContentId");
+            return (Criteria) this;
+        }
         public Criteria andImageIdNotEqualTo(Integer value) {
             addCriterion("image_id <>", value, "imageId");
             return (Criteria) this;

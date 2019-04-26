@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.hmx.category.entity.HmxCategoryContent;
+import com.hmx.files.dto.HmxFilesDto;
+import com.hmx.images.dto.HmxImagesDto;
+import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.utils.result.PageBean;
 import com.hmx.category.dto.HmxCategoryContentDto;
 /**
@@ -66,13 +69,13 @@ public interface HmxCategoryContentService {
 	 * @param hmxCategoryContentDto
 	 * @return
 	 */
-	Map<String,Object> categoryContentAdd(HmxCategoryContentDto hmxCategoryContentDto);
+	Map<String,Object> categoryContentAdd(HmxCategoryContentDto hmxCategoryContentDto, List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList);
 	/**
 	 * 内容详情编辑
 	 * @param hmxCategoryContentDto
 	 * @return
 	 */
-	Map<String,Object> categoryContentUpdate(HmxCategoryContentDto hmxCategoryContentDto);
+	Map<String,Object> categoryContentUpdate(HmxCategoryContentDto hmxCategoryContentDto, List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList);
 	/**
      * 查询内容详情
      * @param categoryContentId

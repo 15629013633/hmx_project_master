@@ -7,17 +7,29 @@ import com.aliyun.vod.upload.resp.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.hmx.images.dao.HmxImagesMapper;
+import com.hmx.images.entity.HmxImages;
+import com.hmx.movie.dao.HmxMovieMapper;
+import com.hmx.movie.entity.HmxMovie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UploadVideoDemo {
 	private Logger logger = LoggerFactory.getLogger(UploadVideoDemo.class);
+
+	@Autowired
+	private HmxImagesMapper hmxImagesMapper;
+	@Autowired
+	private HmxMovieMapper hmxMovieMapper;
+
     //账号AK信息请填写(必选)
 	@Value("${accessKeyId}")
     private String accessKeyId;
@@ -87,8 +99,8 @@ public class UploadVideoDemo {
     			resultMap.put("flag", true);
     			String url = response.getImageURL();
     			url = url.substring(0, url.lastIndexOf("?"));
-    			resultMap.put("url", url);
-    			resultMap.put("content", "上传图片成功");
+				resultMap.put("url", url);
+				resultMap.put("content", "上传图片成功");
     		} else {
 				logger.info("ErrorCode=" + response.getCode() + "\n");
 				logger.info("ErrorMessage=" + response.getMessage() + "\n");
@@ -96,6 +108,7 @@ public class UploadVideoDemo {
     		}
     		return resultMap;
 		} catch (Exception e) {
+			e.printStackTrace();
 			resultMap.put("content", "上传图片异常:"+e.getMessage());
 			return resultMap;
 		}finally {
@@ -113,8 +126,6 @@ public class UploadVideoDemo {
     /**
      * 本地文件上传接口
      *
-     * @param accessKeyId
-     * @param accessKeySecret
      * @param title
      * @param fileName
      */

@@ -95,7 +95,7 @@ import javax.servlet.http.HttpServletRequest;
 	/**
 	 * @Method: info 
 	 * @Description: 根据自增主键查询对象信息
-	 * @param hmxCategory 根据自增对象查询信息
+	 * @param hmxCategoryId 根据自增对象查询信息
 	 * @return HmxCategory 查询的对象
 	 */
 	public HmxCategory info (Integer hmxCategoryId) {
@@ -299,6 +299,29 @@ import javax.servlet.http.HttpServletRequest;
 			return resultMap;
 		}
     }
+
+	/**
+	 * 分类删除
+	 * @param categoryIds
+	 * @return
+     */
+	@Override
+	public Map<String, Object> categoryDelete(String categoryIds) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("flag", false);
+		try {
+			if(!deleteByIdArray(categoryIds)){
+				resultMap.put("content", "删除分类信息失败");
+				return resultMap;
+			}
+			resultMap.put("flag", true);
+			resultMap.put("content", "删除分类信息成功");
+			return resultMap;
+		} catch (Exception e) {
+			resultMap.put("content", "删除分类信息失败");
+			return resultMap;
+		}
+	}
     /**
      * 查询分类名是否重复
      * @return
@@ -318,7 +341,6 @@ import javax.servlet.http.HttpServletRequest;
     }
     /**
      * 分类列表
-     * @param parameter
      */
     public PageBean<Map<String,Object>> selectCategoryTable(PageBean<Map<String,Object>> page,HmxCategoryDto hmxCategoryDto){
     	Map<String,Object> parameter = new HashMap<String,Object>();
@@ -346,6 +368,7 @@ import javax.servlet.http.HttpServletRequest;
 	    page.setPage(data);
     	return page;
     }
+
 }
  
  

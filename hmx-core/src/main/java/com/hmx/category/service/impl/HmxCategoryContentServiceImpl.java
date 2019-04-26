@@ -6,6 +6,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.hmx.files.dao.HmxFilesMapper;
+import com.hmx.files.dto.HmxFilesDto;
+import com.hmx.files.entity.HmxFiles;
+import com.hmx.images.dao.HmxImagesMapper;
+import com.hmx.images.dto.HmxImagesDto;
+import com.hmx.images.entity.HmxImages;
+import com.hmx.movie.dao.HmxMovieMapper;
+import com.hmx.movie.dto.HmxMovieDto;
+import com.hmx.movie.entity.HmxMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +43,14 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	private HmxCategoryContentMapper hmxCategoryContentMapper;
  	@Autowired
 	private InitVodClients initVodClients;
+	@Autowired
+	private HmxMovieMapper hmxMovieMapper;
+
+	@Autowired
+	private HmxFilesMapper hmxFilesMapper;
+
+	@Autowired
+	private HmxImagesMapper hmxImagesMapper;
 	
 	
 	/**
@@ -97,7 +114,6 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	/**
 	 * @Method: info 
 	 * @Description: 根据自增主键查询对象信息
-	 * @param hmxCategoryContent 根据自增对象查询信息
 	 * @return HmxCategoryContent 查询的对象
 	 */
 	public HmxCategoryContent info (Integer hmxCategoryContentId) {
@@ -248,7 +264,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	 * @return
 	 */
 	@Transactional
-	public Map<String,Object> categoryContentAdd(HmxCategoryContentDto hmxCategoryContentDto){
+	public Map<String,Object> categoryContentAdd(HmxCategoryContentDto hmxCategoryContentDto, List<HmxMovieDto> hmxMovieDtoList,
+												 List<HmxImagesDto> hmxImagesDtoList, List<HmxFilesDto> hmxFilesDtoList){
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("flag", false);
 		try {
@@ -258,6 +275,25 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			if(!insert(hmxCategoryContentDto)){
 				resultMap.put("content", "添加内容失败");
 	    		return resultMap;
+			}
+			int categoryId = hmxCategoryContentDto.getCategoryContentId();
+			//1将视频信息维护到movie表
+			for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
+				hmxMovieDto.setCreateTime(date);
+				hmxMovieDto.setCategoryContentId(categoryId);
+				hmxMovieMapper.insert(hmxMovieDto);
+			}
+			//2将图片信息维护到images表
+			for(HmxImagesDto hmxImagesDto : hmxImagesDtoList){
+				hmxImagesDto.setCreateTime(date);
+				hmxImagesDto.setCategoryContentId(categoryId);
+				hmxImagesMapper.insert(hmxImagesDto);
+			}
+			//3将pdf文件信息维护进files表
+			for(HmxFilesDto filesDto : hmxFilesDtoList){
+				filesDto.setCreateTime(date);
+				filesDto.setCategoryContentId(categoryId);
+				hmxFilesMapper.insert(filesDto);
 			}
 			resultMap.put("flag", true);
     		resultMap.put("content", "添加内容成功");
@@ -275,7 +311,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	 * @return
 	 */
 	@Transactional
-	public Map<String,Object> categoryContentUpdate(HmxCategoryContentDto hmxCategoryContentDto){
+	public Map<String,Object> categoryContentUpdate(HmxCategoryContentDto hmxCategoryContentDto, List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList){
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("flag", false);
 		try {
@@ -283,6 +319,43 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			if(!update(hmxCategoryContentDto)){
 				resultMap.put("content", "编辑内容失败");
 	    		return resultMap;
+			}
+			Integer categoryId = hmxCategoryContentDto.getCategoryContentId();
+			//1更新视频信息
+			for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
+				HmxMovie hmxMovie = hmxMovieMapper.selectByPrimaryKey(hmxMovieDto.getMovieId());
+				if(null == hmxMovie){
+					hmxMovieDto.setCreateTime(new Date());
+					hmxMovieDto.setCategoryContentId(categoryId);
+					hmxMovieMapper.insert(hmxMovieDto);
+				}else {
+					hmxMovieMapper.updateByPrimaryKeySelective(hmxMovieDto);
+				}
+
+			}
+			//2更新图片信息
+			for(HmxImagesDto hmxImagesDto : hmxImagesDtoList){
+				HmxImages images = hmxImagesMapper.selectByPrimaryKey(hmxImagesDto.getImageId());
+				if(images == null ){
+					hmxImagesDto.setCreateTime(new Date());
+					hmxImagesDto.setCategoryContentId(categoryId);
+					hmxImagesMapper.insert(hmxImagesDto);
+				}else {
+					hmxImagesMapper.updateByPrimaryKeySelective(hmxImagesDto);
+				}
+
+			}
+			//3更新文件信息
+			for(HmxFilesDto filesDto : hmxFilesDtoList){
+				HmxFiles files = hmxFilesMapper.selectByPrimaryKey(filesDto.getFileId());
+				if(null == files){
+					filesDto.setCreateTime(new Date());
+					filesDto.setCategoryContentId(categoryId);
+					hmxFilesMapper.insert(filesDto);
+				}else {
+					hmxFilesMapper.updateByPrimaryKeySelective(filesDto);
+				}
+
 			}
 			resultMap.put("flag", true);
     		resultMap.put("content", "编辑内容成功");

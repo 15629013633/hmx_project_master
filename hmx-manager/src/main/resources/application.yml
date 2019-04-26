@@ -3,7 +3,7 @@ server:
   servlet.context-path: /hmx_cmp
 spring:  
   datasource:
-    url: jdbc:mysql://47.107.170.192:3306/hmx_schema
+    url: jdbc:mysql://47.107.170.192:3306/hmx_schema?
     username: root
     password: 2019_Hmx_$
     driver-class-name: com.mysql.jdbc.Driver
@@ -17,7 +17,16 @@ spring:
       multipart:
         max-file-size : 1024mb
         max-request-size : 1589mb
-        
+  http:
+      encoding:
+        charset: UTF-8
+        enabled: true
+        force: true
+
+#        spring.http.encoding.force=true
+#        spring.http.encoding.charset=UTF-8
+#        spring.http.encoding.enabled=true
+#        server.tomcat.uri-encoding=UTF-8
 mybatis:
   mapper-locations: classpath*:com/hmx/*/mapper/*.xml
   configuration:

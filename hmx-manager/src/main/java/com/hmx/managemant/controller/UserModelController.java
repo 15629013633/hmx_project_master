@@ -29,7 +29,7 @@ import java.util.Map;
  * Created by songjinbao on 2019/4/25.
  */
 @Controller
-@RequestMapping(value = "/management/userManage")
+@RequestMapping(value = "/management/userContrl")
 public class UserModelController {
     @Autowired
     private HmxUserMapper hmxUserMapper;

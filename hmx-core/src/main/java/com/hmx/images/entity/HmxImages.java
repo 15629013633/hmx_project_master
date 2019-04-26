@@ -12,12 +12,13 @@ public class HmxImages{
     private Integer state;
     private Integer version;
     private Integer createid;
+	private Integer categoryContentId;
 
     public HmxImages() {
 		super();
 	}
 
-    public HmxImages(Integer imageId, String imageUrl, Date createTime, Date newTime, Integer state, Integer version, Integer createid) {
+    public HmxImages(Integer imageId, String imageUrl, Date createTime, Date newTime, Integer state, Integer version, Integer createid,Integer categoryContentId) {
 		super();
 		this.imageId = imageId;
 		this.imageUrl = imageUrl;
@@ -26,6 +27,7 @@ public class HmxImages{
 		this.state = state;
 		this.version = version;
 		this.createid = createid;
+		this.categoryContentId = categoryContentId;
 	}
 	
     public Integer getImageId() {
@@ -83,5 +85,12 @@ public class HmxImages{
 	public void setCreateid(Integer createid){
 		this.createid = createid;
 	}
-	
+
+	public Integer getCategoryContentId() {
+		return categoryContentId;
+	}
+
+	public void setCategoryContentId(Integer categoryContentId) {
+		this.categoryContentId = categoryContentId;
+	}
 }

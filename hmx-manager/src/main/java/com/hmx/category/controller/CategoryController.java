@@ -76,8 +76,9 @@ public class CategoryController {
      * 首页分类信息查找
      * @return
      */
-    @GetMapping("/{id}")
-    public String categoryInfo(@PathVariable(name="id",required=true) Integer categoryId, Model model){
+    @GetMapping("/getCategoryByid")
+    //public String categoryInfo(@PathVariable(name="id",required=true) Integer categoryId, Model model){
+    public ResultBean categoryInfo(Integer categoryId, Model model){
         ResultBean resultBean = new ResultBean();
         HmxCategory hmxCategory = hmxCategoryService.info(categoryId);
         if(hmxCategory == null){
@@ -89,7 +90,7 @@ public class CategoryController {
         }
         resultBean.put("hmxCategory", hmxCategory);
         model.addAttribute("resultBean", resultBean);
-        return "hello";
+        return resultBean;
     }
     /**
      * 分类信息更新
@@ -107,6 +108,33 @@ public class CategoryController {
         }
         if(flag){
             Map<String,Object> resultMap = hmxCategoryService.categoryUpdate(hmxcategoryDto);
+            flag=Boolean.parseBoolean(resultMap.get("flag").toString());
+            if(!flag){
+                result.setStatus(Config.FAIL_CODE);
+            }else{
+                result.setStatus(Config.SUCCESS_CODE);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 分类信息更新
+     * @param model
+     * @param categoryIds  分类主件id，以逗号分隔  2,3,4
+     * @return
+     */
+    @PostMapping("/delete")
+    public Result<Object> categoryDelete(String categoryIds,Model model){
+        Result<Object> result = new Result<>();
+        boolean flag=true;
+        if(StringUtils.isEmpty(categoryIds)){
+            result.setStatus(Config.FAIL_FIELD_EMPTY);
+            result.setMsg("分类编号不能为空");
+            flag=false;
+        }
+        if(flag){
+            Map<String,Object> resultMap = hmxCategoryService.categoryDelete(categoryIds);
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
                 result.setStatus(Config.FAIL_CODE);
@@ -150,7 +178,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/categoryAll")
-    public String categoryAll(HmxCategoryDto hmxCategoryDto,Model model){
+    public ResultBean categoryAll(HmxCategoryDto hmxCategoryDto,Model model){
         ResultBean resultBean = new ResultBean();
         hmxCategoryDto.setState(DataState.正常.getState());
         hmxCategoryDto.setIsClose(IsClose.开放.getState());
@@ -162,6 +190,6 @@ public class CategoryController {
         }
         resultBean.put("hmxCategoryList", hmxCategoryList);
         model.addAttribute("resultBean", resultBean);
-        return "hello";
+        return resultBean;
     }
 }

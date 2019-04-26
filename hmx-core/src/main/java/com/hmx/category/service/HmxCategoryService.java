@@ -98,4 +98,12 @@ public interface HmxCategoryService {
      * @param parameter
      */
     PageBean<Map<String,Object>> selectCategoryTable(PageBean<Map<String,Object>> page,HmxCategoryDto hmxCategoryDto);
+
+
+	/**
+	 * 删除分类
+	 * @param categoryIds
+	 * @return
+     */
+	Map<String,Object> categoryDelete(String categoryIds);
 }

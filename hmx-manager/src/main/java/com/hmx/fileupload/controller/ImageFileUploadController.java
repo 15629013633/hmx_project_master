@@ -4,7 +4,10 @@ import com.hmx.utils.result.Config;
 import com.hmx.utils.result.ResultBean;
 import com.hmx.utils.upload.UploadVideoDemo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +25,10 @@ public class ImageFileUploadController {
     @Autowired
     private UploadVideoDemo uploadVideoDemo;
 
+    /**
+     * @param file
+     * @return
+     */
     @RequestMapping("/upload")
     public ResultBean fileImageUpload(MultipartFile file){
         if(file == null){

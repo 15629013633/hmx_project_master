@@ -6,6 +6,9 @@ import com.hmx.category.entity.HmxCategory;
 import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.service.HmxCategoryContentService;
 import com.hmx.category.service.HmxCategoryService;
+import com.hmx.files.dto.HmxFilesDto;
+import com.hmx.images.dto.HmxImagesDto;
+import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.Result;
@@ -70,11 +73,14 @@ public class CategoryContentController {
 
     /**
      * 分类内容添加
+     * 会添加的内容包含：文本信息，内容基本信息，
+     *            文件：pdf文件信息，视频信息，图片信息
      * @param model
      * @return
      */
     @PostMapping("/add")
-    public String categoryAdd(HmxCategoryContentDto hmxCategoryContentDto, Model model){
+    public String categoryAdd(HmxCategoryContentDto hmxCategoryContentDto, List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,
+                              List<HmxFilesDto> hmxFilesDtoList, Model model){
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
         if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryTitle())){
@@ -89,8 +95,9 @@ public class CategoryContentController {
             resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联首页分类不能为空");
             flag=false;
         }
+        printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
         if(flag){
-            Map<String,Object> resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto);
+            Map<String,Object> resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
                 resultBean.setCode(Config.FAIL_CODE);
@@ -108,15 +115,18 @@ public class CategoryContentController {
      * @return
      */
     @RequestMapping("/edit")
-    public Result<Object> categoryUpdate(HmxCategoryContentDto hmxCategoryContentDto){
+    public Result<Object> categoryUpdate(HmxCategoryContentDto hmxCategoryContentDto,List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList){
         Result<Object> result = new Result<>();
         boolean flag=true;
+
         if(flag){
             Map<String,Object> resultMap = null;
             if(hmxCategoryContentDto.getCategoryContentId() == null){
-                resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto);
+                printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
+                resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
             }else {
-                resultMap = hmxCategoryContentService.categoryContentUpdate(hmxCategoryContentDto);
+                printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"edit");
+                resultMap = hmxCategoryContentService.categoryContentUpdate(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
             }
 
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
@@ -185,5 +195,17 @@ public class CategoryContentController {
         map.put("rows", page.getPage());
         map.put("total", page.getTotalNum());
         return map;
+    }
+
+    public void printValues(List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList,String type){
+        for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
+            System.out.print(type+ "视频信息：" + hmxMovieDto.getMovieName()+"," + hmxMovieDto.getMovieId());
+        }
+        for(HmxImagesDto hmxImagesDto : hmxImagesDtoList){
+            System.out.print(type+ "图片信息：" + hmxImagesDto.getImageUrl());
+        }
+        for(HmxFilesDto hmxFilesDto : hmxFilesDtoList){
+            System.out.print(type+ "文件信息：" + hmxFilesDto.getFileUrl());
+        }
     }
 }

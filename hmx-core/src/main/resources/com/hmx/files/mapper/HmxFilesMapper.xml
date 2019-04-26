@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hmx.movie.dao.HmxMovieMapper" >
+<mapper namespace="com.hmx.files.dao.HmxFilesMapper" >
 
-  <resultMap id="BaseResultMap" type="com.hmx.movie.entity.HmxMovie" >
-    <id column="movie_id" property="movieId" jdbcType="INTEGER" />
-  	<result column="movie_name" property="movieName" jdbcType="VARCHAR" />
-  	<result column="ratio" property="ratio" jdbcType="VARCHAR" />
-  	<result column="duration" property="duration" jdbcType="VARCHAR" />
-  	<result column="movie_url" property="movieUrl" jdbcType="VARCHAR" />
+  <resultMap id="BaseResultMap" type="com.hmx.files.dao.HmxFilesMapper" >
+    <id column="file_id" property="fileId" jdbcType="INTEGER" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
   	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+
   	<result column="new_time" property="newTime" jdbcType="TIMESTAMP" />
   	<result column="state" property="state" jdbcType="INTEGER" />
+
   	<result column="version" property="version" jdbcType="INTEGER" />
   	<result column="createid" property="createid" jdbcType="INTEGER" />
-    <result column="video_id" property="videoId" jdbcType="VARCHAR" />
-    <result column="video_status" property="videoStatus" jdbcType="INTEGER" />
-    <result column="category_content_id" property="categoryContentId" jdbcType="INTEGER" />
+  	<result column="category_content_id" property="categoryContentId" jdbcType="INTEGER" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -78,16 +75,16 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    movie_id,movie_name,ratio,duration,movie_url,create_time,new_time,state,version,createid,video_id,video_status,category_content_id
+    file_id,file_url,create_time,state,version,createid,category_content_id
   </sql>
   
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.movie.entity.HmxMovieExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.files.entity.HmxFilesExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hmx_movie 
+    from hmx_files
     
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -111,53 +108,40 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from hmx_movie 
-    where movie_id = #{movieId,jdbcType=INTEGER}
+    from hmx_files
+    where file_id = #{fileId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from hmx_movie 
-    where movie_id = #{movieId,jdbcType=INTEGER}
+    delete from hmx_files
+    where file_id = #{fileId,jdbcType=INTEGER}
   </delete>
   
-  <delete id="deleteByExample" parameterType="com.hmx.movie.entity.HmxMovieExample" >
-    delete from hmx_movie 
+  <delete id="deleteByExample" parameterType="com.hmx.files.entity.HmxFilesExample" >
+    delete from hmx_files
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   
   
-  <insert id="insert" parameterType="com.hmx.movie.entity.HmxMovie" keyProperty="movieId" useGeneratedKeys="true">
-    insert into hmx_movie  (movie_id,movie_name,ratio,duration,movie_url,create_time,new_time,state,version,createid,video_id,video_status,category_content_id)
-    values (#{movieId,jdbcType=INTEGER}, #{movieName,jdbcType=VARCHAR}, #{ratio,jdbcType=VARCHAR}, #{duration,jdbcType=VARCHAR}, #{movieUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
-    #{createid,jdbcType=INTEGER}, #{videoId,jdbcType=VARCHAR}, #{videoStatus,jdbcType=INTEGER}, #{categoryContentId,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.hmx.files.entity.HmxFiles" keyProperty="fileId" useGeneratedKeys="true">
+    insert into hmx_files  (file_id,file_url,create_time,state,version,createid,category_content_id)
+    values (#{fileId,jdbcType=INTEGER}, #{fileUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},#{categoryContentId,jdbcType=INTEGER})
   </insert>
   
   
-  <insert id="insertSelective" parameterType="com.hmx.movie.entity.HmxMovie" keyProperty="movieId" useGeneratedKeys="true"  >
-    insert into hmx_movie 
+  <insert id="insertSelective" parameterType="com.hmx.files.entity.HmxFiles" keyProperty="fileId" useGeneratedKeys="true"  >
+    insert into hmx_files
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="movieId != null" >
-        movie_id,
+      <if test="fileId != null" >
+        file_id,
       </if>
-      <if test="movieName != null" >
-        movie_name,
-      </if>
-      <if test="ratio != null" >
-        ratio,
-      </if>
-      <if test="duration != null" >
-        duration,
-      </if>
-      <if test="movieUrl != null" >
-        movie_url,
+      <if test="fileUrl != null" >
+        file_url,
       </if>
       <if test="createTime != null" >
         create_time,
-      </if>
-      <if test="newTime != null" >
-        new_time,
       </if>
       <if test="state != null" >
         state,
@@ -168,37 +152,19 @@
       <if test="createid != null" >
         createid,
       </if>
-      <if test="videoId  != null" >
-        video_id,
-      </if>
-      <if test="videoStatus  != null" >
-        video_status,
-      </if>
-      <if test="categoryContentId  != null" >
-        category_content_id,
+      <if test="categoryContentId != null" >
+        categoryContentId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="movieId != null" >
-        #{movieId,jdbcType=INTEGER},
+      <if test="fileId != null" >
+        #{fileId,jdbcType=INTEGER},
       </if>
-      <if test="movieName != null" >
-        #{movieName,jdbcType=VARCHAR},
-      </if>
-      <if test="ratio != null" >
-        #{ratio,jdbcType=VARCHAR},
-      </if>
-      <if test="duration != null" >
-        #{duration,jdbcType=VARCHAR},
-      </if>
-      <if test="movieUrl != null" >
-        #{movieUrl,jdbcType=VARCHAR},
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="newTime != null" >
-        #{newTime,jdbcType=TIMESTAMP},
       </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
@@ -207,70 +173,46 @@
         #{version,jdbcType=INTEGER},
       </if>
       <if test="createid != null" >
-      #{createid,jdbcType=INTEGER},
-    </if>
-      <if test="videoId  != null" >
-        #{videoId ,jdbcType=VARCHAR},
+        #{createid,jdbcType=INTEGER},
       </if>
-      <if test="videoStatus  != null" >
-        #{videoStatus ,jdbcType=INTEGER},
-      </if>
-      <if test="categoryContentId  != null" >
-        #{categoryContentId ,jdbcType=INTEGER},
+      <if test="categoryContentId != null" >
+        #{categoryContentId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
   
   <update  id="updateByExample" parameterType="map" >
-    update hmx_movie 
-    set movie_id = #{movieId,jdbcType=INTEGER},
-movie_name = #{movieName,jdbcType=VARCHAR},
-ratio = #{ratio,jdbcType=VARCHAR},
-duration = #{duration,jdbcType=VARCHAR},
-movie_url = #{movieUrl,jdbcType=VARCHAR},
+    update hmx_files
+    set file_id = #{fileId,jdbcType=INTEGER},
+file_url = #{fileUrl,jdbcType=VARCHAR},
 create_time = #{createTime,jdbcType=TIMESTAMP},
-new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-video_id = #{videoId ,jdbcType=VARCHAR},
-video_status = #{videoStatus ,jdbcType=INTEGER},
-category_content_id = #{categoryContentId ,jdbcType=INTEGER}
+category_content_id = #{categoryContentId,jdbcType=INTEGER},
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   
-  <select id="countByExample" parameterType="com.hmx.movie.entity.HmxMovieExample" resultType="java.lang.Integer" >
-    select count(*) from hmx_movie 
+  <select id="countByExample" parameterType="com.hmx.files.entity.HmxFilesExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_files
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   
-  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.movie.entity.HmxMovie" >
-    update hmx_movie
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.files.entity.HmxFiles" >
+    update hmx_files
     <set >
-      <if test="movieId != null" >
-        movie_id = #{movieId,jdbcType=INTEGER} ,
+      <if test="fileId != null" >
+        file_id = #{fileId,jdbcType=INTEGER} ,
       </if>
-      <if test="movieName != null" >
-        movie_name = #{movieName,jdbcType=VARCHAR} ,
-      </if>
-      <if test="ratio != null" >
-        ratio = #{ratio,jdbcType=VARCHAR} ,
-      </if>
-      <if test="duration != null" >
-        duration = #{duration,jdbcType=VARCHAR} ,
-      </if>
-      <if test="movieUrl != null" >
-        movie_url = #{movieUrl,jdbcType=VARCHAR} ,
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl,jdbcType=VARCHAR} ,
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP} ,
-      </if>
-      <if test="newTime != null" >
-        new_time = #{newTime,jdbcType=TIMESTAMP} ,
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER} ,
@@ -279,38 +221,26 @@ category_content_id = #{categoryContentId ,jdbcType=INTEGER}
         version = #{version,jdbcType=INTEGER} ,
       </if>
       <if test="createid != null" >
-        createid = #{createid ,jdbcType=INTEGER} ,
-      </if>
-      <if test="videoId != null" >
-        video_id = #{videoId ,jdbcType=VARCHAR} ,
-      </if>
-      <if test="videoStatus != null" >
-        video_status = #{videoStatus ,jdbcType=INTEGER} ,
+        createid = #{createid,jdbcType=INTEGER} ,
       </if>
       <if test="categoryContentId != null" >
-        category_content_id = #{categoryContentId ,jdbcType=INTEGER} ,
+        categoryContentId = #{categoryContentId,jdbcType=INTEGER} ,
       </if>
     </set >
-    where movie_id = #{movieId,jdbcType=INTEGER}
+    where file_id = #{fileId,jdbcType=INTEGER}
   </update>
   
   
-  <update id="updateByPrimaryKey" parameterType="com.hmx.movie.entity.HmxMovie" >
-    update hmx_movie
-    set movie_id = #{movieId,jdbcType=INTEGER},
-movie_name = #{movieName,jdbcType=VARCHAR},
-ratio = #{ratio,jdbcType=VARCHAR},
-duration = #{duration,jdbcType=VARCHAR},
-movie_url = #{movieUrl,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.hmx.files.entity.HmxFiles" >
+    update hmx_files
+    set file_id = #{fileId,jdbcType=INTEGER},
+file_url = #{fileUrl,jdbcType=VARCHAR},
 create_time = #{createTime,jdbcType=TIMESTAMP},
-new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-video_id = #{videoId ,jdbcType=VARCHAR},
-video_status = #{videoStatus ,jdbcType=INTEGER},
-category_content_id = #{categoryContentId ,jdbcType=INTEGER}
-    where movie_id = #{movieId,jdbcType=INTEGER}
+categoryContentId = #{categoryContentId,jdbcType=INTEGER}
+    where file_id = #{fileId,jdbcType=INTEGER}
   </update>
    
    
