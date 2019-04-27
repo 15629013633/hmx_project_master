@@ -1,5 +1,7 @@
 package com.hmx.images.entity;
 
+import com.hmx.category.entity.HmxCategoryContentExample;
+
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Date;
@@ -155,6 +157,12 @@ public class HmxImagesExample{
             addCriterion("category_content_id =", value, "categoryContentId");
             return (Criteria) this;
         }
+
+        public Criteria andCategoryContentIdIn(List<Integer> values) {
+            addCriterion("category_content_id in", values, "categoryContentId");
+            return (Criteria) this;
+        }
+
         public Criteria andImageIdNotEqualTo(Integer value) {
             addCriterion("image_id <>", value, "imageId");
             return (Criteria) this;

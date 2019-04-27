@@ -6,15 +6,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.files.dao.HmxFilesMapper;
 import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.files.entity.HmxFiles;
+import com.hmx.files.entity.HmxFilesExample;
 import com.hmx.images.dao.HmxImagesMapper;
 import com.hmx.images.dto.HmxImagesDto;
 import com.hmx.images.entity.HmxImages;
+import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.movie.dao.HmxMovieMapper;
 import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.movie.entity.HmxMovie;
+import com.hmx.movie.entity.HmxMovieExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +45,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
  
  	@Autowired
 	private HmxCategoryContentMapper hmxCategoryContentMapper;
+
  	@Autowired
 	private InitVodClients initVodClients;
 	@Autowired
@@ -88,6 +93,20 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 				Integer id = Integer.parseInt(strid);
 				idArray.add(id);
 			}
+
+			//1删除图片
+			HmxImagesExample hmxImagesExample = new HmxImagesExample();
+			hmxImagesExample.or().andCategoryContentIdIn(idArray);
+			hmxImagesMapper.deleteByExample(hmxImagesExample);
+			//2删除文件
+			HmxFilesExample hmxFilesExample = new HmxFilesExample();
+			hmxFilesExample.or().andCategoryContentIdIn(idArray);
+			hmxFilesMapper.deleteByExample(hmxFilesExample);
+			//3删除视频
+			HmxMovieExample hmxMovieExample = new HmxMovieExample();
+			hmxMovieExample.or().andCategoryContentIdIn(idArray);
+			hmxMovieMapper.deleteByExample(hmxMovieExample);
+
 			HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
 			hmxCategoryContentExample.or().andCategoryContentIdIn( idArray );
 			
@@ -355,7 +374,6 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 				}else {
 					hmxFilesMapper.updateByPrimaryKeySelective(filesDto);
 				}
-
 			}
 			resultMap.put("flag", true);
     		resultMap.put("content", "编辑内容成功");
@@ -371,8 +389,58 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
      * @param categoryContentId
      * @return
      */
-    public HmxCategoryContent selectCategoryContentById(Integer categoryContentId){
-    	return hmxCategoryContentMapper.selectCategoryContentById(categoryContentId);
+    public HmxCategoryContentTrans selectCategoryContentById(Integer categoryContentId){
+		HmxCategoryContent hmxCategoryContent = hmxCategoryContentMapper.selectCategoryContentById(categoryContentId);
+		HmxCategoryContentTrans hmxCategoryContentTrans = new HmxCategoryContentTrans();
+		hmxCategoryContentTrans.setCreateTime(hmxCategoryContent.getCreateTime());
+		hmxCategoryContentTrans.setCategoryContentId(hmxCategoryContent.getCategoryContentId());
+		hmxCategoryContentTrans.setCategoryContent(hmxCategoryContent.getCategoryContent());
+		hmxCategoryContentTrans.setBrowseNum(hmxCategoryContent.getBrowseNum());
+		hmxCategoryContentTrans.setCategoryId(hmxCategoryContent.getCategoryId());
+		hmxCategoryContentTrans.setCategoryTitle(hmxCategoryContent.getCategoryTitle());
+		hmxCategoryContentTrans.setContentImages(hmxCategoryContent.getContentImages());
+		hmxCategoryContentTrans.setContentType(hmxCategoryContent.getContentType());
+		hmxCategoryContentTrans.setMusicId(hmxCategoryContent.getMusicId());
+		hmxCategoryContentTrans.setNewTime(hmxCategoryContent.getNewTime());
+		hmxCategoryContentTrans.setState(hmxCategoryContent.getState());
+		hmxCategoryContentTrans.setVersion(hmxCategoryContent.getVersion());
+		hmxCategoryContentTrans.setMovieId(hmxCategoryContent.getMovieId()+"");
+
+    	//查询视频信息
+		String movieIds = "";
+		HmxMovieExample hmxMovieExample = new HmxMovieExample();
+		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
+		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
+		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
+		if(hmxMovieList != null && hmxMovieList.size() > 0){
+			for(HmxMovie movie : hmxMovieList){
+				movieIds += movie.getVideoId()+",";
+			}
+		}
+
+		if(!StringUtils.isEmpty(movieIds) && movieIds.endsWith(movieIds)){
+			movieIds = movieIds.substring(0,(movieIds.length() - 1));
+		}
+		hmxCategoryContentTrans.setMovieId(movieIds);
+		//查询内容下的pdf的url
+		String fileUrl = "";
+		HmxFilesExample hmxFilesExample = new HmxFilesExample();
+		hmxFilesExample.or().andCategoryContentIdEqualTo(categoryContentId);
+		List<HmxFiles> hmxFilesList = hmxFilesMapper.selectByExample(hmxFilesExample);
+		if(null != hmxFilesList && hmxFilesList.size() > 0){
+			fileUrl = hmxFilesList.get(0).getFileUrl();
+		}
+		hmxCategoryContentTrans.setFileUrl(fileUrl);
+		//查询视频下面的图片信息
+		String imageUrl = "";
+		HmxImagesExample hmxImagesExample = new HmxImagesExample();
+		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
+		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+		if(null != hmxImagesList && hmxImagesList.size() > 0){
+			imageUrl= hmxImagesList.get(0).getImageUrl();
+		}
+		hmxCategoryContentTrans.setContentImages(imageUrl);
+		return hmxCategoryContentTrans;
     }
     /**
      * 内容列表查询
@@ -426,6 +494,31 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     			}
     		}
     	}
+		//查询内容下的视频信息
+		String movieIds = "";
+		HmxMovieExample hmxMovieExample = new HmxMovieExample();
+		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
+		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
+		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
+		if(hmxMovieList != null && hmxMovieList.size() > 0){
+			for(HmxMovie movie : hmxMovieList){
+				movieIds += movie.getVideoId()+",";
+			}
+		}
+
+		if(!StringUtils.isEmpty(movieIds) && movieIds.endsWith(movieIds)){
+			movieIds = movieIds.substring(0,(movieIds.length() - 1));
+		}
+		resultMap.put("videoId",movieIds);
+		//查询内容下的pdf的url
+		String fileUrl = "";
+		HmxFilesExample hmxFilesExample = new HmxFilesExample();
+		hmxFilesExample.or().andCategoryContentIdEqualTo(categoryContentId);
+		List<HmxFiles> hmxFilesList = hmxFilesMapper.selectByExample(hmxFilesExample);
+		if(null != hmxFilesList && hmxFilesList.size() > 0){
+			fileUrl = hmxFilesList.get(0).getFileUrl();
+		}
+		resultMap.put("fileUrl",fileUrl);
     	return resultMap;
     }
     /**

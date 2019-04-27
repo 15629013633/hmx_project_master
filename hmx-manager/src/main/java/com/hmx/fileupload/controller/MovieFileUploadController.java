@@ -1,11 +1,14 @@
 package com.hmx.fileupload.controller;
 
+import com.hmx.movie.service.HmxMovieService;
 import com.hmx.utils.result.Config;
+import com.hmx.utils.result.Result;
 import com.hmx.utils.result.ResultBean;
 import com.hmx.utils.upload.InitVodClients;
 import com.hmx.utils.upload.UploadVideoDemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +26,8 @@ public class MovieFileUploadController {
     private UploadVideoDemo uploadVideoDemo;
     @Autowired
     private InitVodClients initVodClients;
+    @Autowired
+    private HmxMovieService hmxMovieService;
     /**
      * 视频上传
      * @param file 视频文件
@@ -70,5 +75,33 @@ public class MovieFileUploadController {
             // TODO Auto-generated catch block
             return new ResultBean().setCode(Config.FAIL_CODE).setContent("获取播放地址异常");
         }
+    }
+
+    /**
+     * 视频删除
+     * @return
+     */
+    @PostMapping(value = "/delete")
+    public ResultBean delete(String ids){
+        Result<Object> result = new Result<>();
+        ResultBean resultBean = new ResultBean();
+        boolean flag=true;
+        if(com.alibaba.druid.util.StringUtils.isEmpty(ids)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("视频主键不能为空");
+            flag=false;
+        }
+        if(flag){
+            flag = hmxMovieService.deleteByIdArray(ids);
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
+                return resultBean;
+            }else{
+                result.setStatus(10000);
+                result.setMsg("成功");
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("删除成功");
+                return resultBean;
+            }
+        }
+        return resultBean;
     }
 }

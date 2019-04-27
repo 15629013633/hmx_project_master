@@ -23,8 +23,8 @@ public class CategoryContentController {
 	@Autowired
 	private HmxCategoryContentService hmxCategoryContentService;
 
-	@GetMapping("/{id}")
-	public ResultBean getCategoryContentById(@PathVariable(name="id",required=true) Integer categoryContentId){
+	@GetMapping("/getContentById")
+	public ResultBean getCategoryContentById(Integer categoryContentId){
 		if(categoryContentId == null){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容编号不能为空");
 		}

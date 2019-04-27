@@ -233,6 +233,11 @@ public class HmxMovieExample{
             return (Criteria) this;
         }
 
+        public Criteria andCategoryContentIdIn(List<Integer> values) {
+            addCriterion("category_content_id in", values, "categoryContentId");
+            return (Criteria) this;
+        }
+
         public Criteria andMovieNameNotEqualTo(String value) {
             addCriterion("movie_name <>", value, "movieName");
             return (Criteria) this;

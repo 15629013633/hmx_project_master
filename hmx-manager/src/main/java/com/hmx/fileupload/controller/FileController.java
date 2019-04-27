@@ -1,15 +1,14 @@
 package com.hmx.fileupload.controller;
 
+import com.hmx.files.service.HmxFilesService;
 import com.hmx.utils.enums.UploadFileType;
 import com.hmx.utils.oss.upload.UploadUtil;
 import com.hmx.utils.result.Config;
+import com.hmx.utils.result.Result;
 import com.hmx.utils.result.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,6 +23,9 @@ public class FileController {
 
     @Autowired
     private UploadUtil uploadUtil;
+
+    @Autowired
+    private HmxFilesService hmxFilesService;
 
     /**
      * @param file 文件
@@ -62,5 +64,33 @@ public class FileController {
             e.printStackTrace();
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常:"+ e.getMessage() );
         }
+    }
+
+    /**
+     * 文件删除
+     * @return
+     */
+    @PostMapping(value = "/delete")
+    public ResultBean delete(String ids){
+        Result<Object> result = new Result<>();
+        ResultBean resultBean = new ResultBean();
+        boolean flag=true;
+        if(com.alibaba.druid.util.StringUtils.isEmpty(ids)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("文件主键不能为空");
+            flag=false;
+        }
+        if(flag){
+            flag = hmxFilesService.deleteByIdArray(ids);
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
+                return resultBean;
+            }else{
+                result.setStatus(10000);
+                result.setMsg("成功");
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("删除成功");
+                return resultBean;
+            }
+        }
+        return resultBean;
     }
 }

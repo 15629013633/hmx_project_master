@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hmx.category.entity.HmxCategoryContent;
+import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.images.dto.HmxImagesDto;
 import com.hmx.movie.dto.HmxMovieDto;
@@ -81,7 +82,7 @@ public interface HmxCategoryContentService {
      * @param categoryContentId
      * @return
      */
-	HmxCategoryContent selectCategoryContentById(Integer categoryContentId);
+	HmxCategoryContentTrans selectCategoryContentById(Integer categoryContentId);
     /**
      * 内容列表查询
      * @return

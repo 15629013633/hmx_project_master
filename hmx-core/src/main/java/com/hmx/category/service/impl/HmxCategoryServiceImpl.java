@@ -230,7 +230,8 @@ import javax.servlet.http.HttpServletRequest;
      * @return
      */
     public Map<String,Object> categoryAdd(HmxCategoryDto hmxCategoryDto, HttpServletRequest request){
-		HmxUser userModelLogin = (HmxUser) request.getSession().getAttribute("userInfo");
+		//暂时先去掉
+		//HmxUser userModelLogin = (HmxUser) request.getSession().getAttribute("userInfo");
     	Map<String,Object> resultMap = new HashMap<String,Object>();
     	resultMap.put("flag", false);
     	try {
@@ -247,7 +248,7 @@ import javax.servlet.http.HttpServletRequest;
     		Date date = new Date();
     		hmxCategoryDto.setCreateTime(date);
     		hmxCategoryDto.setNewTime(date);
-			hmxCategoryDto.setCreateid(userModelLogin.getId());
+			//hmxCategoryDto.setCreateid(userModelLogin.getId());
     		if(!insert(hmxCategoryDto)){
     			resultMap.put("content", "添加分类失败");
     			return resultMap;
@@ -256,6 +257,7 @@ import javax.servlet.http.HttpServletRequest;
     		resultMap.put("content", "添加分类成功");
     		return resultMap;
 		} catch (Exception e) {
+			e.printStackTrace();
 			resultMap.put("content", "添加分类失败");
 			return resultMap;
 		}

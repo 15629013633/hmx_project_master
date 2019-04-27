@@ -4,10 +4,12 @@ import com.hmx.category.dto.HmxCategoryContentDto;
 import com.hmx.category.dto.HmxCategoryDto;
 import com.hmx.category.entity.HmxCategory;
 import com.hmx.category.entity.HmxCategoryContent;
+import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.category.service.HmxCategoryContentService;
 import com.hmx.category.service.HmxCategoryService;
 import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.images.dto.HmxImagesDto;
+import com.hmx.model.TransModel;
 import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
@@ -60,87 +62,122 @@ public class CategoryContentController {
         return modelAndView;
     }
 
-    @RequestMapping("/editInit")
-    public ModelAndView editInit(Integer id) {
-        ModelAndView modelAndView = new ModelAndView();
-        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-        HmxCategoryContent hmxCategoryContent = hmxCategoryContentService.selectCategoryContentById(id);
-        modelAndView.setViewName("/categoryContent/eidt");
-        modelAndView.addObject("category",hmxCategoryList);
-        modelAndView.addObject("hmxCategoryContent",hmxCategoryContent == null? new HmxCategoryContent() : hmxCategoryContent);
-        return modelAndView;
-    }
+//    @RequestMapping("/editInit")
+//    public ModelAndView editInit(Integer id) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
+//        HmxCategoryContent hmxCategoryContent = hmxCategoryContentService.selectCategoryContentById(id);
+//        modelAndView.setViewName("/categoryContent/eidt");
+//        modelAndView.addObject("category",hmxCategoryList);
+//        modelAndView.addObject("hmxCategoryContent",hmxCategoryContent == null? new HmxCategoryContent() : hmxCategoryContent);
+//        return modelAndView;
+//    }
 
     /**
      * 分类内容添加
      * 会添加的内容包含：文本信息，内容基本信息，
      *            文件：pdf文件信息，视频信息，图片信息
-     * @param model
      * @return
      */
-    @PostMapping("/add")
-    public String categoryAdd(HmxCategoryContentDto hmxCategoryContentDto, List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,
-                              List<HmxFilesDto> hmxFilesDtoList, Model model){
-        ResultBean resultBean = new ResultBean();
+    @PostMapping(value = "/add",consumes = "application/json")
+    public ResultBean categoryAdd(@RequestBody TransModel transModel){
+            ResultBean resultBean = new ResultBean();
         boolean flag=true;
-        if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryTitle())){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容标题不能为空");
-            flag=false;
-        }
-        if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容不能为空");
-            flag=false;
-        }
-        if(hmxCategoryContentDto.getCategoryId() == null){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联首页分类不能为空");
-            flag=false;
-        }
-        printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
-        if(flag){
-            Map<String,Object> resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
-            flag=Boolean.parseBoolean(resultMap.get("flag").toString());
-            if(!flag){
-                resultBean.setCode(Config.FAIL_CODE);
-            }else{
-                resultBean.setCode(Config.SUCCESS_CODE);
+        try {
+            HmxCategoryContentDto hmxCategoryContentDto = transModel.getContent();
+            List<HmxMovieDto> hmxMovieDtoList = transModel.getMovieList();
+            List<HmxImagesDto> hmxImagesDtoList = transModel.getImagesList();
+            List<HmxFilesDto> hmxFilesDtoList = transModel.getFilesList();
+            if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryTitle())){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容标题不能为空");
+                flag=false;
             }
-            resultBean.setContent(resultMap.get("content").toString());
+            if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容不能为空");
+                flag=false;
+            }
+            if(hmxCategoryContentDto.getCategoryId() == null){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联首页分类不能为空");
+                flag=false;
+            }
+            printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
+            if(flag){
+                Map<String,Object> resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
+                flag=Boolean.parseBoolean(resultMap.get("flag").toString());
+                if(!flag){
+                    resultBean.setCode(Config.FAIL_CODE);
+                }else{
+                    resultBean.setCode(Config.SUCCESS_CODE);
+                }
+                resultBean.setContent(resultMap.get("content").toString());
+            }
+        }catch (Exception e){
+            resultBean.setCode(Config.FAIL_CODE);
+            e.printStackTrace();
         }
-        model.addAttribute("resultBean", resultBean);
-        return "hello";
+
+        return resultBean;
     }
 
     /**
      * 分类内容编辑
      * @return
      */
-    @RequestMapping("/edit")
-    public Result<Object> categoryUpdate(HmxCategoryContentDto hmxCategoryContentDto,List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList){
+    @PostMapping(value = "/edit",consumes = "application/json")
+    public ResultBean categoryUpdate(@RequestBody TransModel transModel){
         Result<Object> result = new Result<>();
+        ResultBean resultBean = new ResultBean();
         boolean flag=true;
-
+        HmxCategoryContentDto hmxCategoryContentDto = transModel.getContent();
+        List<HmxMovieDto> hmxMovieDtoList = transModel.getMovieList();
+        List<HmxImagesDto> hmxImagesDtoList = transModel.getImagesList();
+        List<HmxFilesDto> hmxFilesDtoList = transModel.getFilesList();
         if(flag){
             Map<String,Object> resultMap = null;
-            if(hmxCategoryContentDto.getCategoryContentId() == null){
-                printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
-                resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
-            }else {
-                printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"edit");
-                resultMap = hmxCategoryContentService.categoryContentUpdate(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
-            }
+            resultMap = hmxCategoryContentService.categoryContentUpdate(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
 
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
-                result.setStatus(20000);
-                result.setMsg("失败");
-                return result;
+                resultBean.setCode(Config.FAIL_CODE).setContent("编辑失败");
+                //result.setStatus(20000);
+                //result.setMsg("失败");
+                return resultBean;
             }else{
                 result.setStatus(10000);
                 result.setMsg("成功");
-                return result;
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("编辑成功");
+                return resultBean;
             }
         }
-        return result;
+        return resultBean;
+    }
+
+    /**
+     * 分类内容删除
+     * @return
+     */
+    @PostMapping(value = "/deleteContent")
+    public ResultBean delete(String ids){
+        Result<Object> result = new Result<>();
+        ResultBean resultBean = new ResultBean();
+        boolean flag=true;
+        if(StringUtils.isEmpty(ids)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容主键不能为空");
+            flag=false;
+        }
+        if(flag){
+            flag = hmxCategoryContentService.deleteByIdArray(ids);
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("编辑失败");
+                return resultBean;
+            }else{
+                result.setStatus(10000);
+                result.setMsg("成功");
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("编辑成功");
+                return resultBean;
+            }
+        }
+        return resultBean;
     }
     /**
      * 内容详情查询
@@ -148,8 +185,8 @@ public class CategoryContentController {
      * @param model
      * @return
      */
-    @GetMapping("/{id}")
-    public String categoryContentInfo(@PathVariable(name="id",required=true) Integer categoryContentId, Model model){
+    @GetMapping("/getCategoryContentById")
+    public ResultBean categoryContentInfo(Integer categoryContentId, Model model){
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
         if(categoryContentId == null){
@@ -157,7 +194,7 @@ public class CategoryContentController {
             flag=false;
         }
         if(flag){
-            HmxCategoryContent resultMap = hmxCategoryContentService.selectCategoryContentById(categoryContentId);
+            HmxCategoryContentTrans resultMap = hmxCategoryContentService.selectCategoryContentById(categoryContentId);
             if(resultMap == null){
                 resultBean.setCode(Config.FAIL_CODE).setContent("查询内容详情失败");
             }else{
@@ -166,7 +203,7 @@ public class CategoryContentController {
             resultBean.put("categoryContentInfo", resultMap);
         }
         model.addAttribute("resultBean", resultBean);
-        return "hello";
+        return resultBean;
     }
 
     /**

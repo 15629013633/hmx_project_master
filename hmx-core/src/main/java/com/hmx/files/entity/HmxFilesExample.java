@@ -151,6 +151,11 @@ public class HmxFilesExample {
             return (Criteria) this;
         }
 
+        public Criteria andCategoryContentIdIn(List<Integer> values) {
+            addCriterion("category_content_id in", values, "categoryContentId");
+            return (Criteria) this;
+        }
+
         public Criteria andFileIdNotEqualTo(Integer value) {
             addCriterion("file_id <>", value, "fileId");
             return (Criteria) this;

@@ -37,7 +37,44 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-aop</artifactId>
 			</dependency>
-			<!-- 添加内置tomcat web <scope>test</scope> 添加此属性会导致HttpServletRequest获取不到-->
+
+		  <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+		  <dependency>
+			  <groupId>org.apache.pdfbox</groupId>
+			  <artifactId>pdfbox</artifactId>
+			  <version>1.8.13</version>
+		  </dependency>
+
+		  <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
+		  <dependency>
+			  <groupId>org.apache.lucene</groupId>
+			  <artifactId>lucene-core</artifactId>
+			  <version>3.0.3</version>
+		  </dependency>
+
+
+		  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		  <dependency>
+			  <groupId>org.apache.poi</groupId>
+			  <artifactId>poi</artifactId>
+			  <version>3.16</version>
+		  </dependency>
+
+		  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+		  <dependency>
+			  <groupId>org.apache.poi</groupId>
+			  <artifactId>poi-ooxml</artifactId>
+			  <version>3.16</version>
+		  </dependency>
+		  <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-examples -->
+		  <dependency>
+			  <groupId>org.apache.poi</groupId>
+			  <artifactId>poi-examples</artifactId>
+			  <version>3.16</version>
+		  </dependency>
+
+
+		  <!-- 添加内置tomcat web <scope>test</scope> 添加此属性会导致HttpServletRequest获取不到-->
 			<!-- <dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
