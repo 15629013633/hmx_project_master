@@ -486,11 +486,20 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     		hmxCategoryContent.setCategoryContentId(categoryContentId);
     		hmxCategoryContent.setBrowseNum(Integer.parseInt(resultMap.get("browseNum").toString()));
     		update(hmxCategoryContent);
-    		if(resultMap.get("videoId") != null){
-    			Map<String,Object> resultUrl = initVodClients.getUrl(resultMap.get("videoId").toString());
-    			boolean flag = Boolean.parseBoolean(resultUrl.get("flag").toString());
-    			if(flag){
-    				resultMap.put("videoUrl", resultUrl.get("url"));
+    		//获取视频链接
+    		if(resultMap.get("videoList") != null){
+    			List<Map<String,Object>> videoList = (List<Map<String,Object>>)resultMap.get("videoList");
+    			if(videoList != null && videoList.size()>0){
+    				for(Map<String,Object> video:videoList){
+    					video.put("videoUrl", null);
+    					if(video.get("videoId") != null){
+    						Map<String,Object> resultUrl = initVodClients.getUrl(video.get("videoId").toString());
+    						boolean flag = Boolean.parseBoolean(resultUrl.get("flag").toString());
+    						if(flag){
+    							video.put("videoUrl", resultUrl.get("url"));
+    						}
+    					}
+    				}
     			}
     		}
     	}
