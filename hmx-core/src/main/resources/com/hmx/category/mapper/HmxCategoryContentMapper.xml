@@ -403,18 +403,25 @@ createid = #{createid,jdbcType=INTEGER}
    </select>
    <!-- ↑ -->
    <!-- 内容详情↓ -->
-   	<select id="selectContentInfoByContentId" resultType="Map">
-  	  select 
+   <resultMap type="Map" id="contentInfoResultMap">
+   	<collection property="videoList" column="category_content_id" ofType="ArrayList" select="movieListByCategoryContentId"/>
+   </resultMap>
+   	<select id="selectContentInfoByContentId" resultMap="contentInfoResultMap">
+  	  select cc.category_content_id,
 		cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
 		cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
 		cc.content_type as 'contentType',cc.content_images as 'contentImages',
 		cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num+1 as 'browseNum',
-		cc.create_time as 'createTime',cc.new_time as 'newTime',m.video_id as 'videoId',
+		cc.create_time as 'createTime',cc.new_time as 'newTime',
 		c.category_type as 'categoryType' 
 		from hmx_category_content cc 
 		LEFT JOIN hmx_category c on c.category_id=cc.category_id and c.state=0
-		LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id and m.state=0 and m.video_status=1
 		where cc.category_content_id=#{categoryContentId} and cc.state=0
+   	</select>
+   	<select id="movieListByCategoryContentId" resultType="Map">
+   	select m.movie_name as 'movieName',m.video_id as 'videoId' 
+   	from hmx_movie m
+   	where m.category_content_id=#{category_content_id} and m.state=0 and m.video_status=1
    	</select>
    <!-- ↑ -->
     <!-- PC内容列表 ↓ -->
