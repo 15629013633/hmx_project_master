@@ -466,6 +466,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     	if(hmxCategoryContentDto.getCategoryId() != null){
     		parameter.put("categoryId", hmxCategoryContentDto.getCategoryId());
     	}
+		if(hmxCategoryContentDto.getContentType() != null){
+			parameter.put("contentType", hmxCategoryContentDto.getContentType());
+		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){
@@ -572,6 +575,32 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     public Map<String,Object>selectRankingListByCategoryId(Integer categoryId){
     	return hmxCategoryContentMapper.selectRankingListByCategoryId(categoryId);
     }
+
+	@Override
+	public PageBean<Map<String, Object>> search(PageBean<Map<String, Object>> page, String contentValue) {
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		parameter.put("offset", page.getStartOfPage());
+		parameter.put("limit", page.getPageSize());
+		parameter.put("state", DataState.正常.getState());
+		parameter.put("categoryTitle", contentValue);
+		Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
+		Boolean haveData = page.setTotalNum((int)(long)count);
+		if(!haveData){
+			return page;
+		}
+		List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTable(parameter);
+		if(null != data && data.size() > 0){
+
+		}
+		page.setPage(data);
+		return page;
+	}
+
+	@Override
+	public Map<String, Object> queryContentById(Integer categoryContentId) {
+		Map<String,Object> resultMap = hmxCategoryContentMapper.selectContentInfoByContentId(categoryContentId);
+		return resultMap;
+	}
 }
  
  

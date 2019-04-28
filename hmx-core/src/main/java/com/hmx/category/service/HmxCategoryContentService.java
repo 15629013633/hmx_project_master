@@ -105,4 +105,14 @@ public interface HmxCategoryContentService {
      * @return
      */
     Map<String,Object>selectRankingListByCategoryId(Integer categoryId);
+
+	/**
+	 * 内容查找
+	 * @param page
+	 * @param contentValue
+     * @return
+     */
+	PageBean<Map<String,Object>> search(PageBean<Map<String, Object>> page, String contentValue);
+
+	Map<String,Object> queryContentById(Integer integer);
 }

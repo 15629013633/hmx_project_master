@@ -362,6 +362,9 @@ createid = #{createid,jdbcType=INTEGER}
 		    <if test="categoryId != null">
 			   cc.category_id = #{categoryId} and 
 		    </if>
+            <if test="contentType != null">
+                cc.content_type = #{contentType} and
+            </if>
 		    <if test="categoryTitle != null">
 		       cc.category_title like concat("%",#{categoryTitle},"%") and 
 		    </if>
@@ -395,6 +398,9 @@ createid = #{createid,jdbcType=INTEGER}
 		    <if test="categoryId != null">
 			   cc.category_id = #{categoryId} and 
 		    </if>
+            <if test="contentType != null">
+                cc.content_type = #{contentType} and
+            </if>
 		    <if test="categoryTitle != null">
 		       cc.category_title like concat("%",#{categoryTitle},"%") and 
 		    </if>

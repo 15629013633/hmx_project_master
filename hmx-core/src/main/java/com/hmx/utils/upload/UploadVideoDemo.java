@@ -160,7 +160,7 @@ public class UploadVideoDemo {
            /* 封面图片(可选) */
            //request.setCoverURL("http://cover.sample.com/sample.jpg");
            /* 模板组ID(可选) */
-           //request.setTemplateGroupId("8c4792cbc8694e7084fd5330e56a33d");
+           request.setTemplateGroupId("78045a3ca145cfd6fe2b13981f81a5bd");
            /* 工作流ID(可选) */
            //request.setWorkflowId("d4430d07361f0*be1339577859b0177b");
            /* 存储区域(可选) */

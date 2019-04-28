@@ -1,5 +1,6 @@
 package com.hmx.utils.upload;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,9 +75,12 @@ public class InitVodClients {
             	PlayInfo playInfo = playInfoList.get(playInfoList.size()-1);
             	resultMap.put("flag", true);
             	//会返回两个url，第一个是m3u8格式的，我们用第二个就好(url有时效)
-            	String url = playInfo.getPlayURL();
-    			url = url.substring(0, url.lastIndexOf("?"));
-            	resultMap.put("url", url);
+            	//String url = playInfo.getPlayURL();
+    			//url = url.substring(0, url.lastIndexOf("?"));
+
+				//List<GetPlayInfoResponse.PlayInfo> playInfoList1 = new ArrayList<>();
+
+            	resultMap.put("url", playInfoList);
             	resultMap.put("duration", playInfo.getDuration());
             	resultMap.put("content", "获取视频链接成功");
             	return resultMap;

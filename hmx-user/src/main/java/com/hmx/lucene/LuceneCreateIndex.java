@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by Administrator on 2019/4/27.
+ * Created by Administrator on 2019/4/29.
  */
 @RestController
-@RequestMapping("/lucene1/createIndex")
+@RequestMapping("/lucene/createIndex")
 public class LuceneCreateIndex {
     /**
      * @throws IOException
