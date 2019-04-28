@@ -413,6 +413,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
 		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
 		if(hmxMovieList != null && hmxMovieList.size() > 0){
+			hmxCategoryContentTrans.setMovieList(hmxMovieList);
 			for(HmxMovie movie : hmxMovieList){
 				movieIds += movie.getVideoId()+",";
 			}
@@ -428,6 +429,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxFilesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxFiles> hmxFilesList = hmxFilesMapper.selectByExample(hmxFilesExample);
 		if(null != hmxFilesList && hmxFilesList.size() > 0){
+			hmxCategoryContentTrans.setFilesList(hmxFilesList);
 			fileUrl = hmxFilesList.get(0).getFileUrl();
 		}
 		hmxCategoryContentTrans.setFileUrl(fileUrl);
@@ -437,6 +439,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
 		if(null != hmxImagesList && hmxImagesList.size() > 0){
+			hmxCategoryContentTrans.setImagesList(hmxImagesList);
 			imageUrl= hmxImagesList.get(0).getImageUrl();
 		}
 		hmxCategoryContentTrans.setContentImages(imageUrl);

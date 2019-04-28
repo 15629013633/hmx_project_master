@@ -1,6 +1,12 @@
 package com.hmx.category.entity;
 
+import com.hmx.files.entity.HmxFiles;
+import com.hmx.images.entity.HmxImages;
+import com.hmx.movie.entity.HmxMovie;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2019/4/28.
@@ -21,6 +27,9 @@ public class HmxCategoryContentTrans {
     private Integer version;
     private Integer createid;
     private String fileUrl;
+    private List<HmxMovie> movieList = new ArrayList<>();
+    private List<HmxImages> imagesList = new ArrayList<>();
+    private List<HmxFiles> filesList = new ArrayList<>();
 
     public HmxCategoryContentTrans() {
         super();
@@ -144,5 +153,29 @@ public class HmxCategoryContentTrans {
 
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
+    }
+
+    public List<HmxMovie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<HmxMovie> movieList) {
+        this.movieList = movieList;
+    }
+
+    public List<HmxImages> getImagesList() {
+        return imagesList;
+    }
+
+    public void setImagesList(List<HmxImages> imagesList) {
+        this.imagesList = imagesList;
+    }
+
+    public List<HmxFiles> getFilesList() {
+        return filesList;
+    }
+
+    public void setFilesList(List<HmxFiles> filesList) {
+        this.filesList = filesList;
     }
 }
