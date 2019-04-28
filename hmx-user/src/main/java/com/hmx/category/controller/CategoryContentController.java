@@ -95,7 +95,7 @@ public class CategoryContentController {
 	 * @return
 	 */
 	@GetMapping("/search")
-	public Map<String,Object> search(String contentValue, PageBean<Map<String,Object>> page, Model model){
+	public ResultBean search(String contentValue, PageBean<Map<String,Object>> page, Model model){
 
 		Map<String,Object> map = new HashMap<>();
 		//从文本和标题中查  实际上目前只从标题中查了
@@ -124,9 +124,10 @@ public class CategoryContentController {
 			page.setPage(resultList);
 		}
 
-		map.put("rows", page.getPage());
-		map.put("total", page.getTotalNum());
-		return map;
+//		map.put("rows", page.getPage());
+//		map.put("total", page.getTotalNum());
+		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
+//		return map;
 	}
 
 	public void slectStr(String contentValue,PageBean<Map<String,Object>> page) throws Exception{
