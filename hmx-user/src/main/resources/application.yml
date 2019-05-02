@@ -16,6 +16,16 @@ spring:
       multipart:
         max-file-size : 1024mb
         max-request-size : 1589mb
+
+#logging:
+#  level:
+#     com.example.demo.dao : debug
+
+
+#logging:
+#  level:
+#    com.simons.cn.springbootdemo.dao.system: debug
+
         
 mybatis:
   mapper-locations: classpath*:com/hmx/*/mapper/*.xml

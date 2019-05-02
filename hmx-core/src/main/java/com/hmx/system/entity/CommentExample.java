@@ -1,14 +1,12 @@
-package com.hmx.hotWords.entity;
-
+package com.hmx.system.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Administrator on 2019/5/2.
  */
-public class HotWordsExample {
+public class CommentExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -19,7 +17,7 @@ public class HotWordsExample {
 
     private Integer offset;
 
-    public HotWordsExample() {
+    public CommentExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -131,38 +129,33 @@ public class HotWordsExample {
 
 
 
-
-        public Criteria andHotWordIdIsNull() {
-            addCriterion("hot_word_id is null");
+        public Criteria andCommentIdEqualTo(Integer value) {
+            addCriterion("comment_id =", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andHotWordIdNotNull() {
-            addCriterion("hot_word_id is not null");
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andHotWordIdEqualTo(Integer value) {
-            addCriterion("hot_word_id =", value, "hotWordId");
+        public Criteria andCategoryContentIdEqualTo(Integer value) {
+            addCriterion("category_content_id =", value, "categoryContentId");
             return (Criteria) this;
         }
 
-        public Criteria andTitleLikeTo(String title) {
-            addCriterion("title like ", title, "title");
+        public Criteria andUserIdEqualTo(String value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-
-        public Criteria andHotWordIdIn(List<Integer> values) {
-            addCriterion("hot_word_id in", values, "hotWordId");
+        public Criteria andParentIdEqualTo(Integer value) {
+            addCriterion("parent_id =", value, "parentId");
             return (Criteria) this;
         }
 
-
-
-
-        public Criteria andCreateDateEqualTo(Date value) {
-            addCriterion("create_date =", value, "createDate");
+        public Criteria andCommentIdIn(List<Integer> values) {
+            addCriterion("comment_id in", values, "commentId");
             return (Criteria) this;
         }
 

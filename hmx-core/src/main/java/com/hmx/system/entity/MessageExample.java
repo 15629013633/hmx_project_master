@@ -1,14 +1,12 @@
-package com.hmx.hotWords.entity;
-
+package com.hmx.system.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Administrator on 2019/5/2.
  */
-public class HotWordsExample {
+public class MessageExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -19,7 +17,7 @@ public class HotWordsExample {
 
     private Integer offset;
 
-    public HotWordsExample() {
+    public MessageExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -131,19 +129,23 @@ public class HotWordsExample {
 
 
 
-
-        public Criteria andHotWordIdIsNull() {
-            addCriterion("hot_word_id is null");
+        public Criteria andMessageIdEqualTo(Integer value) {
+            addCriterion("message_id =", value, "messageId");
             return (Criteria) this;
         }
 
-        public Criteria andHotWordIdNotNull() {
-            addCriterion("hot_word_id is not null");
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andHotWordIdEqualTo(Integer value) {
-            addCriterion("hot_word_id =", value, "hotWordId");
+        public Criteria andFromUserIdEqualTo(String value) {
+            addCriterion("from_user_id =", value, "fromUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTargeUserIdEqualTo(String value) {
+            addCriterion("targe_user_id =", value, "targeUserId");
             return (Criteria) this;
         }
 
@@ -153,18 +155,12 @@ public class HotWordsExample {
         }
 
 
-        public Criteria andHotWordIdIn(List<Integer> values) {
-            addCriterion("hot_word_id in", values, "hotWordId");
+        public Criteria andMessageIdIn(List<Integer> values) {
+            addCriterion("message_id in", values, "messageId");
             return (Criteria) this;
         }
 
 
-
-
-        public Criteria andCreateDateEqualTo(Date value) {
-            addCriterion("create_date =", value, "createDate");
-            return (Criteria) this;
-        }
 
     }
 

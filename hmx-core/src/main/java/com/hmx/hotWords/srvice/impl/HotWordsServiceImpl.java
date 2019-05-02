@@ -141,17 +141,14 @@ public class HotWordsServiceImpl implements HotWordsService{
 
     @Override
     public PageBean<HotWords> list(PageBean<HotWords> page, HotWordsDto hotWordsDto) {
-        Map<String,Object> parameter = new HashMap<String,Object>();
-        parameter.put("offset", page.getStartOfPage());
-        parameter.put("limit", page.getPageSize());
-        if(!StringUtils.isEmpty(hotWordsDto.getTitle())){
-            parameter.put("title", hotWordsDto.getTitle());
-        }
-
         HotWordsExample hotWordsExample = new HotWordsExample();
+        if(!StringUtils.isEmpty(hotWordsDto.getTitle())){
+            hotWordsExample.or().andTitleLikeTo(hotWordsDto.getTitle());
+        }
         hotWordsExample.setLimit(page.getPageSize());
         hotWordsExample.setOffset(page.getStartOfPage());
-        hotWordsExample.or().andTitleLikeTo(hotWordsDto.getTitle());
+        hotWordsExample.setOrderByClause("sort");
+
 
         Integer count = hotWordsMapper.countByExample(hotWordsExample);
         Boolean haveData = page.setTotalNum((int)(long)count);

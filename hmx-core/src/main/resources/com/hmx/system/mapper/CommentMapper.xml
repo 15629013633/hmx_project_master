@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hmx.hotWords.dao.HotWordsMapper" >
+<mapper namespace="com.hmx.system.dao.CommentMapper" >
 
-  <resultMap id="BaseResultMap" type="com.hmx.hotWords.entity.HotWords" >
-    <id column="hot_word_id" property="hotWordId" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.Comment" >
+    <id column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <id column="content" property="content" jdbcType="VARCHAR" />
+    <result column="categoryContent_id" property="categoryContentId" jdbcType="INTEGER" />
   	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-  	<result column="sort" property="sort" jdbcType="INTEGER" />
+  	<result column="user_id" property="userId" jdbcType="VARCHAR" />
+  	<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  	<result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -69,16 +72,16 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    hot_word_id,title,create_date,sort
+    comment_id,content,categoryContent_id,create_date,user_id,parent_id,status
   </sql>
   
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.hotWords.entity.HotWordsExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.CommentExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hot_words
+    from hmx_comment
     <!--<where>-->
       <!--<trim suffixOverrides="and">-->
         <!--<if test="title != null">-->
@@ -109,111 +112,146 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from hot_words
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    from hmx_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from hot_words
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    delete from hmx_comment
+    where comment_id = #{commentId,jdbcType=INTEGER}
   </delete>
   
-  <delete id="deleteByExample" parameterType="com.hmx.hotWords.entity.HotWordsExample" >
-    delete from hot_words
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.CommentExample" >
+    delete from hmx_comment
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   
   
-  <insert id="insert" parameterType="com.hmx.hotWords.entity.HotWords" keyProperty="hotWordId" useGeneratedKeys="true">
-    insert into hot_words  (hot_word_id,title,create_date,sort)
-    values (#{hotWordId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.hmx.system.entity.Comment" keyProperty="commentId" useGeneratedKeys="true">
+    insert into hmx_common  (comment_id,content,categoryContent_id,create_date,user_id,parent_id,status)
+    values (#{commentId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},#{categoryContentId,jdbcType=INTEGER},#{createDate,jdbcType=TIMESTAMP},
+     #{userId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
   
   
-  <insert id="insertSelective" parameterType="com.hmx.hotWords.entity.HotWords" keyProperty="hotWordId" useGeneratedKeys="true"  >
-    insert into hot_words
+  <insert id="insertSelective" parameterType="com.hmx.system.entity.Comment" keyProperty="commentId" useGeneratedKeys="true"  >
+    insert into hmx_common
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="hotWordId != null" >
-        hot_word_id,
+      <if test="commentId != null" >
+        comment_id,
       </if>
-      <if test="title != null" >
-        title,
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="content != null" >
+        content,
       </if>
       <if test="createDate != null" >
         create_date,
       </if>
-      <if test="sort != null" >
-        sort,
+      <if test="categoryContentId != null" >
+        categoryContent_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="hotWordId != null" >
-        #{hotWordId,jdbcType=INTEGER},
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
       </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryContentId != null" >
+        #{categoryContentId,jdbcType=INTEGER},
       </if>
 
     </trim>
   </insert>
   
   <update  id="updateByExample" parameterType="map" >
-    update hot_words
-    set hot_word_id = #{hotWordId,jdbcType=INTEGER},
-    title = #{title,jdbcType=VARCHAR},
+    update hmx_comment
+    set
+    comment_id = #{commentId,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
     create_date = #{createDate,jdbcType=TIMESTAMP},
-    sort = #{sort,jdbcType=INTEGER}
+    content = #{content,jdbcType=VARCHAR},
+    categoryContent_id = #{categoryContentId,jdbcType=INTEGER},
+   user_id = #{userId,jdbcType=VARCHAR},
+    parent_id = #{parentId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   
-  <select id="countByExample" parameterType="com.hmx.hotWords.entity.HotWordsExample" resultType="java.lang.Integer" >
-    select count(*) from hot_words
+  <select id="countByExample" parameterType="com.hmx.system.entity.CommentExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_comment
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   
-  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.hotWords.entity.HotWords" >
-    update hot_words
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.Comment" >
+    update hmx_comment
     <set >
-      <if test="hotWordId != null" >
-        hot_word_id = #{hotWordId,jdbcType=INTEGER} ,
+      <if test="commentId != null" >
+        comment_id,
       </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR} ,
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="content != null" >
+        content,
       </if>
       <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP} ,
+        create_date,
       </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER} ,
+      <if test="categoryContentId != null" >
+        categoryContent_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
 
+
     </set >
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    where common_id = #{commonId,jdbcType=INTEGER}
   </update>
   
   
-  <update id="updateByPrimaryKey" parameterType="com.hmx.hotWords.entity.HotWords" >
-    update hot_words
+  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.Comment" >
+    update hmx_common
     set
-    hot_word_id = #{hotWordId,jdbcType=INTEGER},
-    title = #{title,jdbcType=VARCHAR},
+    comment_id = #{commentId,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
     create_date = #{createDate,jdbcType=TIMESTAMP},
-    sort = #{sort,jdbcType=INTEGER},
-
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    content = #{content,jdbcType=VARCHAR},
+    categoryContent_id = #{categoryContentId,jdbcType=INTEGER},
+   user_id = #{userId,jdbcType=VARCHAR},
+    parent_id = #{parentId,jdbcType=VARCHAR}
+    where comment_id = #{commentId,jdbcType=INTEGER}
   </update>
    
    

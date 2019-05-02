@@ -72,8 +72,12 @@ public class HotWordsController {
 
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
+        if(0 == hotWordsDto.getHotWordId()){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("热词id不能为空");
+            flag=false;
+        }
         if(StringUtils.isEmpty(hotWordsDto.getTitle())){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容标题不能为空");
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("热词标题不能为空");
             flag=false;
         }
         if(0 == hotWordsDto.getSort()){

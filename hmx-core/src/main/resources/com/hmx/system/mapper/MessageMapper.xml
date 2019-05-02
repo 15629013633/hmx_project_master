@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hmx.hotWords.dao.HotWordsMapper" >
+<mapper namespace="com.hmx.system.dao.MessageMappper" >
 
-  <resultMap id="BaseResultMap" type="com.hmx.hotWords.entity.HotWords" >
-    <id column="hot_word_id" property="hotWordId" jdbcType="INTEGER" />
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.Message" >
+    <id column="message_id" property="messageId" jdbcType="INTEGER" />
+    <id column="status" property="status" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
   	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-  	<result column="sort" property="sort" jdbcType="INTEGER" />
+  	<result column="content" property="content" jdbcType="VARCHAR" />
+  	<result column="from_user_id" property="fromUserId" jdbcType="VARCHAR" />
+  	<result column="targe_user_id" property="targeUserId" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -69,16 +72,16 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    hot_word_id,title,create_date,sort
+    message_id,status,title,create_date,content,from_user_id,targe_user_id
   </sql>
   
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.hotWords.entity.HotWordsExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.MessageExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from hot_words
+    from hmx_message
     <!--<where>-->
       <!--<trim suffixOverrides="and">-->
         <!--<if test="title != null">-->
@@ -109,34 +112,37 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from hot_words
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    from hmx_message
+    where message_id = #{messageId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from hot_words
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    delete from hmx_message
+    where message_id = #{messageId,jdbcType=INTEGER}
   </delete>
   
-  <delete id="deleteByExample" parameterType="com.hmx.hotWords.entity.HotWordsExample" >
-    delete from hot_words
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.MessageExample" >
+    delete from hmx_message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   
   
-  <insert id="insert" parameterType="com.hmx.hotWords.entity.HotWords" keyProperty="hotWordId" useGeneratedKeys="true">
-    insert into hot_words  (hot_word_id,title,create_date,sort)
-    values (#{hotWordId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.hmx.system.entity.Message" keyProperty="messageId" useGeneratedKeys="true">
+    insert into hmx_message  (message_id,status,title,create_date,content,from_user_id,targe_user_id)
+    values (#{messageId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{fromUserId,jdbcType=VARCHAR}, #{targeUserId,jdbcType=VARCHAR})
   </insert>
   
   
-  <insert id="insertSelective" parameterType="com.hmx.hotWords.entity.HotWords" keyProperty="hotWordId" useGeneratedKeys="true"  >
-    insert into hot_words
+  <insert id="insertSelective" parameterType="com.hmx.system.entity.Message" keyProperty="messageId" useGeneratedKeys="true"  >
+    insert into hmx_message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="hotWordId != null" >
-        hot_word_id,
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="title != null" >
         title,
@@ -144,14 +150,23 @@
       <if test="createDate != null" >
         create_date,
       </if>
-      <if test="sort != null" >
-        sort,
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id,
+      </if>
+      <if test="targeUserId != null" >
+        targe_user_id,
       </if>
 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="hotWordId != null" >
-        #{hotWordId,jdbcType=INTEGER},
+      <if test="messageId != null" >
+        #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -159,36 +174,49 @@
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="sort != null" >
-        #{sort,jdbcType=INTEGER},
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="targeUserId != null" >
+        #{targeUserId,jdbcType=VARCHAR},
       </if>
 
     </trim>
   </insert>
   
   <update  id="updateByExample" parameterType="map" >
-    update hot_words
-    set hot_word_id = #{hotWordId,jdbcType=INTEGER},
+    update hmx_message
+    set
+    message_id = #{messageId,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
     title = #{title,jdbcType=VARCHAR},
     create_date = #{createDate,jdbcType=TIMESTAMP},
-    sort = #{sort,jdbcType=INTEGER}
+    content = #{content,jdbcType=VARCHAR},
+    from_user_id = #{fromUserId,jdbcType=VARCHAR},
+    targe_user_id = #{targeUserId,jdbcType=VARCHAR},
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   
-  <select id="countByExample" parameterType="com.hmx.hotWords.entity.HotWordsExample" resultType="java.lang.Integer" >
-    select count(*) from hot_words
+  <select id="countByExample" parameterType="com.hmx.system.entity.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   
-  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.hotWords.entity.HotWords" >
-    update hot_words
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.Message" >
+    update hmx_message
     <set >
-      <if test="hotWordId != null" >
-        hot_word_id = #{hotWordId,jdbcType=INTEGER} ,
+      <if test="messageId != null" >
+        message_id = #{messageId,jdbcType=INTEGER} ,
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER} ,
       </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR} ,
@@ -196,24 +224,31 @@
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP} ,
       </if>
-      <if test="sort != null" >
-        sort = #{sort,jdbcType=INTEGER} ,
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR} ,
       </if>
-
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=VARCHAR} ,
+      </if>
+      <if test="targeUserId != null" >
+        targe_user_id = #{targeUserId,jdbcType=VARCHAR} ,
+      </if>
     </set >
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    where message_id = #{messageId,jdbcType=INTEGER}
   </update>
   
   
-  <update id="updateByPrimaryKey" parameterType="com.hmx.hotWords.entity.HotWords" >
-    update hot_words
+  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.Message" >
+    update hmx_message
     set
-    hot_word_id = #{hotWordId,jdbcType=INTEGER},
+    message_id = #{messageId,jdbcType=INTEGER},
+    status = #{status,jdbcType=INTEGER},
     title = #{title,jdbcType=VARCHAR},
     create_date = #{createDate,jdbcType=TIMESTAMP},
-    sort = #{sort,jdbcType=INTEGER},
-
-    where hot_word_id = #{hotWordId,jdbcType=INTEGER}
+    content = #{content,jdbcType=VARCHAR},
+    from_user_id = #{fromUserId,jdbcType=VARCHAR},
+    targe_user_id = #{targeUserId,jdbcType=VARCHAR}
+    where message_id = #{messageId,jdbcType=INTEGER}
   </update>
    
    
