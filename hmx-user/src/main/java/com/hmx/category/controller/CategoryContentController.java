@@ -186,4 +186,27 @@ public class CategoryContentController {
 		indexSearch.close();
 		//=============测试end=======
 	}
+
+	/**
+	 * 内容相关推荐，根据分类来推荐
+	 * @param hmxCategoryContentDto
+	 * @param page
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/recommend")
+	public ResultBean recommend(HmxCategoryContentDto hmxCategoryContentDto,PageBean<Map<String,Object>> page,Model model){
+		page = hmxCategoryContentService.selectCategoryContentTableByPc(page, hmxCategoryContentDto);
+		List<Map<String,Object>> list = page.getPage();
+		if(list == null || list.size() <= 0){
+			if(page.getPageNum() == 1){
+				return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+			}
+			else{
+				return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+			}
+		}
+		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
+	}
+
 }

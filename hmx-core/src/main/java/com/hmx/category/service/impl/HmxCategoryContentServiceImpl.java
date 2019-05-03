@@ -268,6 +268,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
   		if ( hmxCategoryContentDto.getCreateid() != null && hmxCategoryContentDto.getCreateid() != 0 ) {
 			where.andCreateidEqualTo( hmxCategoryContentDto.getCreateid() );
 		}
+		if(hmxCategoryContentDto.getMode() != null && hmxCategoryContentDto.getMode() > 0){
+			where.andModeEqualTo(hmxCategoryContentDto.getMode());
+		}
 		
 		if( hmxCategoryContentDto.getLimit() != null ){
 			hmxCategoryContentExample.setLimit( hmxCategoryContentDto.getLimit() );

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.hmx.category.dao.HmxCategoryContentMapper;
+import com.hmx.category.entity.HmxCategoryContent;
+import com.hmx.category.entity.HmxCategoryContentExample;
 import com.hmx.user.entity.HmxUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,9 @@ import javax.servlet.http.HttpServletRequest;
  
  	@Autowired
 	private HmxCategoryMapper hmxCategoryMapper;
+
+	@Autowired
+	private HmxCategoryContentMapper hmxCategoryContentMapper;
 	
 	
 	/**
@@ -222,7 +228,8 @@ import javax.servlet.http.HttpServletRequest;
      * @return
      */
     public List<Map<String,Object>> selectCategoryAndContentList(){
-    	return hmxCategoryMapper.selectCategoryAndContentList();
+		List<Map<String,Object>> list = hmxCategoryMapper.selectCategoryAndContentList();
+    	return list;
     }
     /**
      * 分类添加
