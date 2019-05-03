@@ -37,6 +37,11 @@ public class CategoryContentController {
 	@Autowired
 	private HmxCategoryContentService hmxCategoryContentService;
 
+	/**
+	 * 查询内容详情
+	 * @param categoryContentId
+	 * @return
+     */
 	@GetMapping("/getContentById")
 	public ResultBean getCategoryContentById(Integer categoryContentId){
 		if(categoryContentId == null){

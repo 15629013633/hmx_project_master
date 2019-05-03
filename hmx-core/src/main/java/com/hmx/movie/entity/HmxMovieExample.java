@@ -146,6 +146,12 @@ public class HmxMovieExample{
             return (Criteria) this;
         }
 
+
+        public Criteria andSerieEqualTo(Integer value) {
+            addCriterion("serie =", value, "serie");
+            return (Criteria) this;
+        }
+
         public Criteria andMovieIdNotEqualTo(Integer value) {
             addCriterion("movie_id <>", value, "movieId");
             return (Criteria) this;

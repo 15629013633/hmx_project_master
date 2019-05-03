@@ -18,12 +18,13 @@ public class HmxMovie{
 	private String videoId;
 	private Integer videoStatus;
 	private Integer categoryContentId;
+	private Integer serie;   //集数
 
 	public HmxMovie() {
 		super();
 	}
 
-    public HmxMovie(Integer movieId, String movieName, String ratio, String duration, String movieUrl, Date createTime,
+    public HmxMovie(Integer movieId, String movieName, String ratio, String duration, String movieUrl, Date createTime,Integer serie,
 					Date newTime, Integer state, Integer version, Integer createid, String videoId, Integer videoStatus,Integer categoryContentId) {
 		super();
 		this.movieId = movieId;
@@ -39,6 +40,7 @@ public class HmxMovie{
 		this.videoId = videoId;
 		this.videoStatus = videoStatus;
 		this.categoryContentId = categoryContentId;
+		this.serie = serie;
 	}
 	
     public Integer getMovieId() {
@@ -143,5 +145,13 @@ public class HmxMovie{
 
 	public void setCategoryContentId(Integer categoryContentId) {
 		this.categoryContentId = categoryContentId;
+	}
+
+	public Integer getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Integer serie) {
+		this.serie = serie;
 	}
 }

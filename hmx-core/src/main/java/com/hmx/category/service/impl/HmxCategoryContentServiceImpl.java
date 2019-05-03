@@ -405,12 +405,15 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setState(hmxCategoryContent.getState());
 		hmxCategoryContentTrans.setVersion(hmxCategoryContent.getVersion());
 		hmxCategoryContentTrans.setMovieId(hmxCategoryContent.getMovieId()+"");
-
+		hmxCategoryContentTrans.setDesc(hmxCategoryContent.getDesc());
+		hmxCategoryContentTrans.setSubTitle(hmxCategoryContent.getSubTitle());
+		hmxCategoryContentTrans.setMode(hmxCategoryContent.getMode());
     	//查询视频信息
 		String movieIds = "";
 		HmxMovieExample hmxMovieExample = new HmxMovieExample();
 		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
 		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
+		hmxMovieExample.setOrderByClause("serie");
 		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
 		if(hmxMovieList != null && hmxMovieList.size() > 0){
 			hmxCategoryContentTrans.setMovieList(hmxMovieList);
@@ -469,6 +472,12 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(hmxCategoryContentDto.getContentType() != null){
 			parameter.put("contentType", hmxCategoryContentDto.getContentType());
 		}
+		if(hmxCategoryContentDto.getMode() != 0){
+			parameter.put("mode", hmxCategoryContentDto.getMode());
+		}
+		if(!StringUtils.isEmpty(hmxCategoryContentDto.getSubTitle())){
+			parameter.put("subTitle", hmxCategoryContentDto.getSubTitle());
+		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){
@@ -514,6 +523,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		HmxMovieExample hmxMovieExample = new HmxMovieExample();
 		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
 		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
+		hmxMovieExample.setOrderByClause("serie");
 		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
 		if(hmxMovieList != null && hmxMovieList.size() > 0){
 			for(HmxMovie movie : hmxMovieList){
@@ -557,6 +567,12 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     	if(hmxCategoryContentDto.getCategoryId() != null){
     		parameter.put("categoryId", hmxCategoryContentDto.getCategoryId());
     	}
+		if(hmxCategoryContentDto.getMode() != null && hmxCategoryContentDto.getMode() > 0){
+			parameter.put("mode", hmxCategoryContentDto.getMode());
+		}
+		if(!StringUtils.isEmpty(hmxCategoryContentDto.getSubTitle())){
+			parameter.put("subTitle", hmxCategoryContentDto.getSubTitle());
+		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTableByPc(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){

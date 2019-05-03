@@ -8,6 +8,8 @@ public class HmxCategoryContent{
     private Integer categoryContentId;
     private Integer categoryId;
     private String categoryTitle;
+    private String subTitle;   //副标题
+    private String desc;   //内容简介
     private String categoryContent;
     private Integer contentType;
     private String contentImages;
@@ -19,15 +21,16 @@ public class HmxCategoryContent{
     private Integer state;
     private Integer version;
     private Integer createid;
+	private Integer mode;      //内容展现方式    1普通类型   2轮播图类型  3首页大图类型
 
     public HmxCategoryContent() {
 		super();
 	}
 
     
-    public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,
+    public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,Integer mode,
 			String categoryContent, Integer contentType, String contentImages, Integer movieId, Integer musicId,
-			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid) {
+			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid,String subTitle,String desc) {
 		super();
 		this.categoryContentId = categoryContentId;
 		this.categoryId = categoryId;
@@ -43,6 +46,9 @@ public class HmxCategoryContent{
 		this.state = state;
 		this.version = version;
 		this.createid = createid;
+		this.subTitle = subTitle;
+		this.desc = desc;
+		this.mode = mode;
 	}
 
 
@@ -159,5 +165,28 @@ public class HmxCategoryContent{
 	public void setCreateid(Integer createid){
 		this.createid = createid;
 	}
-	
+
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public Integer getMode() {
+		return mode;
+	}
+
+	public void setMode(Integer mode) {
+		this.mode = mode;
+	}
 }

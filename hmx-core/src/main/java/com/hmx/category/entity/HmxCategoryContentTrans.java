@@ -27,6 +27,9 @@ public class HmxCategoryContentTrans {
     private Integer version;
     private Integer createid;
     private String fileUrl;
+    private String desc;
+    private String subTitle;
+    private Integer mode;
     private List<HmxMovie> movieList = new ArrayList<>();
     private List<HmxImages> imagesList = new ArrayList<>();
     private List<HmxFiles> filesList = new ArrayList<>();
@@ -177,5 +180,29 @@ public class HmxCategoryContentTrans {
 
     public void setFilesList(List<HmxFiles> filesList) {
         this.filesList = filesList;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
+    }
+
+    public Integer getMode() {
+        return mode;
+    }
+
+    public void setMode(Integer mode) {
+        this.mode = mode;
     }
 }

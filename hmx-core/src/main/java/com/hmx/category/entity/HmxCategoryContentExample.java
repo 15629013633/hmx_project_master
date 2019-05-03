@@ -146,6 +146,11 @@ public class HmxCategoryContentExample{
             return (Criteria) this;
         }
 
+        public Criteria andModeEqualTo(Integer value) {
+            addCriterion("mode =", value, "mode");
+            return (Criteria) this;
+        }
+
         public Criteria andCategoryContentIdNotEqualTo(Integer value) {
             addCriterion("category_content_id <>", value, "categoryContentId");
             return (Criteria) this;
@@ -315,6 +320,16 @@ public class HmxCategoryContentExample{
 
         public Criteria andCategoryTitleLike(String value) {
             addCriterion("category_title like", value, "categoryTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubTitleLike(String value) {
+            addCriterion("sub_title like", value, "subTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescLike(String value) {
+            addCriterion("desc like", value, "desc");
             return (Criteria) this;
         }
 

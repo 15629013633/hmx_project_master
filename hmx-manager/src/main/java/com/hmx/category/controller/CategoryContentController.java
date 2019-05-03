@@ -112,6 +112,10 @@ public class CategoryContentController {
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联首页分类不能为空");
                 flag=false;
             }
+            if(0 == hmxCategoryContentDto.getMode()){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容必须有一种展现方式");
+                flag=false;
+            }
             printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
             if(flag){
                 Map<String,Object> resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
@@ -248,7 +252,7 @@ public class CategoryContentController {
 
     public void printValues(List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList,String type){
         for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
-            System.out.print(type+ "视频信息：" + hmxMovieDto.getMovieName()+"," + hmxMovieDto.getMovieId());
+            System.out.print(type+ "视频信息title:" + hmxMovieDto.getMovieName()+",videoId:" + hmxMovieDto.getVideoId()+",serie=" + hmxMovieDto.getSerie());
         }
         for(HmxImagesDto hmxImagesDto : hmxImagesDtoList){
             System.out.print(type+ "图片信息：" + hmxImagesDto.getImageUrl());
