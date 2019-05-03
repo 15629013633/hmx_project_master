@@ -140,7 +140,7 @@ public class CommentExample {
         }
 
         public Criteria andCategoryContentIdEqualTo(Integer value) {
-            addCriterion("category_content_id =", value, "categoryContentId");
+            addCriterion("categoryContent_id =", value, "categoryContentId");
             return (Criteria) this;
         }
 

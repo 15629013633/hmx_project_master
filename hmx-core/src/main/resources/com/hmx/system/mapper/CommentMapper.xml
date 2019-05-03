@@ -8,7 +8,7 @@
     <result column="categoryContent_id" property="categoryContentId" jdbcType="INTEGER" />
   	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   	<result column="user_id" property="userId" jdbcType="VARCHAR" />
-  	<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  	<result column="parent_id" property="parentId" jdbcType="INTEGER" />
   	<result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   
@@ -130,14 +130,13 @@
   
   
   <insert id="insert" parameterType="com.hmx.system.entity.Comment" keyProperty="commentId" useGeneratedKeys="true">
-    insert into hmx_common  (comment_id,content,categoryContent_id,create_date,user_id,parent_id,status)
-    values (#{commentId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},#{categoryContentId,jdbcType=INTEGER},#{createDate,jdbcType=TIMESTAMP},
-     #{userId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+    insert into hmx_comment  (comment_id,content,create_date,categoryContent_id,user_id,parent_id,status)
+    values (#{commentId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{categoryContentId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
   </insert>
   
   
   <insert id="insertSelective" parameterType="com.hmx.system.entity.Comment" keyProperty="commentId" useGeneratedKeys="true"  >
-    insert into hmx_common
+    insert into hmx_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="commentId != null" >
         comment_id,
@@ -175,15 +174,16 @@
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="categoryContentId != null" >
+        #{categoryContentId,jdbcType=INTEGER},
+      </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
-        #{parentId,jdbcType=VARCHAR},
+        #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="categoryContentId != null" >
-        #{categoryContentId,jdbcType=INTEGER},
-      </if>
+
 
     </trim>
   </insert>
@@ -197,7 +197,7 @@
     content = #{content,jdbcType=VARCHAR},
     categoryContent_id = #{categoryContentId,jdbcType=INTEGER},
    user_id = #{userId,jdbcType=VARCHAR},
-    parent_id = #{parentId,jdbcType=VARCHAR}
+    parent_id = #{parentId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,7 +242,7 @@
   
   
   <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.Comment" >
-    update hmx_common
+    update hmx_comment
     set
     comment_id = #{commentId,jdbcType=INTEGER},
     status = #{status,jdbcType=INTEGER},
@@ -250,7 +250,7 @@
     content = #{content,jdbcType=VARCHAR},
     categoryContent_id = #{categoryContentId,jdbcType=INTEGER},
    user_id = #{userId,jdbcType=VARCHAR},
-    parent_id = #{parentId,jdbcType=VARCHAR}
+    parent_id = #{parentId,jdbcType=INTEGER}
     where comment_id = #{commentId,jdbcType=INTEGER}
   </update>
    

@@ -81,4 +81,6 @@ public interface CommentService {
      * @return
      */
     boolean updateStatus(String ids,String type);
+
+
 }
