@@ -82,9 +82,9 @@ public class CategoryContentController {
 	 */
 	@GetMapping("/rankingContent")
 	public ResultBean categoryContentRankingList(Integer categoryId){
-		if(categoryId == null){
-			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("分类编号不能为空");
-		}
+//		if(categoryId == null){
+//			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("分类编号不能为空");
+//		}
 		Map<String,Object> resultMap = hmxCategoryContentService.selectRankingListByCategoryId(categoryId);
 		if(resultMap == null){
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到排行信息");
@@ -93,7 +93,7 @@ public class CategoryContentController {
 	}
 
 	/**
-	 * 内容列表
+	 * 搜索
 	 * @param contentValue
 	 * @param page
 	 * @param model
@@ -128,11 +128,49 @@ public class CategoryContentController {
 			page.getPage().clear();
 			page.setPage(resultList);
 		}
-
-//		map.put("rows", page.getPage());
-//		map.put("total", page.getTotalNum());
 		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
-//		return map;
+	}
+
+	/**
+	 * 高级搜索
+	 * @param hmxCategoryContentDto
+	 * @param page
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/seniorSearch")
+	public ResultBean seniorSearch(HmxCategoryContentDto hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
+
+		Map<String,Object> map = new HashMap<>();
+		if(null == hmxCategoryContentDto.getCategoryId() || 0 == hmxCategoryContentDto.getCategoryId()){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("分类id不能为空");
+		}
+		//从文本和标题中查  实际上目前只从标题中查了
+		page = hmxCategoryContentService.seniorSearch(page, hmxCategoryContentDto);
+		//从pdf中查询关键字
+		try {
+			//slectStr(contentValue,page);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+		List<Map<String,Object>> list = page.getPage();
+		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+
+		if(null != list && list.size() > 0){
+			for(Map<String,Object> map1 : list){
+				String categoryContentId = map1.get("categoryContentId")+"";
+				if(!StringUtils.isEmpty(categoryContentId)){
+					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId));
+					resultList.add(resultMap);
+				}
+			}
+		}
+		if(null != page && page.getPage() != null){
+			page.getPage().clear();
+			page.setPage(resultList);
+		}
+		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
 	}
 
 	public void slectStr(String contentValue,PageBean<Map<String,Object>> page) throws Exception{

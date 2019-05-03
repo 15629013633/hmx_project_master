@@ -238,9 +238,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
   		if ( !StringUtils.isEmpty( hmxCategoryContentDto.getCategoryContent() ) ) {
 			where.andCategoryContentEqualTo( hmxCategoryContentDto.getCategoryContent() );
 		}
-  		if ( hmxCategoryContentDto.getContentType() != null && hmxCategoryContentDto.getContentType() != 0 ) {
-			where.andContentTypeEqualTo( hmxCategoryContentDto.getContentType() );
-		}
+//  		if ( hmxCategoryContentDto.getContentType() != null && hmxCategoryContentDto.getContentType() != 0 ) {
+//			where.andContentTypeEqualTo( hmxCategoryContentDto.getContentType() );
+//		}
   		if ( !StringUtils.isEmpty( hmxCategoryContentDto.getContentImages() ) ) {
 			where.andContentImagesEqualTo( hmxCategoryContentDto.getContentImages() );
 		}
@@ -608,9 +608,28 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			return page;
 		}
 		List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTable(parameter);
-		if(null != data && data.size() > 0){
+		page.setPage(data);
+		return page;
+	}
 
+
+	@Override
+	public PageBean<Map<String, Object>> seniorSearch(PageBean<Map<String, Object>> page, HmxCategoryContentDto hmxCategoryContentDto) {
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		parameter.put("offset", page.getStartOfPage());
+		parameter.put("limit", page.getPageSize());
+		parameter.put("state", DataState.正常.getState());
+		if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryTitle())){
+			parameter.put("categoryTitle", hmxCategoryContentDto.getCategoryTitle());
 		}
+		parameter.put("categoryId", hmxCategoryContentDto.getCategoryId());
+
+		Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
+		Boolean haveData = page.setTotalNum((int)(long)count);
+		if(!haveData){
+			return page;
+		}
+		List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTable(parameter);
 		page.setPage(data);
 		return page;
 	}
@@ -620,6 +639,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		Map<String,Object> resultMap = hmxCategoryContentMapper.selectContentInfoByContentId(categoryContentId);
 		return resultMap;
 	}
+
 }
  
  

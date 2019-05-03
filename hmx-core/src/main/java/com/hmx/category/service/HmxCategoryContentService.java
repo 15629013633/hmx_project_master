@@ -115,4 +115,12 @@ public interface HmxCategoryContentService {
 	PageBean<Map<String,Object>> search(PageBean<Map<String, Object>> page, String contentValue);
 
 	Map<String,Object> queryContentById(Integer integer);
+
+	/**
+	 * 高级搜索
+	 * @param page
+	 * @param hmxCategoryContentDto
+     * @return
+     */
+	PageBean<Map<String,Object>> seniorSearch(PageBean<Map<String, Object>> page, HmxCategoryContentDto hmxCategoryContentDto);
 }
