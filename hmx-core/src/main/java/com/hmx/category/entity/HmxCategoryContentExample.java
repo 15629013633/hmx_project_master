@@ -293,6 +293,11 @@ public class HmxCategoryContentExample{
             return (Criteria) this;
         }
 
+
+        public Criteria andContentFlowEqualTo(String value) {
+            addCriterion("content_flow =", value, "contentFlow");
+            return (Criteria) this;
+        }
         public Criteria andCategoryTitleNotEqualTo(String value) {
             addCriterion("category_title <>", value, "categoryTitle");
             return (Criteria) this;

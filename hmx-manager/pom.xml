@@ -73,6 +73,29 @@
 			  <version>3.16</version>
 		  </dependency>
 
+		  <!--pdf转html包-->
+		  <!--<dependency>-->
+			  <!--<groupId>org.apache.pdfbox</groupId>-->
+			  <!--<artifactId>fontbox</artifactId>-->
+			  <!--<version>2.0.4</version>-->
+		  <!--</dependency>-->
+		  <!--<dependency>-->
+			  <!--<groupId>org.apache.pdfbox</groupId>-->
+			  <!--<artifactId>pdfbox-tools</artifactId>-->
+			  <!--<version>2.0.4</version>-->
+		  <!--</dependency>-->
+		  <!--<dependency>-->
+			  <!--<groupId>org.swinglabs</groupId>-->
+			  <!--<artifactId>pdf-renderer</artifactId>-->
+			  <!--<version>1.0.5</version>-->
+		  <!--</dependency>-->
+		  <!--<dependency>-->
+			  <!--<groupId>pdf-renderer</groupId>-->
+			  <!--<artifactId>pdf-renderer</artifactId>-->
+			  <!--<version>1.13-atlassian-6</version>-->
+		  <!--</dependency>-->
+
+
 
 		  <!-- 添加内置tomcat web <scope>test</scope> 添加此属性会导致HttpServletRequest获取不到-->
 			<!-- <dependency>

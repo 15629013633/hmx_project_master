@@ -151,6 +151,7 @@ public class UploadUtil {
 			String url = path + newName;
 			url = url.replaceAll("\\\\", "/");*/
 			path = path+newName;
+			System.out.println("文件上传路径：" + path);
 			boolean flag = uploadInputStreamToAliOss(path,file);
 			if(!flag){
 				LogHelper.logger().debug( "文件上传失败");

@@ -3,7 +3,6 @@ package com.hmx.category.controller;
 import com.hmx.category.dto.HmxCategoryContentDto;
 import com.hmx.category.dto.HmxCategoryDto;
 import com.hmx.category.entity.HmxCategory;
-import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.category.service.HmxCategoryContentService;
 import com.hmx.category.service.HmxCategoryService;
@@ -27,9 +26,9 @@ import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import com.alibaba.druid.util.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -114,6 +113,10 @@ public class CategoryContentController {
             }
             if(0 == hmxCategoryContentDto.getMode()){
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容必须有一种展现方式");
+                flag=false;
+            }
+            if(StringUtils.isEmpty(hmxCategoryContentDto.getContentFlow())){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水号不能为空");
                 flag=false;
             }
             printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
