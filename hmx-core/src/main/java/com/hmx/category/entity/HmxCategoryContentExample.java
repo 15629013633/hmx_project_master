@@ -328,8 +328,8 @@ public class HmxCategoryContentExample{
             return (Criteria) this;
         }
 
-        public Criteria andDescLike(String value) {
-            addCriterion("desc like", value, "desc");
+        public Criteria andContentDescLike(String value) {
+            addCriterion("contentDesc like", value, "contentDesc");
             return (Criteria) this;
         }
 

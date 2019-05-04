@@ -408,7 +408,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setState(hmxCategoryContent.getState());
 		hmxCategoryContentTrans.setVersion(hmxCategoryContent.getVersion());
 		hmxCategoryContentTrans.setMovieId(hmxCategoryContent.getMovieId()+"");
-		hmxCategoryContentTrans.setDesc(hmxCategoryContent.getDesc());
+		hmxCategoryContentTrans.setContentDesc(hmxCategoryContent.getContentDesc());
 		hmxCategoryContentTrans.setSubTitle(hmxCategoryContent.getSubTitle());
 		hmxCategoryContentTrans.setMode(hmxCategoryContent.getMode());
     	//查询视频信息

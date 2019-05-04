@@ -18,7 +18,7 @@
   	<result column="version" property="version" jdbcType="INTEGER" />
   	<result column="createid" property="createid" jdbcType="INTEGER" />
   	<result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
-  	<result column="desc" property="desc" jdbcType="VARCHAR" />
+  	<result column="contentDesc" property="contentDesc" jdbcType="VARCHAR" />
   	<result column="mode" property="mode" jdbcType="INTEGER" />
   </resultMap>
   
@@ -133,9 +133,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.category.entity.HmxCategoryContent" keyProperty="categoryContentId" useGeneratedKeys="true">
-    insert into hmx_category_content  (category_content_id,category_id,category_title,category_content,content_type,content_images,movie_id,music_id,browse_num,create_time,new_time,state,version,createid,sub_title,desc,mode)
+    insert into hmx_category_content  (category_content_id,category_id,category_title,category_content,content_type,content_images,movie_id,music_id,browse_num,create_time,new_time,state,version,createid,sub_title,contentDesc,mode)
     values (#{categoryContentId,jdbcType=INTEGER},#{categoryId,jdbcType=INTEGER}, #{categoryTitle,jdbcType=VARCHAR}, #{categoryContent,jdbcType=VARCHAR}, #{contentType,jdbcType=INTEGER}, #{contentImages,jdbcType=VARCHAR}, #{movieId,jdbcType=INTEGER}, #{musicId,jdbcType=INTEGER}, #{browseNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP},
-    #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},#{subTitle,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, #{mode,jdbcType=INTEGER})
+    #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},#{subTitle,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR}, #{mode,jdbcType=INTEGER})
   </insert>
   
   
@@ -187,8 +187,8 @@
         <if test="subTitle != null" >
             sub_title,
         </if>
-        <if test="desc != null" >
-            desc,
+        <if test="contentDesc != null" >
+            contentDesc,
         </if>
         <if test="mode != null" >
             mode,
@@ -240,8 +240,8 @@
         <if test="subTitle != null" >
             #{subTitle,jdbcType=VARCHAR},
         </if>
-        <if test="desc != null" >
-            #{desc,jdbcType=VARCHAR},
+        <if test="contentDesc != null" >
+            #{contentDesc,jdbcType=VARCHAR},
         </if>
         <if test="mode != null" >
             #{mode,jdbcType=INTEGER},
@@ -266,7 +266,7 @@ state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
       sub_title = #{subTitle,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      contentDesc = #{contentDesc,jdbcType=VARCHAR},
       mode = #{mode,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -331,8 +331,8 @@ createid = #{createid,jdbcType=INTEGER},
         <if test="subTitle != null" >
             sub_title = #{subTitle,jdbcType=VARCHAR} ,
         </if>
-        <if test="desc != null" >
-            desc = #{desc,jdbcType=VARCHAR} ,
+        <if test="contentDesc != null" >
+            contentDesc = #{contentDesc,jdbcType=VARCHAR} ,
         </if>
         <if test="mode != null" >
             mode = #{mode,jdbcType=INTEGER} ,
@@ -359,7 +359,7 @@ state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
 sub_title = #{subTitle,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      contentDesc = #{contentDesc,jdbcType=VARCHAR},
       mode = #{mode,jdbcType=INTEGER}
     where category_content_id = #{categoryContentId,jdbcType=INTEGER}
   </update>
@@ -368,7 +368,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',
-       cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.desc as 'desc',cc.mode as 'mode',
+       cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',
        cc.create_time as 'createTime',c.category_name as 'categoryName'
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
@@ -381,7 +381,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',
-       cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.desc as 'desc',cc.mode as 'mode',
+       cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',
        cc.create_time as 'createTime',c.category_name as 'categoryName'
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
@@ -405,8 +405,8 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             <if test="subTitle != null">
                 cc.sub_title = #{subTitle} and
             </if>
-            <if test="desc != null">
-                cc.desc = #{desc} and
+            <if test="contentDesc != null">
+                cc.contentDesc = #{contentDesc} and
             </if>
             <if test="mode != null">
                 cc.mode = #{mode} and
@@ -416,7 +416,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 		    </if>
 		</trim>
 	</where>
-	ORDER BY cc.create_time desc 
+	ORDER BY cc.create_time DESC
 		<if test="limit != null" >
 	      <if test="offset != null" >
 	        limit ${offset}, ${limit}
@@ -450,8 +450,8 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             <if test="subTitle != null">
                 cc.sub_title = #{subTitle} and
             </if>
-            <if test="desc != null">
-                cc.desc = #{desc} and
+            <if test="contentDesc != null">
+                cc.contentDesc = #{contentDesc} and
             </if>
             <if test="mode != null">
                 cc.mode = #{mode} and
@@ -472,7 +472,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 		cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
 		cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
 		cc.content_type as 'contentType',cc.content_images as 'contentImages',
-		cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num+1 as 'browseNum',cc.sub_title as 'subTitle',cc.desc as 'desc',cc.mode as 'mode',
+		cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num+1 as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',
 		cc.create_time as 'createTime',cc.new_time as 'newTime',
 		c.category_type as 'categoryType' 
 		from hmx_category_content cc 
@@ -490,7 +490,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',
-       cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.desc as 'desc',cc.mode as 'mode',
+       cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',
        cc.create_time as 'createTime',c.category_name as 'categoryName',
        c.category_type as 'categoryType'
 	from hmx_category_content cc 
@@ -513,8 +513,8 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             <if test="subTitle != null">
                 cc.sub_title like concat("%",#{subTitle},"%") and
             </if>
-            <if test="desc != null">
-                cc.desc = #{desc} and
+            <if test="contentDesc != null">
+                cc.contentDesc = #{contentDesc} and
             </if>
             <if test="mode != null">
                 cc.mode = #{mode} and
@@ -524,7 +524,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 		    </if>
 		</trim>
 	</where>
-	ORDER BY cc.create_time desc 
+	ORDER BY cc.create_time contentDesc 
 		<if test="limit != null" >
 	      <if test="offset != null" >
 	        limit ${offset}, ${limit}
@@ -556,8 +556,8 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             <if test="subTitle != null">
                 cc.sub_title = #{subTitle} and
             </if>
-            <if test="desc != null">
-                cc.desc = #{desc} and
+            <if test="contentDesc != null">
+                cc.contentDesc = #{contentDesc} and
             </if>
             <if test="mode != null">
                 cc.mode = #{mode} and
@@ -581,7 +581,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    <select id="selectRankingContent" resultType="Map">
    select cc.category_content_id as 'categoryContentId',cc.category_title as 'categoryTitle' 
    from hmx_category_content cc where cc.category_id=#{category_id} and cc.state=0
-   ORDER BY cc.browse_num desc
+   ORDER BY cc.browse_num contentDesc
    LIMIT 10
    </select>
    <!-- ↑ -->

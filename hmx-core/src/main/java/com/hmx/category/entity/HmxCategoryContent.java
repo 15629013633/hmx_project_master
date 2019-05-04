@@ -9,7 +9,7 @@ public class HmxCategoryContent{
     private Integer categoryId;
     private String categoryTitle;
     private String subTitle;   //副标题
-    private String desc;   //内容简介
+    private String contentDesc;   //内容简介
     private String categoryContent;
     private Integer contentType;
     private String contentImages;
@@ -30,7 +30,7 @@ public class HmxCategoryContent{
     
     public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,Integer mode,
 			String categoryContent, Integer contentType, String contentImages, Integer movieId, Integer musicId,
-			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid,String subTitle,String desc) {
+			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid,String subTitle,String contentDesc) {
 		super();
 		this.categoryContentId = categoryContentId;
 		this.categoryId = categoryId;
@@ -47,7 +47,7 @@ public class HmxCategoryContent{
 		this.version = version;
 		this.createid = createid;
 		this.subTitle = subTitle;
-		this.desc = desc;
+		this.contentDesc = contentDesc;
 		this.mode = mode;
 	}
 
@@ -174,12 +174,12 @@ public class HmxCategoryContent{
 		this.subTitle = subTitle;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getContentDesc() {
+		return contentDesc;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setContentDesc(String contentDesc) {
+		this.contentDesc = contentDesc;
 	}
 
 	public Integer getMode() {
