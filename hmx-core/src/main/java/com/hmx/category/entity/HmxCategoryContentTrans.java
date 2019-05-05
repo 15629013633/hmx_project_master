@@ -30,6 +30,7 @@ public class HmxCategoryContentTrans {
     private String contentDesc;
     private String subTitle;
     private Integer mode;
+    private String contentFlow;
     private List<HmxMovie> movieList = new ArrayList<>();
     private List<HmxImages> imagesList = new ArrayList<>();
     private List<HmxFiles> filesList = new ArrayList<>();
@@ -204,5 +205,13 @@ public class HmxCategoryContentTrans {
 
     public void setMode(Integer mode) {
         this.mode = mode;
+    }
+
+    public String getContentFlow() {
+        return contentFlow;
+    }
+
+    public void setContentFlow(String contentFlow) {
+        this.contentFlow = contentFlow;
     }
 }

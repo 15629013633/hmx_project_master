@@ -18,8 +18,12 @@ public class PdfToTxt {
     public static void main(String[] args) {
         try {
             //获取pdf文件
-            String fileName = "bigfile_1.pdf";
-            readPdf(pdfDir,fileName);
+//            String fileName = "bigfile_1.pdf";
+//            readPdf(pdfDir,fileName);
+
+            readPdf(pdfDir,"diskaal_aal74_12_72.pdf");
+            readPdf(pdfDir,"diskaal_aal94_08_34.pdf");
+            readPdf(pdfDir,"diskabl_abl32_07_33.pdf");
         } catch (Exception e) {
             e.printStackTrace();
         }

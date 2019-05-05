@@ -1,6 +1,6 @@
 package com.hmx.category.controller;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,12 @@ import com.hmx.utils.result.ResultBean;
 @RestController
 @RequestMapping("/categoryContent")
 public class CategoryContentController {
-	
+
+	//window下
+	//private static final String txtFileDir = "E:\\fileTest\\txtfile";
+	//linux下
+	private static final String txtFileDir = "/home/back/txtfile";
+
 	@Autowired
 	private HmxCategoryContentService hmxCategoryContentService;
 
@@ -105,7 +110,7 @@ public class CategoryContentController {
 		Map<String,Object> map = new HashMap<>();
 		//从文本和标题中查  实际上目前只从标题中查了
 		page = hmxCategoryContentService.search(page, contentValue);
-		//从pdf中查询关键字
+		//从pdf生成的txt中查询关键字
 		try {
 			slectStr(contentValue,page);
 		}catch (Exception e){
@@ -120,6 +125,7 @@ public class CategoryContentController {
 				String categoryContentId = map1.get("categoryContentId")+"";
 				if(!StringUtils.isEmpty(categoryContentId)){
 					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId));
+					resultMap.put("categoryContent",map1.get("categoryContent"));
 					resultList.add(resultMap);
 				}
 			}
@@ -174,6 +180,146 @@ public class CategoryContentController {
 	}
 
 	public void slectStr(String contentValue,PageBean<Map<String,Object>> page) throws Exception{
+		File file = new File(txtFileDir);
+		List<Map<String,String>> mapList = new ArrayList<>();
+		if(null != file){
+			String[] filelist = file.list();
+			if(null != filelist && filelist.length > 0){
+				for(String fileName : filelist){
+					String result = searchKeyword(new File(txtFileDir + File.separator + fileName), contentValue);
+					if(!StringUtils.isEmpty(result)){
+						Map<String,String> map = new HashMap<>();
+						map.put(fileName,result);
+						mapList.add(map);
+					}
+				}
+			}
+		}
+		if(mapList.size() > 0){
+			for(Map<String,String> map : mapList){
+				for(Map.Entry<String,String> entry : map.entrySet()){
+					String fileName = entry.getKey();
+					String content = entry.getValue();
+					System.out.println("文件名：" + fileName + ",查到的文件内容：" + content);
+					try {
+						String[] strArr = fileName.split("_");
+						String contentId = strArr[3];
+						contentId = contentId.substring(0,contentId.length()-4);
+						Map<String,Object> contentMap = hmxCategoryContentService.queryContentById(Integer.valueOf(contentId));
+						contentMap.put("categoryContent",content);
+						if(null == page.getPage() || page.getPage().size() < 1){
+							List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+							list.add(contentMap);
+							page.setPage(list);
+						}else{
+							page.getPage().add(contentMap);
+						}
+						page.setTotalNum(page.getTotalNum()+1);
+					}catch (Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	public String searchKeyword(File file,String keyword) {
+		String result = "";
+		//参数校验
+		verifyParam(file, keyword);
+
+		//行读取
+		LineNumberReader lineReader = null;
+		try {
+			lineReader = new LineNumberReader(new FileReader(file));
+			String readLine = null;
+			String lastLine = "";//关键字的前一句
+			String currnLine = "";//关键字的当前句
+			String nextLine = "";//关键字的下一句
+			int lineNum = 0;
+			while((readLine =lineReader.readLine()) != null){
+				//判断每一行中,出现关键词的次数
+				int index = 0;
+				int next = 0;
+				int times = 0;//出现的次数
+				//判断次数
+				while((index = readLine.indexOf(keyword,next)) != -1) {
+					next = index + keyword.length();
+					times++;
+					lineNum = lineReader.getLineNumber();
+				}
+				if(times > 0) {
+					System.out.println("第"+ lineReader.getLineNumber() +"行" + "出现 "+keyword+" 次数: "+times);
+					// System.out.println("lastLine是：" + lastLine);
+					currnLine = readLine;
+					//System.out.println("内容是：" + lastLine + readLine);
+				}else if(lineNum == 0) {
+					lastLine = readLine;
+				}
+				if((lineNum + 1) == lineReader.getLineNumber() && (!StringUtils.isEmpty(currnLine))){
+					nextLine = readLine;
+					System.out.println("完整内容是：" + lastLine + currnLine + nextLine);
+					lineNum = 0;
+					//只返回第一次出现的内容
+					result = lastLine + currnLine + nextLine;
+					return result;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			//关闭流
+			close(lineReader);
+		}
+		return result;
+	}
+
+	/**
+	 * 参数校验
+	 *
+	 * <br>
+	 * Date: 2014年11月5日
+	 */
+	private void verifyParam(File file, String keyword) {
+		//对参数进行校验证
+		if(file == null ){
+			throw new NullPointerException("the file is null");
+		}
+		if(keyword == null || keyword.trim().equals("")){
+			throw new NullPointerException("the keyword is null or \"\" ");
+		}
+
+		if(!file.exists()) {
+			throw new RuntimeException("the file is not exists");
+		}
+		//非目录
+		if(file.isDirectory()){
+			throw new RuntimeException("the file is a directory,not a file");
+		}
+
+		//可读取
+		if(!file.canRead()) {
+			throw new RuntimeException("the file can't read");
+		}
+	}
+
+	/**
+	 * 关闭流
+	 * <br>
+	 * Date: 2014年11月5日
+	 */
+	private void close(Closeable able){
+		if(able != null){
+			try {
+				able.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				able = null;
+			}
+		}
+	}
+
+	public void slectStr1(String contentValue,PageBean<Map<String,Object>> page) throws Exception{
 		if(page == null ){
 			page = new PageBean<Map<String,Object>>();
 		}

@@ -36,14 +36,14 @@ public class FileController {
      */
     @RequestMapping("/upload")
     @ResponseBody
-   // public ResultBean fileUpload(@RequestParam MultipartFile file , @RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
-    public ResultBean fileUpload(@RequestParam MultipartFile file , @RequestParam Integer fileType, @RequestParam( required = false) String module ){
+   public ResultBean fileUpload(@RequestParam MultipartFile file , @RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
+    //public ResultBean fileUpload(@RequestParam MultipartFile file , @RequestParam Integer fileType, @RequestParam( required = false) String module ){
         if ( file == null ) {
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件为空");
         }
-//        if(StringUtils.isEmpty(contentFlow)){
-//            return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水哈contentFlow不能为空");
-//        }
+        if(StringUtils.isEmpty(contentFlow)){
+            return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水哈contentFlow不能为空");
+        }
         String path =  "";
         if ( StringUtils.isEmpty( module ) ) {
             path =  File.separator+"files"+File.separator+"default"+File.separator;

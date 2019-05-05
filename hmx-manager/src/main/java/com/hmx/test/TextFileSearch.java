@@ -29,7 +29,7 @@ public class TextFileSearch {
             String[] filelist = file.list();
             if(null != filelist && filelist.length > 0){
                 for(String fileName : filelist){
-                    String result = search.SearchKeyword(new File(txtFileDir + File.separator + fileName), "出现");
+                    String result = search.SearchKeyword(new File(txtFileDir + File.separator + fileName), "习惯上");
                     if(!StringUtils.isEmpty(result)){
                         Map<String,String> map = new HashMap<>();
                         map.put(fileName,result);

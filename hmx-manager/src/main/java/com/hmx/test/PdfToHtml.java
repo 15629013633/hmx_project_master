@@ -35,7 +35,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
  */
 public class PdfToHtml {
 
-    private static final String fileName = "bigfile_1.pdf";
+    //private static final String fileName = "bigfile_1.pdf";
     private static final String pdfDir = "E:\\fileTest\\pdfFile\\";
     private static final String htmlDir = "E:\\fileTest\\htmlFile";
 
@@ -43,7 +43,10 @@ public class PdfToHtml {
         //传入PDF地址
         //PdfToImage("E:\\Xshell\\40000003017146.pdf");
 
-        pdfToHtml(pdfDir,htmlDir,fileName);
+        //pdfToHtml(pdfDir,htmlDir,fileName);
+        pdfToHtml(pdfDir,htmlDir,"diskaal_aal74_12_72.pdf");
+        pdfToHtml(pdfDir,htmlDir,"diskaal_aal94_08_34.pdf");
+        pdfToHtml(pdfDir,htmlDir,"diskabl_abl32_07_33.pdf");
     }
 
     private static void pdfToHtml(String sourcePath, String outPath,String fileName){
