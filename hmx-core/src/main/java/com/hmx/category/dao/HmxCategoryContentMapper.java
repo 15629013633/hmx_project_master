@@ -62,8 +62,7 @@ public interface HmxCategoryContentMapper{
     int countCategoryContentTableByPc(Map<String,Object> parameter);
     /**
      * 查看排行榜信息
-     * @param categoryId
      * @return
      */
-    Map<String,Object>selectRankingListByCategoryId(Integer categoryId);
+    List<Map<String,Object>> selectRankingListByCategoryId();
 }

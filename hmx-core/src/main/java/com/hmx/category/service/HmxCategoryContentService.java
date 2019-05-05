@@ -101,10 +101,9 @@ public interface HmxCategoryContentService {
     PageBean<Map<String,Object>> selectCategoryContentTableByPc(PageBean<Map<String,Object>> page,HmxCategoryContentDto hmxCategoryContentDto);
     /**
      * 查看排行榜信息
-     * @param categoryId
      * @return
      */
-    Map<String,Object>selectRankingListByCategoryId(Integer categoryId);
+	List<Map<String,Object>> selectRankingListByCategoryId();
 
 	/**
 	 * 内容查找

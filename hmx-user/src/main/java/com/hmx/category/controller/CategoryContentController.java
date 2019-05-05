@@ -82,19 +82,18 @@ public class CategoryContentController {
 	}
 	/**
 	 * 查询排行榜信息
-	 * @param categoryId
 	 * @return
 	 */
 	@GetMapping("/rankingContent")
-	public ResultBean categoryContentRankingList(Integer categoryId){
+	public ResultBean categoryContentRankingList(){
 //		if(categoryId == null){
 //			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("分类编号不能为空");
 //		}
-		Map<String,Object> resultMap = hmxCategoryContentService.selectRankingListByCategoryId(categoryId);
-		if(resultMap == null){
+		List<Map<String,Object>> list = hmxCategoryContentService.selectRankingListByCategoryId();
+		if(list == null){
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到排行信息");
 		}
-		return new ResultBean().setCode(Config.SUCCESS_CODE).put("rankingContent", resultMap).setContent("获取排行信息成功");
+		return new ResultBean().setCode(Config.SUCCESS_CODE).put("rankingContent", list).setContent("获取排行信息成功");
 	}
 
 	/**

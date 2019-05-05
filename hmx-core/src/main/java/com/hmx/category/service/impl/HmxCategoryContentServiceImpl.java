@@ -589,11 +589,11 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     
     /**
      * 查看排行榜信息
-     * @param categoryId
      * @return
      */
-    public Map<String,Object>selectRankingListByCategoryId(Integer categoryId){
-    	return hmxCategoryContentMapper.selectRankingListByCategoryId(categoryId);
+    public List<Map<String,Object>> selectRankingListByCategoryId(){
+		List<Map<String,Object>> list = hmxCategoryContentMapper.selectRankingListByCategoryId();
+    	return list;
     }
 
 	@Override
