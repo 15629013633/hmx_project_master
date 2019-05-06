@@ -35,11 +35,9 @@ import com.hmx.utils.result.ResultBean;
 public class CategoryContentController {
 
 	//window下
-	private static final String txtFileDir = "E:\\fileTest\\txtfile";
+	//private static final String txtFileDir = "E:\\fileTest\\txtFile";
 	//linux下
-//	private static final String txtFileDir = "/home/back/txtfile";
-//	private static final String txtFileDir = "/home/back/txtfile";
-//	private static final String txtFileDir = "E:\\fileTest\\txtfile\\";
+	private static final String txtFileDir = "/home/back/txtFile";
 
 	@Autowired
 	private HmxCategoryContentService hmxCategoryContentService;

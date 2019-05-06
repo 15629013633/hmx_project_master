@@ -34,14 +34,14 @@ import com.hmx.utils.oss.upload.exception.UploadException;
 public class UploadUtil {
 
 	//window测试
-	private static final String pdfDir = "E:\\fileTest\\pdfFile\\";
-	private static final String htmlDir = "E:\\fileTest\\htmlFile";
-	private static final String txtFileDir = "E:\\fileTest\\txtfile\\";
+//	private static final String pdfDir = "E:\\fileTest\\pdfFile\\";
+//	private static final String htmlDir = "E:\\fileTest\\htmlFile";
+//	private static final String txtFileDir = "E:\\fileTest\\txtFile\\";
 
 	//linux部署
-//	private static final String pdfDir = "/home/back/pdfFile";
-//	private static final String htmlDir = "/home/back/htmlFile";
-//	private static final String txtFileDir = "/home/back/txtfile";
+	private static final String pdfDir = "/home/back/pdfFile";
+	private static final String htmlDir = "/home/back/htmlFile";
+	private static final String txtFileDir = "/home/back/txtFile";
 
 	@Value("${oss.endpoint}")
 	public String endpoint;
