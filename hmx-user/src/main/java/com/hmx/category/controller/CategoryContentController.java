@@ -201,9 +201,8 @@ public class CategoryContentController {
 					String content = entry.getValue();
 					System.out.println("文件名：" + fileName + ",查到的文件内容：" + content);
 					try {
-						String[] strArr = fileName.split("_");
-						String contentFlow = strArr[1];
-						contentFlow = contentFlow.substring(0,contentFlow.length()-4);
+						//String[] strArr = fileName.split("_");
+						String contentFlow = fileName.substring(0,fileName.length()-4);
 						List<Map<String,Object>> contentList = hmxCategoryContentService.queryByContentFlow(contentFlow);
 						if(null != contentList && contentList.size() > 0){
 							Map<String,Object> contentMap = contentList.get(0);

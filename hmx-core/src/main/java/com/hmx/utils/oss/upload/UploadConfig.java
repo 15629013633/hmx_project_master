@@ -14,7 +14,7 @@ public class UploadConfig {
 
 	//public static Long DEFFILEMAXSIZE = 1024 * 1024 * 5L; // 2M
 	//10M = 10乘以1024再乘以1024等于10485760字节
-	public static Long DEFFILEMAXSIZE = 10240 * 1024 * 1L;
+	public static Long DEFFILEMAXSIZE = 10240 * 1024 * 10L;
 
 	public static Long DEFFILEMINSIZE = 100L; // 100B
 

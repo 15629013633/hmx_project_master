@@ -34,14 +34,15 @@ import com.hmx.utils.oss.upload.exception.UploadException;
 public class UploadUtil {
 
 	//window测试
-//	private static final String pdfDir = "E:\\fileTest\\pdfFile\\";
+	//private static final String pdfDir = "E:\\fileTest\\pdfFile\\";
 //	private static final String htmlDir = "E:\\fileTest\\htmlFile";
-//	private static final String txtFileDir = "E:\\fileTest\\txtFile\\";
+	//private static final String txtFileDir = "E:\\fileTest\\txtFile\\";
 
 	//linux部署
-	private static final String pdfDir = "/home/back/pdfFile";
-	private static final String htmlDir = "/home/back/htmlFile";
-	private static final String txtFileDir = "/home/back/txtFile";
+	private static final String pdfDir = "/home/back/pdfFile/";
+	private static final String htmlDir = "/usr/local/tomcat/webapps/ROOT/htmlFile";
+	private static final String txtFileDir = "/home/back/txtFile/";
+	private static final String ipPort = "http://www.sskj.art:8080/";
 
 	@Value("${oss.endpoint}")
 	public String endpoint;
@@ -140,7 +141,8 @@ public class UploadUtil {
 			LogHelper.logger().debug( "文件通过检查 开始写入");
 
 			//String newName = name + RandomHelper.getRandomString(4) + RandomHelper.getSystemNum("", 2, 12, 2) + "." + suffix;
-			String newName = name + "_" + contentFlow + "." + suffix;
+			//String newName = name + "_" + contentFlow + "." + suffix;
+			String newName = contentFlow + "." + suffix;
 			//取消File文件流上传,使用io流inputStream上传
 			/*File targetFile = new File( (physicsrootpath.isEmpty()?FilesTools.getRootPath():physicsrootpath) + path, newName);
 		    try{
@@ -161,13 +163,13 @@ public class UploadUtil {
 			//System.out.println("文件上传路径：" + path);
 			String realPath = pdfDir + newName;
 			file.transferTo(new File(realPath));
-
+			String htmlPath = "";
 			if(newName.endsWith("pdf") || newName.endsWith("PDF")){
 				//将pdf文件转成html
 				//将pdf文件转成txt
 				File pdfFile = new File(realPath);
 				if(pdfFile.exists()){
-					FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
+					htmlPath = FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
 					FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
 				}
 
@@ -180,8 +182,9 @@ public class UploadUtil {
 //				return null;
 //			}
 //			String url = this.serverip +"/"+StringHelper.getAliOssKeyByPath(path.replace("\\", "/"),ossIsFormal);
-			System.out.println( "文件上传成功  PATH : " + realPath);
-			return realPath;
+			String htmlUrl = ipPort + "htmlFile/"+contentFlow+".html";
+			System.out.println( "文件上传成功  PATH : " + htmlUrl);
+			return htmlUrl;
 
 		} catch (FileIsNullException e1) {
 			throw new UploadException(e1.getMessage());

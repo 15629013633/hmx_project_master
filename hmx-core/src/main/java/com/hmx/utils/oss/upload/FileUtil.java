@@ -24,7 +24,7 @@ import javax.imageio.stream.ImageOutputStream;
 public class FileUtil {
 
 
-    public static void pdfToHtml(String sourcePath, String outPath,String fileName,String sourceFileName){
+    public static String pdfToHtml(String sourcePath, String outPath,String fileName,String sourceFileName){
         List<String> imgList = new ArrayList<String>();
         String imageDir = fileName.substring(0, fileName.length() - 4);
         try {
@@ -54,13 +54,13 @@ public class FileUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createPPTHtml(outPath, imgList, sourcePath,imageDir,sourceFileName);
+        return createPPTHtml(outPath, imgList, sourcePath,imageDir,sourceFileName);
     }
     /**自己创建的html代码
      * 原理上就是，把上一步ppt转的图片
      * 以html的方式呈现出来
      */
-    public static void createPPTHtml(String wordPath,List<String> imgList,String tempContextUrl,String imageDir,String sourceFileName){
+    public static String createPPTHtml(String wordPath,List<String> imgList,String tempContextUrl,String imageDir,String sourceFileName){
         StringBuilder sb = new StringBuilder("<!doctype html><html><head><meta charset='utf-8'><title>"+sourceFileName+"</title></head><body><div align=\"center\">");
         if (imgList != null && !imgList.isEmpty()) {
             for (String img : imgList) {
@@ -69,13 +69,17 @@ public class FileUtil {
         }
         sb.append("</div></body></html>");
         try {
-            File file = new File(wordPath + File.separator + imageDir+".html");
+            String htmlPath = wordPath + File.separator + imageDir+".html";
+            System.out.println("htmlPath:" + htmlPath);
+            File file = new File(htmlPath);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
             bufferedWriter.write(sb.toString());
             bufferedWriter.close();
+            return htmlPath;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "";
     }
 
     /**
