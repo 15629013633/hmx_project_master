@@ -32,7 +32,17 @@ import com.hmx.utils.oss.upload.exception.UploadException;
  */
 @Component
 public class UploadUtil {
-	
+
+	//window测试
+	private static final String pdfDir = "E:\\fileTest\\pdfFile\\";
+	private static final String htmlDir = "E:\\fileTest\\htmlFile";
+	private static final String txtFileDir = "E:\\fileTest\\txtfile\\";
+
+	//linux部署
+//	private static final String pdfDir = "/home/back/pdfFile";
+//	private static final String htmlDir = "/home/back/htmlFile";
+//	private static final String txtFileDir = "/home/back/txtfile";
+
 	@Value("${oss.endpoint}")
 	public String endpoint;
 	@Value("${oss.accessKeyId}")
@@ -53,8 +63,6 @@ public class UploadUtil {
 	/**
 	 * @param file
 	 *            文件对象
-	 * @param path
-	 *            文件存放路径
 	 * @return 文件名 + 文件路径
 	 * @throws FileIsNullException
 	 *             文件为空
@@ -62,21 +70,19 @@ public class UploadUtil {
 	 *             文件过大
 	 * @throws FileSizeSmallException
 	 *             文件太小
-	 * @throws FileIllegalExceptio
-	 *             文件类型异常
+	 * @throws
+	 *
 	 * @throws UploadException
 	 *             系统错误
 	 */
-	public String uploadFile(MultipartFile file, String path, List<String> fileType) throws FileIsNullException,
+	public String uploadFile(MultipartFile file, String contentFlow, List<String> fileType) throws FileIsNullException,
 			FileSizeOutException, FileSizeSmallException, FileIllegalException, UploadException {
-		return uploadFile(file, path, fileType, null, null);
+		return uploadFile(file, contentFlow, fileType, null, null);
 	}
 
 	/**
 	 * @param file
 	 *            文件对象
-	 * @param path
-	 *            文件存放路径
 	 * @param fileType
 	 *            文件类型
 	 * @param fileMaxSize
@@ -90,12 +96,12 @@ public class UploadUtil {
 	 *             文件过大
 	 * @throws FileSizeSmallException
 	 *             文件太小
-	 * @throws FileIllegalExceptio
-	 *             文件类型异常
+	 * @throws
+	 *
 	 * @throws UploadException
 	 *             系统错误
 	 */
-	public String uploadFile(MultipartFile file, String path, List<String> fileType, Long fileMaxSize,
+	public String uploadFile(MultipartFile file, String contentFlow, List<String> fileType, Long fileMaxSize,
 			Long fileMinSize) throws FileIsNullException, FileSizeOutException, FileSizeSmallException,
 			FileIllegalException, UploadException {
 
@@ -133,7 +139,8 @@ public class UploadUtil {
 
 			LogHelper.logger().debug( "文件通过检查 开始写入");
 
-			String newName = name + RandomHelper.getRandomString(4) + RandomHelper.getSystemNum("", 2, 12, 2) + "." + suffix;
+			//String newName = name + RandomHelper.getRandomString(4) + RandomHelper.getSystemNum("", 2, 12, 2) + "." + suffix;
+			String newName = name + "_" + contentFlow + "." + suffix;
 			//取消File文件流上传,使用io流inputStream上传
 			/*File targetFile = new File( (physicsrootpath.isEmpty()?FilesTools.getRootPath():physicsrootpath) + path, newName);
 		    try{
@@ -150,16 +157,31 @@ public class UploadUtil {
 			}
 			String url = path + newName;
 			url = url.replaceAll("\\\\", "/");*/
-			path = path+newName;
-			System.out.println("文件上传路径：" + path);
-			boolean flag = uploadInputStreamToAliOss(path,file);
-			if(!flag){
-				LogHelper.logger().debug( "文件上传失败");
-				return null;	
+//			path = path+newName;
+			//System.out.println("文件上传路径：" + path);
+			String realPath = pdfDir + newName;
+			file.transferTo(new File(realPath));
+
+			if(newName.endsWith("pdf") || newName.endsWith("PDF")){
+				//将pdf文件转成html
+				//将pdf文件转成txt
+				File pdfFile = new File(realPath);
+				if(pdfFile.exists()){
+					FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
+					FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
+				}
+
 			}
-			String url = this.serverip +"/"+StringHelper.getAliOssKeyByPath(path.replace("\\", "/"),ossIsFormal);
-			LogHelper.logger().debug( "文件上传成功  PATH : " + url);
-			return url;
+
+
+//			boolean flag = uploadInputStreamToAliOss(path,file);
+//			if(!flag){
+//				LogHelper.logger().debug( "文件上传失败");
+//				return null;
+//			}
+//			String url = this.serverip +"/"+StringHelper.getAliOssKeyByPath(path.replace("\\", "/"),ossIsFormal);
+			System.out.println( "文件上传成功  PATH : " + realPath);
+			return realPath;
 
 		} catch (FileIsNullException e1) {
 			throw new UploadException(e1.getMessage());
@@ -173,6 +195,17 @@ public class UploadUtil {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 			throw new UploadException("文件上传 系统异常");
+		}
+	}
+
+
+
+	public static void main(String[] arg0){
+		File pdfFile = new File("E:\\fileTest\\pdfFile\\被评估人_123456781.pdf");
+		if(pdfFile.exists()){
+			System.out.println("Y");
+		}else {
+			System.out.println("N");
 		}
 	}
 
@@ -272,8 +305,8 @@ public class UploadUtil {
 	 *             文件过大
 	 * @throws FileSizeSmallException
 	 *             文件太小
-	 * @throws FileIllegalExceptio
-	 *             文件类型异常
+	 * @throws
+	 *
 	 * @throws UploadException
 	 *             系统错误
 	 */

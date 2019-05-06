@@ -124,6 +124,13 @@
 				<artifactId>commons-lang3</artifactId>
 			</dependency>
 
+                      <!-- pdf文件转换-->
+			  <dependency>
+				  <groupId>org.apache.pdfbox</groupId>
+				  <artifactId>pdfbox</artifactId>
+				  <version>1.8.13</version>
+			  </dependency>
+
 
 			
 		  </dependencies>

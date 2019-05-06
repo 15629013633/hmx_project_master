@@ -44,12 +44,12 @@ public class FileController {
         if(StringUtils.isEmpty(contentFlow)){
             return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水哈contentFlow不能为空");
         }
-        String path =  "";
-        if ( StringUtils.isEmpty( module ) ) {
-            path =  File.separator+"files"+File.separator+"default"+File.separator;
-        }else{
-            path =  File.separator+"files"+File.separator+module+File.separator;
-        }
+//        String path =  "";
+//        if ( StringUtils.isEmpty( module ) ) {
+//            path =  File.separator+"files"+File.separator+"default"+File.separator;
+//        }else{
+//            path =  File.separator+"files"+File.separator+module+File.separator;
+//        }
         if(fileType == null){
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件不能为空");
         }
@@ -58,7 +58,7 @@ public class FileController {
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不正确");
         }
         try {
-            String virtualPath = uploadUtil.uploadFile( file , path, fileTypeStr );
+            String virtualPath = uploadUtil.uploadFile( file , contentFlow, fileTypeStr );
 
             if ( StringUtils.isEmpty( virtualPath ) ) {
                 return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常");
