@@ -606,7 +606,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 
 
    <select id="selectRankingListByCategoryId" resultType="java.util.HashMap">
-   select cc.category_content_id as 'categoryContentId',cc.category_title as 'categoryTitle' 
+   select cc.category_content_id as 'categoryContentId',cc.category_title as 'categoryTitle',cc.content_type as 'contentType'
    from hmx_category_content cc where cc.state=0
    ORDER BY cc.browse_num DESC
    LIMIT 10
