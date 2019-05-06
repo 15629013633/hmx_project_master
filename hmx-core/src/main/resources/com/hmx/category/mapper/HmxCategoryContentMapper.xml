@@ -612,4 +612,11 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    LIMIT 10
    </select>
    <!-- ↑ -->
+
+    <select id="queryByContentFlow" resultType="java.util.HashMap">
+        select cc.category_content_id as 'categoryContentId',cc.content_flow as 'contentFlow'
+        from hmx_category_content cc where cc.content_flow=#{contentFlow}
+        ORDER BY cc.browse_num DESC
+        LIMIT 1
+    </select>
 </mapper>

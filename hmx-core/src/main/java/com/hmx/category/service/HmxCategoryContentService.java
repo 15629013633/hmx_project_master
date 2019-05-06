@@ -122,4 +122,6 @@ public interface HmxCategoryContentService {
      * @return
      */
 	PageBean<Map<String,Object>> seniorSearch(PageBean<Map<String, Object>> page, HmxCategoryContentDto hmxCategoryContentDto);
+
+	List<Map<String,Object>> queryByContentFlow(String integer);
 }

@@ -636,6 +636,11 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	}
 
 	@Override
+	public List<Map<String, Object>> queryByContentFlow(String integer) {
+		return hmxCategoryContentMapper.queryByContentFlow(integer);
+	}
+
+	@Override
 	public Map<String, Object> queryContentById(Integer categoryContentId) {
 		Map<String,Object> resultMap = hmxCategoryContentMapper.selectContentInfoByContentId(categoryContentId);
 		return resultMap;

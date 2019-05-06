@@ -35,9 +35,11 @@ import com.hmx.utils.result.ResultBean;
 public class CategoryContentController {
 
 	//window下
-	//private static final String txtFileDir = "E:\\fileTest\\txtfile";
+	private static final String txtFileDir = "E:\\fileTest\\txtfile";
 	//linux下
-	private static final String txtFileDir = "/home/back/txtfile";
+//	private static final String txtFileDir = "/home/back/txtfile";
+//	private static final String txtFileDir = "/home/back/txtfile";
+//	private static final String txtFileDir = "E:\\fileTest\\txtfile\\";
 
 	@Autowired
 	private HmxCategoryContentService hmxCategoryContentService;
@@ -202,18 +204,21 @@ public class CategoryContentController {
 					System.out.println("文件名：" + fileName + ",查到的文件内容：" + content);
 					try {
 						String[] strArr = fileName.split("_");
-						String contentId = strArr[3];
-						contentId = contentId.substring(0,contentId.length()-4);
-						Map<String,Object> contentMap = hmxCategoryContentService.queryContentById(Integer.valueOf(contentId));
-						contentMap.put("categoryContent",content);
-						if(null == page.getPage() || page.getPage().size() < 1){
-							List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-							list.add(contentMap);
-							page.setPage(list);
-						}else{
-							page.getPage().add(contentMap);
+						String contentFlow = strArr[1];
+						contentFlow = contentFlow.substring(0,contentFlow.length()-4);
+						List<Map<String,Object>> contentList = hmxCategoryContentService.queryByContentFlow(contentFlow);
+						if(null != contentList && contentList.size() > 0){
+							Map<String,Object> contentMap = contentList.get(0);
+							contentMap.put("categoryContent",content);
+							if(null == page.getPage() || page.getPage().size() < 1){
+								List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+								list.add(contentMap);
+								page.setPage(list);
+							}else{
+								page.getPage().add(contentMap);
+							}
+							page.setTotalNum(page.getTotalNum()+1);
 						}
-						page.setTotalNum(page.getTotalNum()+1);
 					}catch (Exception e){
 						e.printStackTrace();
 					}

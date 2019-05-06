@@ -65,4 +65,6 @@ public interface HmxCategoryContentMapper{
      * @return
      */
     List<Map<String,Object>> selectRankingListByCategoryId();
+
+    List<Map<String,Object>> queryByContentFlow(String contentFlow);
 }
