@@ -215,8 +215,8 @@ import javax.servlet.http.HttpServletRequest;
 		}
 		if(hmxCategoryDto.getParentId() != null && hmxCategoryDto.getParentId() != 0){//查询某个一级分类下的二级分类
 			where.andParentIdEqualTo(hmxCategoryDto.getParentId());
-		}else {//查询所有一级分类
-			where.andParentIdEqualTo(0);
+		}else if(hmxCategoryDto.getParentId() != null && hmxCategoryDto.getParentId() == 0){//查询所有一级分类
+			where.andParentIdEqualTo(hmxCategoryDto.getParentId());
 		}
 
 		if( hmxCategoryDto.getLimit() != null ){
