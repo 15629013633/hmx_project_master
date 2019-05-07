@@ -345,7 +345,7 @@ parentId = #{parentId,jdbcType=INTEGER}
    <select id="selectCategoryTable" resultType="Map">
    select category_id as 'categoryId',category_name as 'categoryName',
           sort as 'sort',is_close as 'isClose',create_time as 'createTime',
-          new_time as 'newTime',createid as 'createid',category_type as 'categoryType' 
+          new_time as 'newTime',createid as 'createid',category_type as 'categoryType',parentId as 'parentId'
     from hmx_category
 	<where>
 		<trim suffixOverrides="and">

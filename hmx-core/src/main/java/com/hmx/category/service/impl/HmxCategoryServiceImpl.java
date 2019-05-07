@@ -373,6 +373,11 @@ import javax.servlet.http.HttpServletRequest;
     	if(hmxCategoryDto.getIsClose() != null){
     		parameter.put("isClose", hmxCategoryDto.getIsClose());
     	}
+		if(null != hmxCategoryDto.getParentId() && hmxCategoryDto.getParentId() != 0){//查询所有二级分类
+			parameter.put("parentId", hmxCategoryDto.getParentId());
+		}else if(null != hmxCategoryDto.getParentId() && hmxCategoryDto.getParentId() == 0){ //查询所有一级分类
+			parameter.put("parentId", hmxCategoryDto.getParentId());
+		}
     	Integer count = hmxCategoryMapper.countCategoryTable(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){

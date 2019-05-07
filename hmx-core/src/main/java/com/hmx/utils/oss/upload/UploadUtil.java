@@ -169,7 +169,19 @@ public class UploadUtil {
 				//将pdf文件转成txt
 				File pdfFile = new File(realPath);
 				if(pdfFile.exists()){
-					htmlPath = FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
+					//在多线程中执行pdf转成html和txt提高效率
+//					new Thread(new Runnable() {
+//						@Override
+//						public void run(){
+//							try {
+//								FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
+//								FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
+//							}catch (Exception e){
+//								e.printStackTrace();
+//							}
+//						}
+//					}).start();
+					FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
 					FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
 				}
 
