@@ -173,6 +173,7 @@ public class CategoryController {
     }
     /**
      * 查询所有分类信息列表
+     * parentId 为0则查询所有一级分类    不为0则查某个一级分类下的所有二级分类
      * @param hmxCategoryDto
      * @param model
      * @return

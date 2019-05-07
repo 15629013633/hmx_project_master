@@ -65,7 +65,7 @@ public interface HmxCategoryService {
 	List<HmxCategory> list( HmxCategoryDto hmxCategoryDto );
 	
 	/**
-     * 获取首页分类以及内容信息
+     * 获取首页一级分类以及内容信息
      * @return
      */
     List<Map<String,Object>> selectCategoryAndContentList();

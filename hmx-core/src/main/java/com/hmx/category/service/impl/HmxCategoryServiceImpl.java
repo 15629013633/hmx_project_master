@@ -213,7 +213,12 @@ import javax.servlet.http.HttpServletRequest;
   		if ( hmxCategoryDto.getCreateid() != null && hmxCategoryDto.getCreateid() != 0 ) {
 			where.andCreateidEqualTo( hmxCategoryDto.getCreateid() );
 		}
-		
+		if(hmxCategoryDto.getParentId() != null && hmxCategoryDto.getParentId() != 0){//查询某个一级分类下的二级分类
+			where.andParentIdEqualTo(hmxCategoryDto.getParentId());
+		}else {//查询所有一级分类
+			where.andParentIdEqualTo(0);
+		}
+
 		if( hmxCategoryDto.getLimit() != null ){
 			hmxCategoryExample.setLimit( hmxCategoryDto.getLimit() );
 		}
@@ -224,7 +229,7 @@ import javax.servlet.http.HttpServletRequest;
 	}
 	
 	/**
-     * 获取首页分类以及内容信息
+     * 获取首页一级分类以及内容信息
      * @return
      */
     public List<Map<String,Object>> selectCategoryAndContentList(){

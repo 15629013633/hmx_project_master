@@ -289,6 +289,11 @@ public class HmxCategoryExample{
             return (Criteria) this;
         }
 
+        public Criteria andParentIdEqualTo(Integer value) {
+            addCriterion("parentId =", value, "parentId");
+            return (Criteria) this;
+        }
+
         public Criteria andCategoryTypeNotEqualTo(Integer value) {
             addCriterion("category_type <>", value, "categoryType");
             return (Criteria) this;

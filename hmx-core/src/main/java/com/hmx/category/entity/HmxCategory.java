@@ -15,6 +15,7 @@ public class HmxCategory{
     private Integer state;
     private Integer version;
     private Integer createid;
+    private Integer parentId;      //一级分类的id
 
     public HmxCategory() {
 		super();
@@ -22,7 +23,7 @@ public class HmxCategory{
 
 	
     public HmxCategory(Integer categoryId, String categoryName, Integer categoryType, Integer sort, Integer isClose,
-			Date createTime, Date newTime, Integer state, Integer version, Integer createid) {
+			Date createTime, Date newTime, Integer state, Integer version, Integer createid,Integer parentId) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
@@ -35,6 +36,7 @@ public class HmxCategory{
 		this.version = version;
 		this.createid = createid;
 		this.categoryType = categoryType;
+		this.parentId = parentId;
 	}
 
 	public Integer getCategoryId() {
@@ -115,5 +117,13 @@ public class HmxCategory{
 
 	public void setCategoryType(Integer categoryType) {
 		this.categoryType = categoryType;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 }

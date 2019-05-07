@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.hmx.category.dto.HmxCategoryContentDto;
+import com.hmx.category.dto.HmxCategoryDto;
+import com.hmx.category.entity.HmxCategory;
 import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.service.HmxCategoryContentService;
 import com.hmx.images.dto.HmxImagesDto;
@@ -33,6 +35,7 @@ public class CategoryController {
 	
 	@GetMapping("/all")
 	public ResultBean getCategoryAll(){
+		//查询首页一级分类
 		List<Map<String,Object>> categoryList = hmxCategoryService.selectCategoryAndContentList();
 		if(categoryList == null || categoryList.size() <= 0){
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到首页信息");
@@ -77,4 +80,15 @@ public class CategoryController {
 			list.add(map);
 		}
 	}
+
+	@GetMapping("/allCategory")
+	public ResultBean allCategory(HmxCategoryDto hmxCategoryDto){
+		//查询分类
+		List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);
+		if(categoryList == null || categoryList.size() <= 0){
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到分类信息");
+		}
+		return new ResultBean().setCode(Config.SUCCESS_CODE).put("categoryList", categoryList).setContent("查询首页信息成功");
+	}
+
 }
