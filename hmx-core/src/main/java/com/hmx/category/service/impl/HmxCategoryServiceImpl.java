@@ -247,13 +247,17 @@ import javax.servlet.http.HttpServletRequest;
     	Map<String,Object> resultMap = new HashMap<String,Object>();
     	resultMap.put("flag", false);
     	try {
-    		HmxCategoryDto categoryDto = new HmxCategoryDto();
-    		categoryDto.setCategoryName(hmxCategoryDto.getCategoryName());
-    		categoryDto.setState(DataState.正常.getState());
-    		if(selectIsCategoryName(categoryDto)){
-    			resultMap.put("content", "分类名已经被占用了");
-    			return resultMap;
-    		}
+			//添加一级分类不能重名
+			if(null == hmxCategoryDto.getParentId() || 0 == hmxCategoryDto.getParentId()){
+				HmxCategoryDto categoryDto = new HmxCategoryDto();
+				categoryDto.setCategoryName(hmxCategoryDto.getCategoryName());
+				categoryDto.setState(DataState.正常.getState());
+				if(selectIsCategoryName(categoryDto)){
+					resultMap.put("content", "分类名已经被占用了");
+					return resultMap;
+				}
+			}
+
     		if(hmxCategoryDto.getSort() == null ){
     			hmxCategoryDto.setSort(selectCategoryMaxSort()+1);
     		}
