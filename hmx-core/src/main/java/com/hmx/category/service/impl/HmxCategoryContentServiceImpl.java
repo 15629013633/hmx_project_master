@@ -442,14 +442,29 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setFileUrl(fileUrl);
 		//查询视频下面的图片信息
 		String imageUrl = "";
+		String transImage = "";   //横图
+		String verticalImage = "";   //竖图
 		HmxImagesExample hmxImagesExample = new HmxImagesExample();
 		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
 		if(null != hmxImagesList && hmxImagesList.size() > 0){
 			hmxCategoryContentTrans.setImagesList(hmxImagesList);
-			imageUrl= hmxImagesList.get(0).getImageUrl();
+			for(HmxImages images : hmxImagesList){
+				if(!StringUtils.isEmpty(images.getImageUrl())){
+					imageUrl= images.getImageUrl();
+				}
+				if(!StringUtils.isEmpty(images.getVerticalImage())){
+					verticalImage = images.getVerticalImage();
+				}
+				if(StringUtils.isEmpty(images.getTransImage())){
+					transImage = images.getTransImage();
+				}
+			}
+
 		}
 		hmxCategoryContentTrans.setContentImages(imageUrl);
+		hmxCategoryContentTrans.setVerticalImage(verticalImage);
+		hmxCategoryContentTrans.setTransImage(transImage);
 		return hmxCategoryContentTrans;
     }
     /**
