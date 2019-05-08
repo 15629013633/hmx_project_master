@@ -11,6 +11,8 @@
   	<result column="version" property="version" jdbcType="INTEGER" />
   	<result column="createid" property="createid" jdbcType="INTEGER" />
   	<result column="category_content_id" property="categoryContentId" jdbcType="INTEGER" />
+  	<result column="transImage" property="transImage" jdbcType="VARCHAR" />
+  	<result column="verticalImage" property="verticalImage" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -73,7 +75,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    image_id,image_url,create_time,new_time,state,version,createid,category_content_id
+    image_id,image_url,create_time,new_time,state,version,createid,category_content_id,transImage,verticalImage
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.images.entity.HmxImagesExample" >
@@ -124,8 +126,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.images.entity.HmxImages" keyProperty="imageId" useGeneratedKeys="true">
-    insert into hmx_images  (image_id,image_url,create_time,new_time,state,version,createid,category_content_id)
-    values (#{imageId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{categoryContentId,jdbcType=INTEGER})
+    insert into hmx_images  (image_id,image_url,create_time,new_time,state,version,createid,category_content_id,transImage,verticalImage)
+    values (#{imageId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
+     #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{categoryContentId,jdbcType=INTEGER}, #{transImage,jdbcType=VARCHAR}, #{verticalImage,jdbcType=VARCHAR})
   </insert>
   
   
@@ -156,6 +159,12 @@
       <if test="categoryContentId != null" >
         category_content_id,
       </if>
+      <if test="transImage != null" >
+        transImage,
+      </if>
+      <if test="verticalImage != null" >
+        verticalImage,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="imageId != null" >
@@ -182,6 +191,13 @@
       <if test="categoryContentId != null" >
         #{categoryContentId,jdbcType=INTEGER},
       </if>
+      <if test="transImage != null" >
+        #{transImage,jdbcType=VARCHAR},
+      </if>
+      <if test="verticalImage != null" >
+        #{verticalImage,jdbcType=VARCHAR},
+      </if>
+      
     </trim>
   </insert>
   
@@ -194,7 +210,9 @@ new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-category_content_id = #{categoryContentId,jdbcType=INTEGER}
+category_content_id = #{categoryContentId,jdbcType=INTEGER},
+    transImage = #{transImage,jdbcType=INTEGER},
+    verticalImage = #{verticalImage,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,6 +252,12 @@ category_content_id = #{categoryContentId,jdbcType=INTEGER}
       <if test="categoryContentId != null" >
         category_content_id = #{categoryContentId,jdbcType=INTEGER} ,
       </if>
+      <if test="transImage != null" >
+        #{transImage,jdbcType=VARCHAR},
+      </if>
+      <if test="verticalImage != null" >
+        #{verticalImage,jdbcType=VARCHAR},
+      </if>
     </set >
     where image_id = #{imageId,jdbcType=INTEGER}
   </update>
@@ -248,7 +272,9 @@ new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-category_content_id = #{categoryContentId,jdbcType=INTEGER}
+category_content_id = #{categoryContentId,jdbcType=INTEGER},
+   transImage = #{transImage,jdbcType=INTEGER},
+    verticalImage = #{verticalImage,jdbcType=INTEGER}
     where image_id = #{imageId,jdbcType=INTEGER}
   </update>
    
