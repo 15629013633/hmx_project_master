@@ -253,10 +253,10 @@ category_content_id = #{categoryContentId,jdbcType=INTEGER},
         category_content_id = #{categoryContentId,jdbcType=INTEGER} ,
       </if>
       <if test="transImage != null" >
-        #{transImage,jdbcType=VARCHAR},
+        transImage = #{transImage,jdbcType=VARCHAR},
       </if>
       <if test="verticalImage != null" >
-        #{verticalImage,jdbcType=VARCHAR},
+        verticalImage = #{verticalImage,jdbcType=VARCHAR},
       </if>
     </set >
     where image_id = #{imageId,jdbcType=INTEGER}

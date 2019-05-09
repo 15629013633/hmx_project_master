@@ -31,8 +31,8 @@ public class HmxCategoryContentTrans {
     private String subTitle;
     private Integer mode;
     private String contentFlow;
-    private String transImage;   //横图
-    private String verticalImage;   //竖图
+//    private String transImage;   //横图
+//    private String verticalImage;   //竖图
     private List<HmxMovie> movieList = new ArrayList<>();
     private List<HmxImages> imagesList = new ArrayList<>();
     private List<HmxFiles> filesList = new ArrayList<>();
@@ -217,19 +217,19 @@ public class HmxCategoryContentTrans {
         this.contentFlow = contentFlow;
     }
 
-    public String getTransImage() {
-        return transImage;
-    }
-
-    public void setTransImage(String transImage) {
-        this.transImage = transImage;
-    }
-
-    public String getVerticalImage() {
-        return verticalImage;
-    }
-
-    public void setVerticalImage(String verticalImage) {
-        this.verticalImage = verticalImage;
-    }
+//    public String getTransImage() {
+//        return transImage;
+//    }
+//
+//    public void setTransImage(String transImage) {
+//        this.transImage = transImage;
+//    }
+//
+//    public String getVerticalImage() {
+//        return verticalImage;
+//    }
+//
+//    public void setVerticalImage(String verticalImage) {
+//        this.verticalImage = verticalImage;
+//    }
 }

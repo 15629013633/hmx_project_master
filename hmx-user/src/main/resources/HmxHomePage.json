@@ -1,5 +1,7 @@
-[
-  {
+{
+  "code": 10000,
+  "content": "查询首页信息成功",
+  "result": {
     "rcmb":[
       {
         "mode": 1,
@@ -556,5 +558,5 @@
     ],
     "categoryId": 0,
     "columnName": "首页推荐位"
-  }
-]
+}
+}

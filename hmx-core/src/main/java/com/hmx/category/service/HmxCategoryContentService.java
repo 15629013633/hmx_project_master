@@ -3,6 +3,7 @@ package com.hmx.category.service;
 import java.util.List;
 import java.util.Map;
 
+import com.hmx.base.entity.RcmbModel;
 import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.files.dto.HmxFilesDto;
@@ -124,4 +125,10 @@ public interface HmxCategoryContentService {
 	PageBean<Map<String,Object>> seniorSearch(PageBean<Map<String, Object>> page, HmxCategoryContentDto hmxCategoryContentDto);
 
 	List<Map<String,Object>> queryByContentFlow(String integer);
+
+	/**
+	 * 查询首页推荐位信息
+	 * @return
+     */
+	List<RcmbModel> getHomeInfo();
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.hmx.base.entity.RcmbModel;
 import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.files.dao.HmxFilesMapper;
 import com.hmx.files.dto.HmxFilesDto;
@@ -442,29 +443,29 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setFileUrl(fileUrl);
 		//查询视频下面的图片信息
 		String imageUrl = "";
-		String transImage = "";   //横图
-		String verticalImage = "";   //竖图
+//		String transImage = "";   //横图
+//		String verticalImage = "";   //竖图
 		HmxImagesExample hmxImagesExample = new HmxImagesExample();
 		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
 		if(null != hmxImagesList && hmxImagesList.size() > 0){
 			hmxCategoryContentTrans.setImagesList(hmxImagesList);
-			for(HmxImages images : hmxImagesList){
-				if(!StringUtils.isEmpty(images.getImageUrl())){
-					imageUrl= images.getImageUrl();
-				}
-				if(!StringUtils.isEmpty(images.getVerticalImage())){
-					verticalImage = images.getVerticalImage();
-				}
-				if(StringUtils.isEmpty(images.getTransImage())){
-					transImage = images.getTransImage();
-				}
-			}
+//			for(HmxImages images : hmxImagesList){
+//				if(!StringUtils.isEmpty(images.getImageUrl())){
+//					imageUrl= images.getImageUrl();
+//				}
+//				if(!StringUtils.isEmpty(images.getVerticalImage())){
+//					verticalImage = images.getVerticalImage();
+//				}
+//				if(StringUtils.isEmpty(images.getTransImage())){
+//					transImage = images.getTransImage();
+//				}
+//			}
 
 		}
 		hmxCategoryContentTrans.setContentImages(imageUrl);
-		hmxCategoryContentTrans.setVerticalImage(verticalImage);
-		hmxCategoryContentTrans.setTransImage(transImage);
+//		hmxCategoryContentTrans.setVerticalImage(verticalImage);
+//		hmxCategoryContentTrans.setTransImage(transImage);
 		return hmxCategoryContentTrans;
     }
     /**
@@ -659,6 +660,15 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	public Map<String, Object> queryContentById(Integer categoryContentId) {
 		Map<String,Object> resultMap = hmxCategoryContentMapper.selectContentInfoByContentId(categoryContentId);
 		return resultMap;
+	}
+
+
+	@Override
+	public List<RcmbModel> getHomeInfo() {
+		//1获取轮播图
+		//2获取一级分类信息
+		//3获取一级分类下的内容信息
+		return null;
 	}
 
 }
