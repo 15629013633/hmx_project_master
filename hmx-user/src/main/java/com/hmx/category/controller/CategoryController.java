@@ -82,6 +82,9 @@ public class CategoryController {
 	}
 
 	@GetMapping("/allCategory")
+	/**
+	 * parentId 为0则查询所有一级分类    不为0则查某个一级分类下的所有二级分类
+	 */
 	public ResultBean allCategory(HmxCategoryDto hmxCategoryDto){
 		//查询分类
 		List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);

@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.hmx.base.entity.ContentModel;
 import com.hmx.base.entity.RcmbModel;
+import com.hmx.base.entity.RowsModel;
+import com.hmx.category.dao.HmxCategoryMapper;
 import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.files.dao.HmxFilesMapper;
 import com.hmx.files.dto.HmxFilesDto;
@@ -46,6 +49,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
  
  	@Autowired
 	private HmxCategoryContentMapper hmxCategoryContentMapper;
+
+	@Autowired
+	private HmxCategoryMapper hmxCategoryMapper;
 
  	@Autowired
 	private InitVodClients initVodClients;
@@ -662,13 +668,76 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		return resultMap;
 	}
 
+	/**
+	 * 轮播图组装
+	 * @param rcmbModelList
+     */
+	public void packWheel(List<RcmbModel> rcmbModelList){
+		HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
+		hmxCategoryContentDto.setMode(2);
+		List<HmxCategoryContent> wheelPlantList = list(hmxCategoryContentDto);
+		RcmbModel rcmbModel = new RcmbModel();
+		rcmbModelList.add(rcmbModel);
+		rcmbModel.setMode(1);
+		rcmbModel.setHasMore(false);
+		rcmbModel.setTitle("轮播图");
+		List<RowsModel> rowsModelList = new ArrayList<>();
+		rcmbModel.setRows(rowsModelList);
+		RowsModel rowsModel = new RowsModel();
+		rowsModelList.add(rowsModel);
+		rowsModel.setRow(1);
+		rowsModel.setLine(1);
+		rowsModel.setImageType("1");
+		List<ContentModel> contentModelList = new ArrayList<>();
+		rowsModel.setItems(contentModelList);
+		if(null != wheelPlantList && wheelPlantList.size() > 0){
+			for(HmxCategoryContent content : wheelPlantList){
+				ContentModel contentModel = new ContentModel();
+				contentModel.setTitle(content.getCategoryTitle());
+				contentModel.setSubTitle(content.getSubTitle());
+				contentModel.setContentId(content.getCategoryContentId());
+				contentModel.setContent(content.getCategoryContent());
+				contentModel.setCreateTime(content.getCreateTime());
+				contentModel.setDesc(content.getContentDesc());
+				contentModel.setContentType(content.getContentType());
+				//获取内容的图片
+				String imageUrl = "";
+				String transImage = "";   //横图
+				String verticalImage = "";   //竖图
+				HmxImagesExample hmxImagesExample = new HmxImagesExample();
+				hmxImagesExample.or().andCategoryContentIdEqualTo(content.getCategoryContentId());
+				List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+				if(null != hmxImagesList && hmxImagesList.size() > 0){
+					for(HmxImages images : hmxImagesList){
+						if(!StringUtils.isEmpty(images.getImageUrl())){
+							imageUrl= images.getImageUrl();
+						}
+						if(!StringUtils.isEmpty(images.getVerticalImage())){
+							verticalImage = images.getVerticalImage();
+						}
+						if(StringUtils.isEmpty(images.getTransImage())){
+							transImage = images.getTransImage();
+						}
+					}
+				}
+				contentModel.setImageUrl(imageUrl);
+				contentModel.setVerticalImage(verticalImage);
+				contentModel.setTransImage(transImage);
+
+				contentModelList.add(contentModel);
+			}
+		}
+	}
 
 	@Override
 	public List<RcmbModel> getHomeInfo() {
+		List<RcmbModel> rcmbModelList = new ArrayList<>();
 		//1获取轮播图
+		packWheel(rcmbModelList);
 		//2获取一级分类信息
+		List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryAndContentList();
 		//3获取一级分类下的内容信息
-		return null;
+		return rcmbModelList;
 	}
 
 }

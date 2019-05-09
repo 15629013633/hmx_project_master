@@ -14,6 +14,7 @@
   	<result column="version" property="version" jdbcType="INTEGER" />
   	<result column="createid" property="createid" jdbcType="INTEGER" />
   	<result column="parentId" property="parentId" jdbcType="INTEGER" />
+  	<result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -76,7 +77,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId
+    category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId,imageUrl
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.category.entity.HmxCategoryExample" >
@@ -127,8 +128,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.category.entity.HmxCategory" keyProperty="categoryId" useGeneratedKeys="true">
-    insert into hmx_category  (category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId)
-    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryType,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{isClose,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER})
+    insert into hmx_category  (category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId,imageUrl)
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryType,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{isClose,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
+    #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR})
   </insert>
   
   
@@ -168,6 +170,9 @@
         <if test="parentId != null" >
             parentId,
         </if>
+        <if test="imageUrl != null" >
+            imageUrl,
+        </if>
 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -204,6 +209,9 @@
         <if test="parentId != null" >
             #{parentId,jdbcType=INTEGER},
         </if>
+        <if test="imageUrl != null" >
+            #{imageUrl,jdbcType=VARCHAR},
+        </if>
 
     </trim>
   </insert>
@@ -220,7 +228,8 @@ new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-      parentId = #{parentId,jdbcType=INTEGER}
+      parentId = #{parentId,jdbcType=INTEGER},
+      imageUrl = #{imageUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +281,9 @@ createid = #{createid,jdbcType=INTEGER},
         <if test="parentId != null" >
             parentId = #{parentId,jdbcType=INTEGER} ,
         </if>
+        <if test="imageUrl != null" >
+            imageUrl = #{imageUrl,jdbcType=VARCHAR} ,
+        </if>
     </set >
     where category_id = #{categoryId,jdbcType=INTEGER}
   </update>
@@ -289,14 +301,15 @@ new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-parentId = #{parentId,jdbcType=INTEGER}
+parentId = #{parentId,jdbcType=INTEGER},
+imageUrl = #{imageUrl,jdbcType=VARCHAR}
     where category_id = #{categoryId,jdbcType=INTEGER}
   </update>
   
    <!-- 首页分类查询  ↓-->
    <select id="selectCategoryAndContentList" resultMap="selectCategoryAndContentListResultMap">
    select c.category_id,c.category_id as 'categoryId',c.category_type as 'categoryType',
-          c.category_name as 'categoryName',c.sort as 'sort' 
+          c.category_name as 'categoryName',c.sort as 'sort' ,c.imageUrl as 'imageUrl'
     from hmx_category c 
 	where c.is_close=0 and c.state=0 and c.parentId=0
 	ORDER BY c.sort
@@ -345,7 +358,7 @@ parentId = #{parentId,jdbcType=INTEGER}
    <select id="selectCategoryTable" resultType="Map">
    select category_id as 'categoryId',category_name as 'categoryName',
           sort as 'sort',is_close as 'isClose',create_time as 'createTime',
-          new_time as 'newTime',createid as 'createid',category_type as 'categoryType',parentId as 'parentId'
+          new_time as 'newTime',createid as 'createid',category_type as 'categoryType',parentId as 'parentId',imageUrl as 'imageUrl'
     from hmx_category
 	<where>
 		<trim suffixOverrides="and">
@@ -363,6 +376,9 @@ parentId = #{parentId,jdbcType=INTEGER}
 		  </if>
             <if test="parentId != null">
                 parentId = #{parentId} and
+            </if>
+            <if test="imageUrl != null">
+                imageUrl = #{imageUrl} and
             </if>
 		  <if test="categoryName != null">
 		   category_name like concat("%",#{categoryName},"%") and 
@@ -398,6 +414,9 @@ parentId = #{parentId,jdbcType=INTEGER}
 		  </if>
             <if test="parentId != null" >
                 parentId = #{parentId} and
+            </if>
+            <if test="imageUrl != null" >
+                imageUrl = #{imageUrl} and
             </if>
 		  <if test="categoryName != null">
 		   category_name like concat("%",#{categoryName},"%") and 

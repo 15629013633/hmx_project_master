@@ -16,6 +16,7 @@ public class HmxCategory{
     private Integer version;
     private Integer createid;
     private Integer parentId;      //一级分类的id
+	private String imageUrl;
 
     public HmxCategory() {
 		super();
@@ -23,7 +24,7 @@ public class HmxCategory{
 
 	
     public HmxCategory(Integer categoryId, String categoryName, Integer categoryType, Integer sort, Integer isClose,
-			Date createTime, Date newTime, Integer state, Integer version, Integer createid,Integer parentId) {
+			Date createTime, Date newTime, Integer state, Integer version, Integer createid,Integer parentId,String imageUrl) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
@@ -37,6 +38,7 @@ public class HmxCategory{
 		this.createid = createid;
 		this.categoryType = categoryType;
 		this.parentId = parentId;
+		this.imageUrl = imageUrl;
 	}
 
 	public Integer getCategoryId() {
@@ -125,5 +127,13 @@ public class HmxCategory{
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 }

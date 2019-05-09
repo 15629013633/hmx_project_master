@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/app/content")
-public class ContentController {
+@RequestMapping("/appcontent")
+public class AppContentController {
 
 	//window下
 	//private static final String txtFileDir = "E:\\fileTest\\txtFile";

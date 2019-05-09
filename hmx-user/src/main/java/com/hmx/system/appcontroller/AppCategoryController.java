@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/app/category")
-public class CategoryController {
+@RequestMapping("/appcategory")
+public class AppCategoryController {
 
 	@Autowired
 	private HmxCategoryService hmxCategoryService;
