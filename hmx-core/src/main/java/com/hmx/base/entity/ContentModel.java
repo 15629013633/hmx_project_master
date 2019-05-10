@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by songjinbao on 2019/5/8.
  */
-public class ContentModel {
+public class ContentModel{
     private String imageUrl;   //大横图
     private Date createTime;
     private String content;

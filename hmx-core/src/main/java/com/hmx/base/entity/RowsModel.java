@@ -10,7 +10,7 @@ public class RowsModel {
     private Integer row;
     private Integer line;
     private String imageType;
-    private List<ContentModel> items = new ArrayList<>();
+    private List<?> items = new ArrayList<Object>();
 
     public Integer getRow() {
         return row;
@@ -36,11 +36,11 @@ public class RowsModel {
         this.imageType = imageType;
     }
 
-    public List<ContentModel> getItems() {
+    public List<?> getItems() {
         return items;
     }
 
-    public void setItems(List<ContentModel> items) {
+    public void setItems(List<?> items) {
         this.items = items;
     }
 }

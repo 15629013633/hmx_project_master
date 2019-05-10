@@ -10,7 +10,10 @@ import com.hmx.base.entity.ContentModel;
 import com.hmx.base.entity.RcmbModel;
 import com.hmx.base.entity.RowsModel;
 import com.hmx.category.dao.HmxCategoryMapper;
+import com.hmx.category.dto.HmxCategoryDto;
+import com.hmx.category.entity.HmxCategory;
 import com.hmx.category.entity.HmxCategoryContentTrans;
+import com.hmx.category.service.HmxCategoryService;
 import com.hmx.files.dao.HmxFilesMapper;
 import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.files.entity.HmxFiles;
@@ -63,6 +66,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 
 	@Autowired
 	private HmxImagesMapper hmxImagesMapper;
+
+	@Autowired
+	private HmxCategoryService hmxCategoryService;
 	
 	
 	/**
@@ -668,14 +674,34 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		return resultMap;
 	}
 
+
+
+	@Override
+	public List<RcmbModel> getHomeInfo() {
+		List<RcmbModel> rcmbModelList = new ArrayList<>();
+		//1获取轮播图
+		packWheel(rcmbModelList);
+		//2获取一级分类信息
+		List<HmxCategory> categoryList = packCategory(rcmbModelList);
+
+		//3获取一级分类下的内容信息
+		if(null != categoryList && categoryList.size() > 0){
+			packCategoryContent(rcmbModelList,categoryList);
+		}
+		return rcmbModelList;
+	}
+
 	/**
 	 * 轮播图组装
 	 * @param rcmbModelList
-     */
+	 */
 	public void packWheel(List<RcmbModel> rcmbModelList){
 		HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
 		hmxCategoryContentDto.setMode(2);
 		List<HmxCategoryContent> wheelPlantList = list(hmxCategoryContentDto);
+		if(null == wheelPlantList || wheelPlantList.size() == 0){
+			return;
+		}
 		RcmbModel rcmbModel = new RcmbModel();
 		rcmbModelList.add(rcmbModel);
 		rcmbModel.setMode(1);
@@ -696,7 +722,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 				contentModel.setTitle(content.getCategoryTitle());
 				contentModel.setSubTitle(content.getSubTitle());
 				contentModel.setContentId(content.getCategoryContentId());
-				contentModel.setContent(content.getCategoryContent());
+				contentModel.setContent("");
 				contentModel.setCreateTime(content.getCreateTime());
 				contentModel.setDesc(content.getContentDesc());
 				contentModel.setContentType(content.getContentType());
@@ -729,15 +755,95 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 	}
 
-	@Override
-	public List<RcmbModel> getHomeInfo() {
-		List<RcmbModel> rcmbModelList = new ArrayList<>();
-		//1获取轮播图
-		packWheel(rcmbModelList);
-		//2获取一级分类信息
-		List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryAndContentList();
-		//3获取一级分类下的内容信息
-		return rcmbModelList;
+	/**
+	 * 组装一级分类
+	 * @param rcmbModelList
+     */
+	public List<HmxCategory> packCategory(List<RcmbModel> rcmbModelList){
+		HmxCategoryDto hmxCategoryDto = new HmxCategoryDto();
+		hmxCategoryDto.setParentId(0);
+		List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);
+		if(null == categoryList || categoryList.size() == 0){
+			return null;
+		}
+
+		RcmbModel rcmbModel = new RcmbModel();
+		rcmbModelList.add(rcmbModel);
+		rcmbModel.setMode(1);
+		rcmbModel.setHasMore(false);
+		rcmbModel.setTitle("一级分类");
+		List<RowsModel> rowsModelList = new ArrayList<>();
+		rcmbModel.setRows(rowsModelList);
+		RowsModel rowsModel = new RowsModel();
+		rowsModelList.add(rowsModel);
+		rowsModel.setRow(2);
+		rowsModel.setLine(6);
+		rowsModel.setImageType("2");
+		rowsModel.setItems(categoryList);
+		return categoryList;
+	}
+
+	public void packCategoryContent(List<RcmbModel> rcmbModelList,List<HmxCategory> categoryList){
+		RcmbModel rcmbModel = new RcmbModel();
+		rcmbModelList.add(rcmbModel);
+		rcmbModel.setMode(1);
+		rcmbModel.setHasMore(false);
+		//rcmbModel.setTitle("轮播图");
+		List<RowsModel> rowsModelList = new ArrayList<>();
+		rcmbModel.setRows(rowsModelList);
+		RowsModel rowsModel = new RowsModel();
+		rowsModelList.add(rowsModel);
+		rowsModel.setRow(1);
+		rowsModel.setLine(1);
+		rowsModel.setImageType("1");
+		List<ContentModel> contentModelList = new ArrayList<>();
+		rowsModel.setItems(contentModelList);
+		for(HmxCategory category : categoryList){
+			rcmbModel.setTitle(category.getCategoryName());
+			HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
+			hmxCategoryContentExample.or().andCategoryIdEqualTo(category.getCategoryId());
+			hmxCategoryContentExample.setOrderByClause("create_time");
+			hmxCategoryContentExample.setLimit(10);
+			hmxCategoryContentExample.setOffset(0);
+			List<HmxCategoryContent> contentList = hmxCategoryContentMapper.selectByExample(hmxCategoryContentExample);
+			if(null != contentList && contentList.size() > 0){
+				for(HmxCategoryContent content : contentList){
+					ContentModel contentModel = new ContentModel();
+					contentModel.setTitle(content.getCategoryTitle());
+					contentModel.setSubTitle(content.getSubTitle());
+					contentModel.setContentId(content.getCategoryContentId());
+					contentModel.setContent("");
+					contentModel.setCreateTime(content.getCreateTime());
+					contentModel.setDesc(content.getContentDesc());
+					contentModel.setContentType(content.getContentType());
+					//获取内容的图片
+					String imageUrl = "";
+					String transImage = "";   //横图
+					String verticalImage = "";   //竖图
+					HmxImagesExample hmxImagesExample = new HmxImagesExample();
+					hmxImagesExample.or().andCategoryContentIdEqualTo(content.getCategoryContentId());
+					List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+					if(null != hmxImagesList && hmxImagesList.size() > 0){
+						for(HmxImages images : hmxImagesList){
+							if(!StringUtils.isEmpty(images.getImageUrl())){
+								imageUrl= images.getImageUrl();
+							}
+							if(!StringUtils.isEmpty(images.getVerticalImage())){
+								verticalImage = images.getVerticalImage();
+							}
+							if(StringUtils.isEmpty(images.getTransImage())){
+								transImage = images.getTransImage();
+							}
+						}
+					}
+					contentModel.setImageUrl(imageUrl);
+					contentModel.setVerticalImage(verticalImage);
+					contentModel.setTransImage(transImage);
+
+					contentModelList.add(contentModel);
+				}
+			}
+		}
 	}
 
 }
