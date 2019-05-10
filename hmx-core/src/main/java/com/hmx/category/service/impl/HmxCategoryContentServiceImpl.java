@@ -534,21 +534,21 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     		hmxCategoryContent.setBrowseNum(Integer.parseInt(resultMap.get("browseNum").toString()));
     		update(hmxCategoryContent);
     		//获取视频链接
-    		if(resultMap.get("videoList") != null){
-    			List<Map<String,Object>> videoList = (List<Map<String,Object>>)resultMap.get("videoList");
-    			if(videoList != null && videoList.size()>0){
-    				for(Map<String,Object> video:videoList){
-    					video.put("videoUrl", null);
-    					if(video.get("videoId") != null){
-    						Map<String,Object> resultUrl = initVodClients.getUrl(video.get("videoId").toString());
-    						boolean flag = Boolean.parseBoolean(resultUrl.get("flag").toString());
-    						if(flag){
-    							video.put("videoUrl", resultUrl.get("url"));
-    						}
-    					}
-    				}
-    			}
-    		}
+//    		if(resultMap.get("videoList") != null){
+//    			List<Map<String,Object>> videoList = (List<Map<String,Object>>)resultMap.get("videoList");
+//    			if(videoList != null && videoList.size()>0){
+//    				for(Map<String,Object> video:videoList){
+//    					video.put("videoUrl", null);
+//    					if(video.get("videoId") != null){
+//    						Map<String,Object> resultUrl = initVodClients.getUrl(video.get("videoId").toString());
+//    						boolean flag = Boolean.parseBoolean(resultUrl.get("flag").toString());
+//    						if(flag){
+//    							video.put("videoUrl", resultUrl.get("url"));
+//    						}
+//    					}
+//    				}
+//    			}
+//    		}
     	}
 		//查询内容下的视频信息
 		String movieIds = "";
@@ -557,6 +557,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
 		hmxMovieExample.setOrderByClause("serie");
 		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
+		resultMap.put("videoList",hmxMovieList);
+
 		if(hmxMovieList != null && hmxMovieList.size() > 0){
 			for(HmxMovie movie : hmxMovieList){
 				movieIds += movie.getVideoId()+",";
@@ -572,9 +574,14 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		HmxFilesExample hmxFilesExample = new HmxFilesExample();
 		hmxFilesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxFiles> hmxFilesList = hmxFilesMapper.selectByExample(hmxFilesExample);
+		resultMap.put("filesList",hmxFilesList);
 		if(null != hmxFilesList && hmxFilesList.size() > 0){
 			fileUrl = hmxFilesList.get(0).getFileUrl();
 		}
+		HmxImagesExample hmxImagesExample = new HmxImagesExample();
+		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
+		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+		resultMap.put("imagesList",hmxImagesList);
 		resultMap.put("fileUrl",fileUrl);
     	return resultMap;
     }
@@ -783,23 +790,38 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		return categoryList;
 	}
 
+	/**
+	 * 组装分类内容
+	 * @param rcmbModelList
+	 * @param categoryList
+     */
 	public void packCategoryContent(List<RcmbModel> rcmbModelList,List<HmxCategory> categoryList){
-		RcmbModel rcmbModel = new RcmbModel();
-		rcmbModelList.add(rcmbModel);
-		rcmbModel.setMode(1);
-		rcmbModel.setHasMore(false);
-		//rcmbModel.setTitle("轮播图");
-		List<RowsModel> rowsModelList = new ArrayList<>();
-		rcmbModel.setRows(rowsModelList);
-		RowsModel rowsModel = new RowsModel();
-		rowsModelList.add(rowsModel);
-		rowsModel.setRow(1);
-		rowsModel.setLine(1);
-		rowsModel.setImageType("1");
-		List<ContentModel> contentModelList = new ArrayList<>();
-		rowsModel.setItems(contentModelList);
+		List<ContentModel> contentModel5List = new ArrayList<>();
+		int num = 0;
 		for(HmxCategory category : categoryList){
-			rcmbModel.setTitle(category.getCategoryName());
+			RcmbModel rcmbModel = new RcmbModel();
+			rcmbModelList.add(rcmbModel);
+			rcmbModel.setMode(3);
+			rcmbModel.setShowTitle(1);
+			rcmbModel.setHasMore(false);
+			List<RowsModel> rowsModelList = new ArrayList<>();
+			rcmbModel.setRows(rowsModelList);
+			RowsModel rowsModel = new RowsModel();
+			rowsModelList.add(rowsModel);
+			rowsModel.setRow(2);
+			rowsModel.setLine(3);
+			rowsModel.setImageType("1");
+			List<ContentModel> contentModelList = new ArrayList<>();
+			rowsModel.setItems(contentModelList);
+			String categoryName = category.getCategoryName();
+			rcmbModel.setTitle(categoryName);
+			if("名家功臣".equals(categoryName)){
+				rcmbModel.setMode(4);
+			}
+			if("图片资料".equals(categoryName)){
+				rcmbModel.setMode(5);
+				num = 0;
+			}
 			HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
 			hmxCategoryContentExample.or().andCategoryIdEqualTo(category.getCategoryId());
 			hmxCategoryContentExample.setOrderByClause("create_time");
@@ -840,10 +862,38 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 					contentModel.setVerticalImage(verticalImage);
 					contentModel.setTransImage(transImage);
 
-					contentModelList.add(contentModel);
+					//==========为加一个大横图start======
+					if(num == 0 && rcmbModel.getMode() == 5){
+						contentModel5List.add(contentModel);
+					}else {
+						contentModelList.add(contentModel);
+					}
+					//==========为加一个大横图end======
+					num++;
 				}
 			}
+
+			//==========为加一个大横图start======
+			if(rcmbModel.getMode() == 5){
+				RowsModel rowMap0 = new RowsModel();
+				rowMap0.setItems(contentModel5List);
+				rowMap0.setLine(1);
+				rowMap0.setRow(1);
+				rowMap0.setImageType("1");
+				rowsModelList.add(0,rowMap0);
+			}
+
+			//==========为加一个大横图end======
 		}
+	}
+
+	public static void main(String[] arg0){
+		List<String> list = new ArrayList<>();
+		list.add("kkkkk");
+		System.out.println(list.get(0));
+		list.add(0,"pppppp");
+		System.out.println(list.get(0));
+		System.out.println(list.get(1));
 	}
 
 }

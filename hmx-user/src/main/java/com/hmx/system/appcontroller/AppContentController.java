@@ -51,6 +51,23 @@ public class AppContentController {
 		List<RcmbModel> homeInfoList = hmxCategoryContentService.getHomeInfo();
 		return new ResultBean().setCode(Config.SUCCESS_CODE).put("rcmb", homeInfoList).setContent("首页推荐位信息获取成功");
 	}
+
+	/**
+	 * 查询内容详情
+	 * @param categoryContentId
+	 * @return
+	 */
+	@GetMapping("/getContentById")
+	public ResultBean getCategoryContentById(Integer categoryContentId){
+		if(categoryContentId == null){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容编号不能为空");
+		}
+		Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(categoryContentId);
+		if(resultMap == null){
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到内容详情信息");
+		}
+		return new ResultBean().setCode(Config.SUCCESS_CODE).put("categoryContentInfo", resultMap).setContent("获取内容详情成功");
+	}
 	
 	/**
 	 * 内容列表
