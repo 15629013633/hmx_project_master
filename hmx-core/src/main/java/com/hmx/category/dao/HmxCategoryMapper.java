@@ -38,7 +38,7 @@ public interface HmxCategoryMapper{
      * 获取首页分类以及内容信息
      * @return
      */
-    List<Map<String,Object>> selectCategoryAndContentList();
+    List<Map<String,Object>> selectCategoryAndContentList(Integer parentId);
     /**
      * 分类在首页显示模块排序
      * @return
@@ -55,4 +55,5 @@ public interface HmxCategoryMapper{
      */
     List<Map<String,Object>> selectCategoryTable(Map<String,Object> parameter);
     int countCategoryTable(Map<String,Object> parameter);
+
 }

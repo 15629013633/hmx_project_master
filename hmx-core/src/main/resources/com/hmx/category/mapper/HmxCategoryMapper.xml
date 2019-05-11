@@ -314,6 +314,7 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
 	where c.is_close=0 and c.state=0 and c.parentId=0
 	ORDER BY c.sort
    </select>
+
    <resultMap type="Map" id="selectCategoryAndContentListResultMap">
    		<collection property="contentList" column="category_id" ofType="ArrayList" select="selectContentListByCategoryId"/>
    </resultMap>
@@ -321,8 +322,8 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
    select cc.category_content_id as 'categoryContentId',
           cc.category_title as 'categoryTitle',cc.content_type as 'contentType',
           cc.content_images as 'contentImages',DATE_FORMAT(cc.create_time,'%Y-%d-%m-%H:%i') as 'createTime',
-          cc.category_content as 'categoryContent' 
-    from hmx_category_content cc 
+          cc.category_content as 'categoryContent'
+    from hmx_category_content cc
     where cc.category_id=#{category_id} and cc.state=0
 	ORDER BY cc.create_time desc
    </select>

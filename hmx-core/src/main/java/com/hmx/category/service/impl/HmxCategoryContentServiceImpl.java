@@ -504,7 +504,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(hmxCategoryContentDto.getContentType() != null){
 			parameter.put("contentType", hmxCategoryContentDto.getContentType());
 		}
-		if(hmxCategoryContentDto.getMode() != 0){
+		if(null != hmxCategoryContentDto.getMode() && hmxCategoryContentDto.getMode() != 0){
 			parameter.put("mode", hmxCategoryContentDto.getMode());
 		}
 		if(!StringUtils.isEmpty(hmxCategoryContentDto.getSubTitle())){
@@ -516,6 +516,25 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			return page;
 		}
 	    List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTable(parameter);
+		//获取imageUrl
+		if(null != data && data.size() > 0){
+			for(Map<String,Object> map : data){
+				if(StringUtils.isEmpty(map.get("contentImages")+"") || "null".equals(map.get("contentImages")+"")){
+					//获取图片在images表
+					HmxImagesExample imagesExample = new HmxImagesExample();
+					imagesExample.or().andCategoryContentIdEqualTo(Integer.valueOf(map.get("categoryContentId")+""));
+					List<HmxImages> imagesList = hmxImagesMapper.selectByExample(imagesExample);
+					if(null != imagesList && imagesList.size() > 0){
+						for(HmxImages images : imagesList){
+							if(!StringUtils.isEmpty(images.getImageUrl())){
+								map.put("contentImages",images.getImageUrl());
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 	    page.setPage(data);
     	return page;
     }

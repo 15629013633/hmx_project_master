@@ -88,7 +88,7 @@ import com.hmx.utils.result.PageBean;
 	/**
 	 * @Method: info 
 	 * @Description: 根据自增主键查询对象信息
-	 * @param hmxImages 根据自增对象查询信息
+	 * @param hmxImagesId 根据自增对象查询信息
 	 * @return HmxImages 查询的对象
 	 */
 	public HmxImages info (Integer hmxImagesId) {
@@ -181,6 +181,9 @@ import com.hmx.utils.result.PageBean;
 		}
   		if ( hmxImagesDto.getCreateid() != null && hmxImagesDto.getCreateid() != 0 ) {
 			where.andCreateidEqualTo( hmxImagesDto.getCreateid() );
+		}
+		if(hmxImagesDto.getCategoryContentId() != null){
+			where.andCategoryContentIdEqualTo(hmxImagesDto.getCategoryContentId());
 		}
 		
 		if( hmxImagesDto.getLimit() != null ){

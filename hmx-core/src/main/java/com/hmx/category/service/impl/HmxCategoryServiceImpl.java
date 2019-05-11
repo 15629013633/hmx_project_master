@@ -229,12 +229,44 @@ import javax.servlet.http.HttpServletRequest;
 	}
 	
 	/**
-     * 获取首页一级分类以及内容信息
+     * 获取首页一级分类及其下面的最新的10条内容
      * @return
      */
     public List<Map<String,Object>> selectCategoryAndContentList(){
-		List<Map<String,Object>> list = hmxCategoryMapper.selectCategoryAndContentList();
-    	return list;
+		//获取一级分类
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		parameter.put("parentId",0);
+		List<Map<String,Object>> topCategoryList = hmxCategoryMapper.selectCategoryTable(parameter);
+		//获取二级分类
+		if(null != topCategoryList && topCategoryList.size() > 0){
+			//获取二级分类及其下的内容
+			for(Map<String,Object> map : topCategoryList){
+				map.put("contentList",null);
+				Integer topCategoryId = Integer.valueOf(map.get("categoryId")+"");
+				Map<String,Object> subparameter = new HashMap<String,Object>();
+				subparameter.put("parentId",topCategoryId);
+				List<Map<String,Object>> subCategoryList = hmxCategoryMapper.selectCategoryTable(subparameter);
+				if(null != subCategoryList && subCategoryList.size() > 0){
+					List<Integer> subCategoryIdList = new ArrayList<>();
+					for (Map<String,Object> objectMap : subCategoryList){
+						subCategoryIdList.add(Integer.valueOf(objectMap.get("categoryId")+""));
+					}
+					HmxCategoryContentExample example = new HmxCategoryContentExample();
+					example.or().andCategoryIdIn(subCategoryIdList);
+					example.setOrderByClause("create_time");
+					example.setOffset(0);
+					example.setLimit(10);
+					List<HmxCategoryContent> contenList = hmxCategoryContentMapper.selectByExample(example);
+					if(null != contenList && contenList.size() > 0){
+						for(HmxCategoryContent content : contenList){
+							content.setCategoryContent("");
+						}
+					}
+					map.put("contentList",contenList);
+				}
+			}
+		}
+    	return topCategoryList;
     }
     /**
      * 分类添加
