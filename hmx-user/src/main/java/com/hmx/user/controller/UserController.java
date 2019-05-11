@@ -193,7 +193,8 @@ public class UserController {
 			sb.append("account=8T00134&");
 			sb.append("password=8T0013443&");
 			sb.append("mobile="+mobile+"&");
-			sb.append("content=【黄梅戏资源库】您的验证码是"+code+"，请在一分钟内进行验证!如非本人操作，请忽略本短信"+"&");
+			//sb.append("content=【黄梅戏资源库】您的验证码是"+code+"，请在一分钟内进行验证!如非本人操作，请忽略本短信"+"&");
+			sb.append("content=【IFIP】您的验证码是"+ code+"。如非本人操作，请忽略本短信"+"&");
 			sb.append("sendTime=&");
 			sb.append("extno=&");
 			String xmlStr=sendPost("https://dx.ipyy.net/sms.aspx", sb.toString());
