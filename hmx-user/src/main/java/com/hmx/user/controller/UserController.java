@@ -126,17 +126,19 @@ public class UserController {
 //			if(!flag){
 //				return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
 //			}
-//			HmxVerifylog hmxVerifylog = new HmxVerifylog();
-//			hmxVerifylog.setAddTime(new Date());
-//			hmxVerifylog.setVerifyCode(code);
-//			hmxVerifylog.setVerifyObject(userPhone);
-//			hmxVerifylog.setVerifyType(0);
-//			flag = hmxVerifylogService.insert(hmxVerifylog);
+
 			boolean flag = sendSms(userPhone,code);
+
 			if(!flag){
 				return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
 			}
 			if(flag){
+				HmxVerifylog hmxVerifylog = new HmxVerifylog();
+				hmxVerifylog.setAddTime(new Date());
+				hmxVerifylog.setVerifyCode(code);
+				hmxVerifylog.setVerifyObject(userPhone);
+				hmxVerifylog.setVerifyType(0);
+				hmxVerifylogService.insert(hmxVerifylog);
 				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("发送验证码成功");
 			}
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
