@@ -1,6 +1,12 @@
 package com.hmx.user.controller;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -116,17 +122,24 @@ public class UserController {
 			if(isHmxUser != null){
 				return new ResultBean().setCode(Config.FAIL_CODE).setContent("该手机号已经被注册");
 			}
-			boolean flag = SMSSendOut.SMSSending(userPhone, code);
+//			boolean flag = SMSSendOut.SMSSending(userPhone, code);
+//			if(!flag){
+//				return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
+//			}
+//			HmxVerifylog hmxVerifylog = new HmxVerifylog();
+//			hmxVerifylog.setAddTime(new Date());
+//			hmxVerifylog.setVerifyCode(code);
+//			hmxVerifylog.setVerifyObject(userPhone);
+//			hmxVerifylog.setVerifyType(0);
+//			flag = hmxVerifylogService.insert(hmxVerifylog);
+			boolean flag = sendSms(userPhone,code);
 			if(!flag){
 				return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
 			}
-			HmxVerifylog hmxVerifylog = new HmxVerifylog();
-			hmxVerifylog.setAddTime(new Date());
-			hmxVerifylog.setVerifyCode(code);
-			hmxVerifylog.setVerifyObject(userPhone);
-			hmxVerifylog.setVerifyType(0);
-			flag = hmxVerifylogService.insert(hmxVerifylog);
-			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("发送验证码成功");
+			if(flag){
+				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("发送验证码成功");
+			}
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
 		} catch (Exception e) {
 			LogHelper.logger().error("操作失败", e);
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败" + e.getMessage());
@@ -165,5 +178,93 @@ public class UserController {
 			LogHelper.logger().error("登录失败", e);
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("登录失败" + e.getMessage());
 		}
+	}
+
+	public static void main(String[] arg0){
+		sendSms("13076949806","1111");
+	}
+
+	public static Boolean sendSms(String mobile, String code) {
+		Boolean flag=true;
+		try {
+			StringBuffer sb=new StringBuffer();
+			sb.append("action=send&");
+			sb.append("userid=&");
+			sb.append("account=8T00134&");
+			sb.append("password=8T0013443&");
+			sb.append("mobile="+mobile+"&");
+			sb.append("content=【黄梅戏资源库】您的验证码是"+code+"，请在一分钟内进行验证!如非本人操作，请忽略本短信"+"&");
+			sb.append("sendTime=&");
+			sb.append("extno=&");
+			String xmlStr=sendPost("https://dx.ipyy.net/sms.aspx", sb.toString());
+//			String Success=parseXml(xmlStr);//短信发送成功的标记为 Success
+//			if ("Success".equals(Success)) {
+//				flag=true;
+//			}else {
+//				flag=false;
+//			}
+
+			System.out.println(xmlStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag=false;
+		}
+		return flag;
+	}
+
+	/**
+	 * 向指定 URL 发送POST方法的请求
+	 *
+	 * @param url
+	 *            发送请求的 URL
+	 * @param param
+	 *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+	 * @return 所代表远程资源的响应结果
+	 */
+	public static String sendPost(String url, String param) {
+		PrintWriter out = null;
+		BufferedReader in = null;
+		String result = "";
+		try {
+			URL realUrl = new URL(url);
+			// 打开和URL之间的连接
+			URLConnection conn = realUrl.openConnection();
+			// 设置通用的请求属性
+			conn.setRequestProperty("accept", "*/*");
+			conn.setRequestProperty("connection", "Keep-Alive");
+			conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; WinDo1ws NT 5.1;SV1)");
+			// 发送POST请求必须设置如下两行
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			// 获取URLConnection对象对应的输出流
+			out = new PrintWriter(conn.getOutputStream());
+			// 发送请求参数
+			out.print(param);
+			// flush输出流的缓冲
+			out.flush();
+			// 定义BufferedReader输入流来读取URL的响应
+			in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line;
+			while ((line = in.readLine()) != null) {
+				result += line;
+			}
+		} catch (Exception e) {
+			System.out.println("发送 POST 请求出现异常！" + e);
+			e.printStackTrace();
+		}
+		// 使用finally块来关闭输出流、输入流
+		finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return result;
 	}
 }
