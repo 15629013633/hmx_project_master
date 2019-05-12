@@ -99,7 +99,7 @@
     </if>
     
     <if test="orderByClause != null" >
-      order by ${orderByClause}
+      order by ${orderByClause} DESC
     </if>
     
     <if test="limit != null" >

@@ -11,8 +11,7 @@ import com.hmx.base.entity.RcmbModel;
 import com.hmx.base.entity.RowsModel;
 import com.hmx.category.dao.HmxCategoryMapper;
 import com.hmx.category.dto.HmxCategoryDto;
-import com.hmx.category.entity.HmxCategory;
-import com.hmx.category.entity.HmxCategoryContentTrans;
+import com.hmx.category.entity.*;
 import com.hmx.category.service.HmxCategoryService;
 import com.hmx.files.dao.HmxFilesMapper;
 import com.hmx.files.dto.HmxFilesDto;
@@ -38,9 +37,7 @@ import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
 import com.hmx.utils.upload.InitVodClients;
-import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.dto.HmxCategoryContentDto;
-import com.hmx.category.entity.HmxCategoryContentExample;
 import com.hmx.category.entity.HmxCategoryContentExample.Criteria;
 import com.hmx.category.dao.HmxCategoryContentMapper;
 /**
@@ -795,7 +792,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 
 		RcmbModel rcmbModel = new RcmbModel();
 		rcmbModelList.add(rcmbModel);
-		rcmbModel.setMode(1);
+		rcmbModel.setMode(2);
 		rcmbModel.setHasMore(false);
 		rcmbModel.setTitle("一级分类");
 		List<RowsModel> rowsModelList = new ArrayList<>();
@@ -841,8 +838,21 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 				rcmbModel.setMode(5);
 				num = 0;
 			}
+			//获取一级分类的二级分类
+			HmxCategoryDto hmxCategoryDto = new HmxCategoryDto();
+			hmxCategoryDto.setParentId(category.getCategoryId());
+			List<HmxCategory> hmxCategoryList = hmxCategoryService.list(hmxCategoryDto);
+			List<Integer> subCategoryIdList = new ArrayList<>();
+			if(null != hmxCategoryList && hmxCategoryList.size() > 0){
+				for(HmxCategory hmxCategory : hmxCategoryList){
+					subCategoryIdList.add(hmxCategory.getCategoryId());
+				}
+			}
+			if(subCategoryIdList.size() == 0){
+				continue;
+			}
 			HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
-			hmxCategoryContentExample.or().andCategoryIdEqualTo(category.getCategoryId());
+			hmxCategoryContentExample.or().andCategoryIdIn(subCategoryIdList);
 			hmxCategoryContentExample.setOrderByClause("create_time");
 			hmxCategoryContentExample.setLimit(10);
 			hmxCategoryContentExample.setOffset(0);

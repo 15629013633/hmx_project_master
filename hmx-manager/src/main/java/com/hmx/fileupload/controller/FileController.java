@@ -2,6 +2,7 @@ package com.hmx.fileupload.controller;
 
 import com.hmx.files.service.HmxFilesService;
 import com.hmx.utils.enums.UploadFileType;
+import com.hmx.utils.oss.upload.UploadEpubUtil;
 import com.hmx.utils.oss.upload.UploadUtil;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.Result;
@@ -25,6 +26,9 @@ public class FileController {
     private UploadUtil uploadUtil;
 
     @Autowired
+    private UploadEpubUtil uploadEpubUtil;
+
+    @Autowired
     private HmxFilesService hmxFilesService;
 
     /**
@@ -37,28 +41,51 @@ public class FileController {
     @RequestMapping("/upload")
     @ResponseBody
    public ResultBean fileUpload(@RequestParam MultipartFile file , @RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
-    //public ResultBean fileUpload(@RequestParam MultipartFile file , @RequestParam Integer fileType, @RequestParam( required = false) String module ){
-        if ( file == null ) {
+        if(fileType == null){
+            return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件不能为空");
+        }
+       if ( file == null ) {
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件为空");
         }
         if(StringUtils.isEmpty(contentFlow)){
             return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水哈contentFlow不能为空");
         }
-//        String path =  "";
-//        if ( StringUtils.isEmpty( module ) ) {
-//            path =  File.separator+"files"+File.separator+"default"+File.separator;
-//        }else{
-//            path =  File.separator+"files"+File.separator+module+File.separator;
-//        }
-        if(fileType == null){
-            return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件不能为空");
-        }
+
+
         List<String> fileTypeStr = UploadFileType.getName(fileType);
         if(fileTypeStr == null){
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不正确");
         }
+        String fileOriginalName = file.getOriginalFilename().trim();
+        String fileName = file.getName();
+        System.out.println("fileOriginalName=" + fileOriginalName);
+        System.out.println("fileName=" + fileName);
+        //上传的epub文件不用转成html
+        if(fileOriginalName.endsWith("epub")){
+            return uploadEpub(file,module,fileType,fileTypeStr);
+        }
         try {
             String virtualPath = uploadUtil.uploadFile( file , contentFlow, fileTypeStr );
+            if ( StringUtils.isEmpty( virtualPath ) ) {
+                return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常");
+            }
+            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("上传成功").put("virtualPath", virtualPath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常:"+ e.getMessage() );
+        }
+    }
+
+    public ResultBean uploadEpub(MultipartFile file,String module,Integer fileType,List<String> fileTypeStr){
+        String path =  "";
+        if ( StringUtils.isEmpty( module ) ) {
+            path =  File.separator+"files"+File.separator+"default"+File.separator;
+        }else{
+            path =  File.separator+"files"+File.separator+module+File.separator;
+        }
+        try {
+            String virtualPath = uploadEpubUtil.uploadFile( file , path, fileTypeStr );
 
             if ( StringUtils.isEmpty( virtualPath ) ) {
                 return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常");
@@ -97,5 +124,10 @@ public class FileController {
             }
         }
         return resultBean;
+    }
+
+    public static void main(String[] arg0){
+        List<String> fileTypeStr = UploadFileType.getName(2);
+        System.out.println(fileTypeStr);
     }
 }
