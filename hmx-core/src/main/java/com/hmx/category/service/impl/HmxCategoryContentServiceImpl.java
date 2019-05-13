@@ -25,6 +25,7 @@ import com.hmx.movie.dao.HmxMovieMapper;
 import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.movie.entity.HmxMovie;
 import com.hmx.movie.entity.HmxMovieExample;
+import com.hmx.utils.common.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,11 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
  */
  @Service
  public class HmxCategoryContentServiceImpl implements HmxCategoryContentService{
- 
+
+	private static final Integer INDEX = 45;  //关键字前后几个字符被显示
+	private static final Integer COUNTINDEX = 100;  //最多显示多少个字
+	private static final Integer MAXCOUNT = 30;   //预留多少个字的保留空间
+
  	@Autowired
 	private HmxCategoryContentMapper hmxCategoryContentMapper;
 
@@ -653,16 +658,40 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		parameter.put("offset", page.getStartOfPage());
 		parameter.put("limit", page.getPageSize());
 		parameter.put("state", DataState.正常.getState());
-		parameter.put("categoryTitle", contentValue);
+		parameter.put("title", contentValue);
 		Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
 		Boolean haveData = page.setTotalNum((int)(long)count);
 		if(!haveData){
 			return page;
 		}
 		List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTable(parameter);
+		//如果是从内容中查找的则只显示关键字的前后15个文字
+		//如果是标题查找到的则将内容的开头30个字展示出来
+		if(null != data && data.size() > 0){
+			for(Map<String,Object> map : data){
+				try {
+					String content = CommonUtils.clearNotChinese(map.get("categoryContent")+"");
+					if(!StringUtils.isEmpty(content) && content.length() > ((INDEX * 2) + contentValue.length() + MAXCOUNT)){
+						Integer num = content.indexOf(contentValue);
+						if( num != -1){//内容中存在关键字
+							content = content.substring((num - INDEX),(num + contentValue.length() + INDEX));
+							map.put("categoryContent",content);
+						}else {//内容中不存在关键字
+							map.put("categoryContent",content.substring(0,COUNTINDEX));
+						}
+					}
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
 		page.setPage(data);
 		return page;
 	}
+
+
+
+
 
 
 	@Override
@@ -916,14 +945,6 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 	}
 
-	public static void main(String[] arg0){
-		List<String> list = new ArrayList<>();
-		list.add("kkkkk");
-		System.out.println(list.get(0));
-		list.add(0,"pppppp");
-		System.out.println(list.get(0));
-		System.out.println(list.get(1));
-	}
 
 }
  

@@ -1,10 +1,7 @@
 package com.hmx.category.controller;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -107,7 +104,7 @@ public class CategoryContentController {
 	public ResultBean search(String contentValue, PageBean<Map<String,Object>> page, Model model){
 
 		Map<String,Object> map = new HashMap<>();
-		//从文本和标题中查  实际上目前只从标题中查了
+		//从文本和标题中查
 		page = hmxCategoryContentService.search(page, contentValue);
 		//从pdf生成的txt中查询关键字
 		try {
@@ -118,6 +115,7 @@ public class CategoryContentController {
 
 		List<Map<String,Object>> list = page.getPage();
 		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
+		Set<String> set = new HashSet();
 
 		if(null != list && list.size() > 0){
 			for(Map<String,Object> map1 : list){
@@ -125,13 +123,18 @@ public class CategoryContentController {
 				if(!StringUtils.isEmpty(categoryContentId)){
 					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId));
 					resultMap.put("categoryContent",map1.get("categoryContent"));
-					resultList.add(resultMap);
+					if(set.add(resultMap.get("categoryContentId")+"")){//去重
+						resultList.add(resultMap);
+					}
 				}
 			}
 		}
 		if(null != page && page.getPage() != null){
 			page.getPage().clear();
 			page.setPage(resultList);
+			page.setPageNum(1);
+			page.setPageSize(10);
+			page.setTotalNum(resultList.size());
 		}
 		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
 	}
