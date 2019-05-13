@@ -42,7 +42,7 @@ public class FileController {
      */
     @RequestMapping("/upload")
     @ResponseBody
-   public ResultBean fileUpload(@RequestParam MultipartFile pdfFile , @RequestParam MultipartFile epubFile,@RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
+   public ResultBean fileUpload(MultipartFile pdfFile , MultipartFile epubFile,@RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
         if(fileType == null){
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不能为空");
         }

@@ -688,7 +688,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 					if(!StringUtils.isEmpty(content) && content.length() > ((INDEX * 2) + contentValue.length() + MAXCOUNT)){
 						Integer num = content.indexOf(contentValue);
 						if( num != -1){//内容中存在关键字
-							content = content.substring((num - INDEX),(num + contentValue.length() + INDEX));
+							Integer startIndex = num - INDEX;
+							content = content.substring(startIndex < 0 ? 0 : startIndex,(num + contentValue.length() + INDEX));
 							map.put("categoryContent",content);
 						}else {//内容中不存在关键字
 							map.put("categoryContent",content.substring(0,COUNTINDEX));
