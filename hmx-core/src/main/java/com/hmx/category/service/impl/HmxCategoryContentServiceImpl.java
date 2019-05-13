@@ -546,7 +546,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
      * @param categoryContentId
      * @return
      */
-    public Map<String,Object> selectContentInfoByContentId(Integer categoryContentId){
+    public Map<String,Object> selectContentInfoByContentId(Integer categoryContentId,String type){
     	Map<String,Object> resultMap = hmxCategoryContentMapper.selectContentInfoByContentId(categoryContentId);
     	resultMap.put("videoUrl", null);
     	if(resultMap != null){
@@ -595,7 +595,21 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		HmxFilesExample hmxFilesExample = new HmxFilesExample();
 		hmxFilesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxFiles> hmxFilesList = hmxFilesMapper.selectByExample(hmxFilesExample);
-		resultMap.put("filesList",hmxFilesList);
+		List<HmxFiles> filesList = new ArrayList<>();
+		if(null != hmxFilesList && hmxFilesList.size() > 0){
+			for(HmxFiles file : hmxFilesList){
+				if("app".equals(type)){
+					if(file.getFileUrl().endsWith("epub")){
+						filesList.add(file);
+					}
+				}else if("pc".equals(type)){
+					if(file.getFileUrl().endsWith("html")){
+						filesList.add(file);
+					}
+				}
+			}
+		}
+		resultMap.put("filesList",filesList);
 		if(null != hmxFilesList && hmxFilesList.size() > 0){
 			fileUrl = hmxFilesList.get(0).getFileUrl();
 		}

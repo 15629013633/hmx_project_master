@@ -94,7 +94,7 @@ public interface HmxCategoryContentService {
      * @param categoryContentId
      * @return
      */
-    Map<String,Object> selectContentInfoByContentId(Integer categoryContentId);
+    Map<String,Object> selectContentInfoByContentId(Integer categoryContentId,String type);
     /**
      * Pc内容列表查询
      * @return

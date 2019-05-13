@@ -62,7 +62,7 @@ public class AppContentController {
 		if(categoryContentId == null){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容编号不能为空");
 		}
-		Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(categoryContentId);
+		Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(categoryContentId,"app");
 		if(resultMap == null){
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到内容详情信息");
 		}
@@ -133,7 +133,7 @@ public class AppContentController {
 			for(Map<String,Object> map1 : list){
 				String categoryContentId = map1.get("categoryContentId")+"";
 				if(!StringUtils.isEmpty(categoryContentId)){
-					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId));
+					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId),"app");
 					resultMap.put("categoryContent",map1.get("categoryContent"));
 					resultList.add(resultMap);
 				}
@@ -176,7 +176,7 @@ public class AppContentController {
 			for(Map<String,Object> map1 : list){
 				String categoryContentId = map1.get("categoryContentId")+"";
 				if(!StringUtils.isEmpty(categoryContentId)){
-					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId));
+					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId),"app");
 					resultList.add(resultMap);
 				}
 			}
