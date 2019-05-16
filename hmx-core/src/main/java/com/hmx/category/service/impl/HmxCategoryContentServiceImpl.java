@@ -624,7 +624,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
      * Pc内容列表查询
      * @return
      */
-    public PageBean<Map<String,Object>> selectCategoryContentTableByPc(PageBean<Map<String,Object>> page,HmxCategoryContentDto hmxCategoryContentDto){
+    public PageBean<Map<String,Object>> selectCategoryContentTableByPc(PageBean<Map<String,Object>> page,HmxCategoryContentDto hmxCategoryContentDto,String type){
     	Map<String,Object> parameter = new HashMap<String,Object>();
     	parameter.put("offset", page.getStartOfPage());
     	parameter.put("limit", page.getPageSize());
@@ -653,9 +653,32 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			return page;
 		}
 	    List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTableByPc(parameter);
+		if("app".equals(type) && null != data && data.size() > 0){
+			//获取内容的附属信息，图片，视频
+			getContentImagesAndVideo(data);
+		}
+
 	    page.setPage(data);
     	return page;
     }
+
+	public void getContentImagesAndVideo(List<Map<String,Object>> data){
+		for(Map<String,Object> map : data){
+
+			String contentId = map.get("categoryContentId")+"";
+			HmxImagesExample hmxImagesExample = new HmxImagesExample();
+			hmxImagesExample.or().andCategoryContentIdEqualTo(Integer.valueOf(contentId));
+			//获取图片信息
+			List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+			map.put("imagesList",hmxImagesList);
+			//获取视频信息
+//			HmxMovieExample hmxMovieExample = new HmxMovieExample();
+//			hmxMovieExample.or().andCategoryContentIdEqualTo(contentId+"");
+//			hmxMovieExample.setOrderByClause("serie");
+//			List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
+//			map.put("videoList",hmxMovieList);
+		}
+	}
     
     /**
      * 查看排行榜信息

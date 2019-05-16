@@ -78,7 +78,7 @@ public class AppContentController {
 	 */
 	@GetMapping("/contentTable")
 	public ResultBean categoryContentTable(HmxCategoryContentDto hmxCategoryContentDto,PageBean<Map<String,Object>> page,Model model){
-		page = hmxCategoryContentService.selectCategoryContentTableByPc(page, hmxCategoryContentDto);
+		page = hmxCategoryContentService.selectCategoryContentTableByPc(page, hmxCategoryContentDto,"app");
 		List<Map<String,Object>> list = page.getPage();
 		if(list == null || list.size() <= 0){
 			if(page.getPageNum() == 1){
@@ -391,7 +391,7 @@ public class AppContentController {
 	 */
 	@GetMapping("/recommend")
 	public ResultBean recommend(HmxCategoryContentDto hmxCategoryContentDto,PageBean<Map<String,Object>> page,Model model){
-		page = hmxCategoryContentService.selectCategoryContentTableByPc(page, hmxCategoryContentDto);
+		page = hmxCategoryContentService.selectCategoryContentTableByPc(page, hmxCategoryContentDto,"app");
 		List<Map<String,Object>> list = page.getPage();
 		if(list == null || list.size() <= 0){
 			if(page.getPageNum() == 1){

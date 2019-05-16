@@ -99,7 +99,7 @@ public interface HmxCategoryContentService {
      * Pc内容列表查询
      * @return
      */
-    PageBean<Map<String,Object>> selectCategoryContentTableByPc(PageBean<Map<String,Object>> page,HmxCategoryContentDto hmxCategoryContentDto);
+    PageBean<Map<String,Object>> selectCategoryContentTableByPc(PageBean<Map<String,Object>> page,HmxCategoryContentDto hmxCategoryContentDto,String type);
     /**
      * 查看排行榜信息
      * @return
