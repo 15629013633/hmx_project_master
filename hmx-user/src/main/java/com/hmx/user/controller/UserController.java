@@ -108,6 +108,30 @@ public class UserController {
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("注册失败" + e.getMessage());
 		}
 	}
+
+	/**
+	 * 注册用户
+	 * @param hmxUser
+	 * @return
+	 */
+	@PostMapping("/edit")
+	public ResultBean editUser(@ModelAttribute HmxUser hmxUser,String verifyCode,HttpServletRequest request){
+		if(null == hmxUser.getId() || 0 == hmxUser.getId()){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("用户id不能为空");
+		}
+		try {
+			hmxUser.setPassword(MD5Util.encode(hmxUser.getPassword()));
+			boolean flag = hmxUserService.update(hmxUser);
+			if(flag){
+				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("修改成功");
+			}
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}catch (Exception e){
+			e.printStackTrace();
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}
+	}
+
 	/**
 	 * 发送验证码
 	 * @param hmxUser

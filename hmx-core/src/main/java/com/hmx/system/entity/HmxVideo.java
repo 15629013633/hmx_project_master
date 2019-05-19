@@ -4,6 +4,7 @@ package com.hmx.system.entity;
  * Created by Administrator on 2019/5/12.
  */
 public class HmxVideo {
+    private String videoId;
     private Integer width;
     private Integer height;
     private Integer size;
@@ -26,6 +27,14 @@ public class HmxVideo {
     private String modificationTime;
     private String encryptType;
     private String narrowBandType;
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
+    }
 
     public Integer getWidth() {
         return width;
@@ -202,4 +211,5 @@ public class HmxVideo {
     public void setNarrowBandType(String narrowBandType) {
         this.narrowBandType = narrowBandType;
     }
+
 }

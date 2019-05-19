@@ -2,14 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hmx.system.dao.CommentMapper" >
 
-  <resultMap id="BaseResultMap" type="com.hmx.system.entity.Comment" >
-    <id column="comment_id" property="commentId" jdbcType="INTEGER" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="categoryContent_id" property="categoryContentId" jdbcType="INTEGER" />
-  	<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-  	<result column="user_id" property="userId" jdbcType="VARCHAR" />
-  	<result column="parent_id" property="parentId" jdbcType="INTEGER" />
-  	<result column="status" property="status" jdbcType="INTEGER" />
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.HmxVideo" >
+    <result column="videoId" property="videoId" jdbcType="VARCHAR" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+  	<result column="size" property="size" jdbcType="INTEGER" />
+  	<result column="play_url" property="playURL" jdbcType="VARCHAR" />
+  	<result column="bitrate" property="bitrate" jdbcType="VARCHAR" />
+  	<result column="definition" property="definition" jdbcType="VARCHAR" />
+  	<result column="duration" property="duration" jdbcType="VARCHAR" />
+  	<result column="format" property="format" jdbcType="VARCHAR" />
+  	<result column="fps" property="fps" jdbcType="VARCHAR" />
+  	<result column="encrypt" property="encrypt" jdbcType="INTEGER" />
+    <result column="plaintext" property="plaintext" jdbcType="VARCHAR" />
+    <result column="complexity" property="complexity" jdbcType="VARCHAR" />
+    <result column="streamType" property="streamType" jdbcType="VARCHAR" />
+    <result column="rand" property="rand" jdbcType="VARCHAR" />
+    <result column="jobId" property="jobId" jdbcType="VARCHAR" />
+    <result column="preprocessStatus" property="preprocessStatus" jdbcType="VARCHAR" />
+    <result column="watermarkId" property="watermarkId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creationTime" property="creationTime" jdbcType="VARCHAR" />
+    <result column="modificationTime" property="modificationTime" jdbcType="VARCHAR" />
+    <result column="encryptType" property="encryptType" jdbcType="VARCHAR" />
+    <result column="narrowBandType" property="narrowBandType" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -72,10 +88,10 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    comment_id,content,categoryContent_id,create_date,user_id,parent_id,status
+    videoId,width,height,size,playURL,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,jobId,preprocessStatus,watermarkId,status,creationTime,modificationTime,encryptType,narrowBandType
   </sql>
   
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.CommentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.HmxVideoExample" >
     select
     <if test="distinct" >
       distinct
@@ -121,7 +137,7 @@
     where comment_id = #{commentId,jdbcType=INTEGER}
   </delete>
   
-  <delete id="deleteByExample" parameterType="com.hmx.system.entity.CommentExample" >
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.HmxVideoExample" >
     delete from hmx_comment
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -129,13 +145,13 @@
   </delete>
   
   
-  <insert id="insert" parameterType="com.hmx.system.entity.Comment" keyProperty="commentId" useGeneratedKeys="true">
+  <insert id="insert" parameterType="com.hmx.system.entity.HmxVideo" keyProperty="commentId" useGeneratedKeys="true">
     insert into hmx_comment  (comment_id,content,create_date,categoryContent_id,user_id,parent_id,status)
     values (#{commentId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{categoryContentId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
   </insert>
   
   
-  <insert id="insertSelective" parameterType="com.hmx.system.entity.Comment" keyProperty="commentId" useGeneratedKeys="true"  >
+  <insert id="insertSelective" parameterType="com.hmx.system.entity.HmxVideo" keyProperty="commentId" useGeneratedKeys="true"  >
     insert into hmx_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="commentId != null" >
@@ -203,14 +219,14 @@
     </if>
   </update>
   
-  <select id="countByExample" parameterType="com.hmx.system.entity.CommentExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.hmx.system.entity.HmxVideoExample" resultType="java.lang.Integer" >
     select count(*) from hmx_comment
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   
-  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.Comment" >
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.HmxVideo" >
     update hmx_comment
     <set >
       <if test="commentId != null" >
@@ -241,7 +257,7 @@
   </update>
   
   
-  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.Comment" >
+  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.HmxVideo" >
     update hmx_comment
     set
     comment_id = #{commentId,jdbcType=INTEGER},
