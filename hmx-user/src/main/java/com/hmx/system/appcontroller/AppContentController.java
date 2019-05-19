@@ -78,6 +78,9 @@ public class AppContentController {
 	 */
 	@GetMapping("/contentTable")
 	public ResultBean categoryContentTable(HmxCategoryContentDto hmxCategoryContentDto,PageBean<Map<String,Object>> page,Model model){
+		if(null == hmxCategoryContentDto.getContentType() || 0 == hmxCategoryContentDto.getContentType()){
+			hmxCategoryContentDto.setContentType(3);
+		}
 		page = hmxCategoryContentService.selectCategoryContentTableByPc(page, hmxCategoryContentDto,"app");
 		List<Map<String,Object>> list = page.getPage();
 		if(list == null || list.size() <= 0){

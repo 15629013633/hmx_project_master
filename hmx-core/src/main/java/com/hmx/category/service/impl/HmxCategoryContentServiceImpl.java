@@ -647,6 +647,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(!StringUtils.isEmpty(hmxCategoryContentDto.getSubTitle())){
 			parameter.put("subTitle", hmxCategoryContentDto.getSubTitle());
 		}
+		if(null != hmxCategoryContentDto.getContentType() && 0 != hmxCategoryContentDto.getContentType()){
+			parameter.put("contentType", hmxCategoryContentDto.getContentType());
+		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTableByPc(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){
