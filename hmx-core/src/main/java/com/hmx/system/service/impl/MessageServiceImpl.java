@@ -151,8 +151,8 @@ public class MessageServiceImpl implements MessageService {
         }else if(3 == type){//查询自己未读消息
             where.andTargeUserIdEqualTo(messageDto.getTargeUserId());
             where.andStatusEqualTo(0);
-        } else if(4 == type){
-
+        } else if(0 == type){//查询已读和未读的消息列表
+            messageExample.or().andTargeUserIdEqualTo(messageDto.getTargeUserId());
         } else {
             return page;
         }

@@ -110,7 +110,7 @@ public class UserController {
 	}
 
 	/**
-	 * 注册用户
+	 * 修改用户
 	 * @param hmxUser
 	 * @return
 	 */
@@ -129,6 +129,28 @@ public class UserController {
 		}catch (Exception e){
 			e.printStackTrace();
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}
+	}
+
+	/**
+	 * 注册用户
+	 * @param hmxUser
+	 * @return
+	 */
+	@GetMapping("/getUserInfo")
+	public ResultBean getUserInfo(@ModelAttribute HmxUser hmxUser,HttpServletRequest request){
+		if(null == hmxUser.getUserPhone()){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("用户手机号不能为空");
+		}
+		try {
+			HmxUser isHmxUser = hmxUserService.selectUserInfoByUserPhone(hmxUser.getUserPhone());
+			if(null == isHmxUser){
+				return new ResultBean().setCode(Config.FAIL_CODE).setContent("通过该手机号没有查到用户信息");
+			}
+			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("查询到用户").put("user",isHmxUser);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("查询失败");
 		}
 	}
 

@@ -34,8 +34,8 @@ public class MessageController {
      * @param messageDto
      * @return
      */
-    @PostMapping("/add")
-    public ResultBean add(MessageDto messageDto, HttpServletRequest request){
+    @PostMapping("/sendMesg")
+    public ResultBean sendMesg(MessageDto messageDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
@@ -160,6 +160,7 @@ public class MessageController {
 
     /**
      * type :
+     *    0  查询已读和未读的消息列表  targeUserId 值传自己的用户id
      *    1 查询接收到的消息列表    targeUserId 值传自己的用户id
      *    2 查询发送给别人的消息列表   fromUserId传自己的用户id
      * @param messageDto
