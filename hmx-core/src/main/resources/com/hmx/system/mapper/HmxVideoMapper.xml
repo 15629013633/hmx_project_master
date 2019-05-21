@@ -6,7 +6,7 @@
     <result column="videoId" property="videoId" jdbcType="VARCHAR" />
     <result column="width" property="width" jdbcType="INTEGER" />
     <result column="height" property="height" jdbcType="INTEGER" />
-  	<result column="size" property="size" jdbcType="INTEGER" />
+  	<result column="size" property="size" jdbcType="" />
   	<result column="play_url" property="playURL" jdbcType="VARCHAR" />
   	<result column="bitrate" property="bitrate" jdbcType="VARCHAR" />
   	<result column="definition" property="definition" jdbcType="VARCHAR" />
@@ -91,184 +91,195 @@
     videoId,width,height,size,playURL,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,jobId,preprocessStatus,watermarkId,status,creationTime,modificationTime,encryptType,narrowBandType
   </sql>
   
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.HmxVideoExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from hmx_comment
-    <!--<where>-->
-      <!--<trim suffixOverrides="and">-->
-        <!--<if test="title != null">-->
-          <!--title like concat("%",#{title},"%")-->
-        <!--</if>-->
-      <!--</trim>-->
-    <!--</where>-->
+  <!--<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.HmxVideoExample" >-->
+    <!--select-->
+    <!--<if test="distinct" >-->
+      <!--distinct-->
+    <!--</if>-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from hmx_video-->
+ <!---->
 
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-    
-    <if test="limit != null" >
-      <if test="offset != null" >
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null" >
-        limit ${limit}
-      </if>
-    </if>
-  </select>
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+    <!---->
+    <!--<if test="orderByClause != null" >-->
+      <!--order by ${orderByClause}-->
+    <!--</if>-->
+    <!---->
+    <!--<if test="limit != null" >-->
+      <!--<if test="offset != null" >-->
+        <!--limit ${offset}, ${limit}-->
+      <!--</if>-->
+      <!--<if test="offset == null" >-->
+        <!--limit ${limit}-->
+      <!--</if>-->
+    <!--</if>-->
+  <!--</select>-->
   
   
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.HmxVideoExample" >
     select 
     <include refid="Base_Column_List" />
-    from hmx_comment
-    where comment_id = #{commentId,jdbcType=INTEGER}
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from hmx_comment
-    where comment_id = #{commentId,jdbcType=INTEGER}
-  </delete>
-  
-  <delete id="deleteByExample" parameterType="com.hmx.system.entity.HmxVideoExample" >
-    delete from hmx_comment
+    from hmx_video
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-  </delete>
+  </select>
+
+  <select id="selectByJobId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from hmx_video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+    <!--delete from hmx_video-->
+    <!--where comment_id = #{commentId,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  
+  <!--<delete id="deleteByExample" parameterType="com.hmx.system.entity.HmxVideoExample" >-->
+    <!--delete from hmx_video-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</delete>-->
   
   
   <insert id="insert" parameterType="com.hmx.system.entity.HmxVideo" keyProperty="commentId" useGeneratedKeys="true">
-    insert into hmx_comment  (comment_id,content,create_date,categoryContent_id,user_id,parent_id,status)
-    values (#{commentId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{categoryContentId,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+    insert into hmx_video  (videoId,width,height,size,playURL,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,
+    jobId,preprocessStatus,watermarkId,status,creationTime,modificationTime,encryptType,narrowBandType)
+    values (#{videoId,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER},#{height,jdbcType=INTEGER},#{size,jdbcType=INTEGER},#{playURL,jdbcType=VARCHAR},
+     #{bitrate,jdbcType=VARCHAR}, #{definition,jdbcType=VARCHAR},#{duration,jdbcType=VARCHAR},#{format,jdbcType=VARCHAR}, #{fps,jdbcType=VARCHAR},#{encrypt,jdbcType=INTEGER},
+      #{plaintext,jdbcType=VARCHAR}, #{complexity,jdbcType=VARCHAR},#{streamType,jdbcType=VARCHAR}, #{rand,jdbcType=VARCHAR},#{jobId,jdbcType=VARCHAR},
+      #{preprocessStatus,jdbcType=VARCHAR}, #{watermarkId,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR},#{modificationTime,jdbcType=VARCHAR},
+   #{encryptType,jdbcType=VARCHAR}, #{narrowBandType,jdbcType=VARCHAR}
+      )
   </insert>
   
   
-  <insert id="insertSelective" parameterType="com.hmx.system.entity.HmxVideo" keyProperty="commentId" useGeneratedKeys="true"  >
-    insert into hmx_comment
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="commentId != null" >
-        comment_id,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="categoryContentId != null" >
-        categoryContent_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
+  <!--<insert id="insertSelective" parameterType="com.hmx.system.entity.HmxVideo" keyProperty="commentId" useGeneratedKeys="true"  >-->
+    <!--insert into hmx_video-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="commentId != null" >-->
+        <!--comment_id,-->
+      <!--</if>-->
+      <!--<if test="status != null" >-->
+        <!--status,-->
+      <!--</if>-->
+      <!--<if test="content != null" >-->
+        <!--content,-->
+      <!--</if>-->
+      <!--<if test="createDate != null" >-->
+        <!--create_date,-->
+      <!--</if>-->
+      <!--<if test="categoryContentId != null" >-->
+        <!--categoryContent_id,-->
+      <!--</if>-->
+      <!--<if test="userId != null" >-->
+        <!--user_id,-->
+      <!--</if>-->
+      <!--<if test="parentId != null" >-->
+        <!--parent_id,-->
+      <!--</if>-->
 
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="commentId != null" >
-        #{commentId,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="categoryContentId != null" >
-        #{categoryContentId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=INTEGER},
-      </if>
-
-
-    </trim>
-  </insert>
-  
-  <update  id="updateByExample" parameterType="map" >
-    update hmx_comment
-    set
-    comment_id = #{commentId,jdbcType=INTEGER},
-    status = #{status,jdbcType=INTEGER},
-    create_date = #{createDate,jdbcType=TIMESTAMP},
-    content = #{content,jdbcType=VARCHAR},
-    categoryContent_id = #{categoryContentId,jdbcType=INTEGER},
-   user_id = #{userId,jdbcType=VARCHAR},
-    parent_id = #{parentId,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  
-  <select id="countByExample" parameterType="com.hmx.system.entity.HmxVideoExample" resultType="java.lang.Integer" >
-    select count(*) from hmx_comment
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  
-  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.HmxVideo" >
-    update hmx_comment
-    <set >
-      <if test="commentId != null" >
-        comment_id,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="categoryContentId != null" >
-        categoryContent_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="commentId != null" >-->
+        <!--#{commentId,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="status != null" >-->
+        <!--#{status,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="content != null" >-->
+        <!--#{content,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="createDate != null" >-->
+        <!--#{createDate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="categoryContentId != null" >-->
+        <!--#{categoryContentId,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="userId != null" >-->
+        <!--#{userId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="parentId != null" >-->
+        <!--#{parentId,jdbcType=INTEGER},-->
+      <!--</if>-->
 
 
-    </set >
-    where common_id = #{commonId,jdbcType=INTEGER}
-  </update>
+    <!--</trim>-->
+  <!--</insert>-->
+  
+  <!--<update  id="updateByExample" parameterType="map" >-->
+    <!--update hmx_video-->
+    <!--set-->
+    <!--comment_id = #{commentId,jdbcType=INTEGER},-->
+    <!--status = #{status,jdbcType=INTEGER},-->
+    <!--create_date = #{createDate,jdbcType=TIMESTAMP},-->
+    <!--content = #{content,jdbcType=VARCHAR},-->
+    <!--categoryContent_id = #{categoryContentId,jdbcType=INTEGER},-->
+   <!--user_id = #{userId,jdbcType=VARCHAR},-->
+    <!--parent_id = #{parentId,jdbcType=INTEGER}-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Update_By_Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</update>-->
+  
+  <!--<select id="countByExample" parameterType="com.hmx.system.entity.HmxVideoExample" resultType="java.lang.Integer" >-->
+    <!--select count(*) from hmx_video-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</select>-->
+  
+  <!--<update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.HmxVideo" >-->
+    <!--update hmx_video-->
+    <!--<set >-->
+      <!--<if test="commentId != null" >-->
+        <!--comment_id,-->
+      <!--</if>-->
+      <!--<if test="status != null" >-->
+        <!--status,-->
+      <!--</if>-->
+      <!--<if test="content != null" >-->
+        <!--content,-->
+      <!--</if>-->
+      <!--<if test="createDate != null" >-->
+        <!--create_date,-->
+      <!--</if>-->
+      <!--<if test="categoryContentId != null" >-->
+        <!--categoryContent_id,-->
+      <!--</if>-->
+      <!--<if test="userId != null" >-->
+        <!--user_id,-->
+      <!--</if>-->
+      <!--<if test="parentId != null" >-->
+        <!--parent_id,-->
+      <!--</if>-->
+
+
+    <!--</set >-->
+    <!--where common_id = #{commonId,jdbcType=INTEGER}-->
+  <!--</update>-->
   
   
-  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.HmxVideo" >
-    update hmx_comment
-    set
-    comment_id = #{commentId,jdbcType=INTEGER},
-    status = #{status,jdbcType=INTEGER},
-    create_date = #{createDate,jdbcType=TIMESTAMP},
-    content = #{content,jdbcType=VARCHAR},
-    categoryContent_id = #{categoryContentId,jdbcType=INTEGER},
-   user_id = #{userId,jdbcType=VARCHAR},
-    parent_id = #{parentId,jdbcType=INTEGER}
-    where comment_id = #{commentId,jdbcType=INTEGER}
-  </update>
+  <!--<update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.HmxVideo" >-->
+    <!--update hmx_video-->
+    <!--set-->
+    <!--comment_id = #{commentId,jdbcType=INTEGER},-->
+    <!--status = #{status,jdbcType=INTEGER},-->
+    <!--create_date = #{createDate,jdbcType=TIMESTAMP},-->
+    <!--content = #{content,jdbcType=VARCHAR},-->
+    <!--categoryContent_id = #{categoryContentId,jdbcType=INTEGER},-->
+   <!--user_id = #{userId,jdbcType=VARCHAR},-->
+    <!--parent_id = #{parentId,jdbcType=INTEGER}-->
+    <!--where comment_id = #{commentId,jdbcType=INTEGER}-->
+  <!--</update>-->
    
    
 </mapper>

@@ -5,16 +5,16 @@ package com.hmx.system.entity;
  */
 public class HmxVideo {
     private String videoId;
-    private Integer width;
-    private Integer height;
-    private Integer size;
+    private long width;
+    private long height;
+    private long size;
     private String playURL;
     private String bitrate;
     private String definition;
     private String duration;
     private String format;
     private String fps;
-    private Integer encrypt;
+    private long encrypt;
     private String plaintext;
     private String complexity;
     private String streamType;
@@ -36,28 +36,36 @@ public class HmxVideo {
         this.videoId = videoId;
     }
 
-    public Integer getWidth() {
+    public long getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(long width) {
         this.width = width;
     }
 
-    public Integer getHeight() {
+    public long getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(long height) {
         this.height = height;
     }
 
-    public Integer getSize() {
+    public long getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(long size) {
         this.size = size;
+    }
+
+    public long getEncrypt() {
+        return encrypt;
+    }
+
+    public void setEncrypt(long encrypt) {
+        this.encrypt = encrypt;
     }
 
     public String getPlayURL() {
@@ -108,13 +116,6 @@ public class HmxVideo {
         this.fps = fps;
     }
 
-    public Integer getEncrypt() {
-        return encrypt;
-    }
-
-    public void setEncrypt(Integer encrypt) {
-        this.encrypt = encrypt;
-    }
 
     public String getPlaintext() {
         return plaintext;

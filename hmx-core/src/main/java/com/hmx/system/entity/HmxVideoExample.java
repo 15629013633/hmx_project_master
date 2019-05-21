@@ -129,33 +129,13 @@ public class HmxVideoExample {
 
 
 
-        public Criteria andCommentIdEqualTo(Integer value) {
-            addCriterion("comment_id =", value, "commentId");
+        public Criteria andVideoIdEqualTo(String value) {
+            addCriterion("videoId =", value, "videoId");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Integer value) {
-            addCriterion("status =", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andCategoryContentIdEqualTo(Integer value) {
-            addCriterion("categoryContent_id =", value, "categoryContentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andUserIdEqualTo(String value) {
-            addCriterion("user_id =", value, "userId");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentIdEqualTo(Integer value) {
-            addCriterion("parent_id =", value, "parentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentIdIn(List<Integer> values) {
-            addCriterion("comment_id in", values, "commentId");
+        public Criteria andJobIdEqualTo(String value) {
+            addCriterion("jobId =", value, "jobId");
             return (Criteria) this;
         }
 
