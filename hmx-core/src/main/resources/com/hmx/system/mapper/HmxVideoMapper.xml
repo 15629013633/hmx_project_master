@@ -6,7 +6,7 @@
     <result column="videoId" property="videoId" jdbcType="VARCHAR" />
     <result column="width" property="width" jdbcType="INTEGER" />
     <result column="height" property="height" jdbcType="INTEGER" />
-  	<result column="size" property="size" jdbcType="" />
+  	<result column="size" property="size" jdbcType="INTEGER" />
   	<result column="play_url" property="playURL" jdbcType="VARCHAR" />
   	<result column="bitrate" property="bitrate" jdbcType="VARCHAR" />
   	<result column="definition" property="definition" jdbcType="VARCHAR" />
