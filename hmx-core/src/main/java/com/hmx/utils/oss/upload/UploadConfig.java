@@ -28,7 +28,7 @@ public class UploadConfig {
 	public static List<String> IMAGETYPE = Arrays.asList("jpg", "bmp", "gif", "png", "jpeg", "bmp", "ai", "pdg","pdf");// 图片类型
 
 	//允许大多文件上传
-	public static List<String> FILETYPE = Arrays.asList("doc", "docx","text", "xls", "xlsx","jpg", "bmp", "gif", "png", "jpeg", "bmp", "ai", "pdg","pdf","xls", "xlsx","rar", "RAR", "zip", "ZIP", "mp4", "flv", "wmv", "swf","epub");// 上传的文件类型
+	public static List<String> FILETYPE = Arrays.asList("doc", "docx","text", "xls", "xlsx","jpg", "bmp", "gif", "png", "jpeg", "bmp", "ai", "pdg","pdf","xls", "xlsx","rar", "RAR", "zip", "ZIP", "mp4","mp3", "flv", "hls","wmv", "swf","epub");// 上传的文件类型
 
 	public static List<String> XLSXType = Arrays.asList("xls", "xlsx");// 报表类型
 

@@ -45,7 +45,7 @@ accessKeySecret: HSB7GdPp998ziaGiVK6rgbrHhHSwAl
 imageType: default
 #默认png
 imageExt: png,jpg,jpeg,gif
-videoExt: MP4,TS,3GP,MPG,MPEG,MPE,DAT,VOB,ASF,AVI,WMV,ASF,FLV,F4V,RM,RMVB,MOV,MKV,M3U8,DV,GIF,M2T,M4V,MJ2,MJPEG,MTS,OGG,QT,SWF,WEBM
+videoExt: MP4,MP3,FLV,HLS,TS,3GP,MPG,MPEG,MPE,DAT,VOB,ASF,AVI,WMV,ASF,FLV,F4V,RM,RMVB,MOV,MKV,M3U8,DV,GIF,M2T,M4V,MJ2,MJPEG,MTS,OGG,QT,SWF,WEBM
 #阿里文件上传：pdf,epub
 oss: 
   endpoint: http://oss-cn-hangzhou.aliyuncs.com

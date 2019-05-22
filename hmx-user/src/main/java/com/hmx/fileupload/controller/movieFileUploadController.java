@@ -46,7 +46,8 @@ public class movieFileUploadController {
 			HmxVideoDto hmxVideoDto = new HmxVideoDto();
 			hmxVideoDto.setVideoId(videoId);
 			List<HmxVideo> videoList  = hmxVideoService.list(hmxVideoDto);
-			if(null != videoList && videoList.size() > 0){
+			//转码了一般至少有2个码率的   mp3的有两个品质
+			if(null != videoList && videoList.size() > 1){
 				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("获取播放地址成功").put("url", videoList);
 			}
 			Map<String,Object> resultMap = initVodClients.getUrl(videoId);

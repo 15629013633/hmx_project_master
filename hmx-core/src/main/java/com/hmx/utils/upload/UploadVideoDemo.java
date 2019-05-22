@@ -160,7 +160,17 @@ public class UploadVideoDemo {
            /* 封面图片(可选) */
            //request.setCoverURL("http://cover.sample.com/sample.jpg");
            /* 模板组ID(可选) */
-           request.setTemplateGroupId("78045a3ca145cfd6fe2b13981f81a5bd");
+			if(fileName.endsWith("mp4") || fileName.endsWith("MP4")){
+				request.setTemplateGroupId("78045a3ca145cfd6fe2b13981f81a5bd");
+			}else if(fileName.endsWith("mp3") || fileName.endsWith("MP3")){
+				request.setTemplateGroupId("73b863cbefcf44721e7d5e07520b4964");
+			}else if(fileName.endsWith("flv") || fileName.endsWith("FLV")){
+				request.setTemplateGroupId("2734268fac6df6e3e1cf3140d8c2a7fe");
+			}else if(fileName.endsWith("hls") || fileName.endsWith("HLS")){
+				request.setTemplateGroupId("35d9474deab647aba262d52ea347fe88");
+			}else {
+				request.setTemplateGroupId("VOD_NO_TRANSCODE");
+			}
            /* 工作流ID(可选) */
            //request.setWorkflowId("d4430d07361f0*be1339577859b0177b");
            /* 存储区域(可选) */
