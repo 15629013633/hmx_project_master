@@ -508,17 +508,146 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    	where m.category_content_id=#{category_content_id} and m.state=0 and m.video_status=1
    	</select>
    <!-- ↑ -->
+
+    <!-- 用于高级搜索 ↓ -->
+    <select id="selectContentTable" resultType="Map">
+        select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
+        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
+        cc.content_type as 'contentType',cc.content_images as 'contentImages',
+        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
+        cc.create_time as 'createTime',c.category_name as 'categoryName',
+        cc.category_type as 'categoryType'
+        from hmx_category_content cc,hmx_movie as m,hmx_video as v
+        <where>
+            <trim suffixOverrides="and">
+                <if test="1=1">
+                    cc.category_content_id=m.category_content_id and m.video_id=v.videoId and
+                </if>
+
+                <!-- 日期条件start -->
+                <if test="beginDate != null">
+                    cc.create_time &gt;= #{beginDate} and
+                </if>
+                <if test="endDate != null">
+                    cc.create_time &lt;= #{endDate} and
+                </if>
+                <!-- 日期条件end -->
+
+                <!-- 时长条件start -->
+                <if test="minDuration != null">
+                    v.duration &gt;= #{minDuration} and
+                </if>
+                <if test="maxDuration != null">
+                    v.duration &lt;= #{maxDuration} and
+                </if>
+                <!-- 时长条件end -->
+
+                <!-- 画质条件start -->
+                <if test="definition != null">
+                    v.definition = #{definition} and
+                </if>
+
+                <if test="categoryId != null">
+                    cc.category_id = #{categoryId} and
+                </if>
+                <if test="subTitle != null">
+                    cc.sub_title like concat("%",#{subTitle},"%") and
+                </if>
+                <if test="contentDesc != null">
+                    cc.contentDesc = #{contentDesc} and
+                </if>
+                <if test="mode != null">
+                    cc.mode = #{mode} and
+                </if>
+                <if test="contentFlow != null">
+                    cc.content_flow = #{contentFlow} and
+                </if>
+                <if test="contentType != null">
+                    cc.content_type = #{contentType} and
+                </if>
+                <if test="categoryTitle != null">
+                    cc.category_title like concat("%",#{categoryTitle},"%") and
+                </if>
+            </trim>
+        </where>
+        ORDER BY cc.create_time DESC
+        <if test="limit != null" >
+            <if test="offset != null" >
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null" >
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+
+    <!-- 用于高级搜索 -->
+    <select id="countContentTable" resultType="Integer">
+        select count(1)
+        from hmx_category_content cc,hmx_movie as m,hmx_video as v
+        <where>
+            <trim suffixOverrides="and">
+                <if test="1=1">
+                    cc.category_content_id=m.category_content_id and m.video_id=v.videoId and
+                </if>
+
+                <!-- 日期条件start -->
+                <if test="beginDate != null">
+                    cc.create_time &gt;= #{beginDate} and
+                </if>
+                <if test="endDate != null">
+                    cc.create_time &lt;= #{endDate} and
+                </if>
+                <!-- 日期条件end -->
+
+                <!-- 时长条件start -->
+                <if test="minDuration != null">
+                    v.duration &gt;= #{minDuration} and
+                </if>
+                <if test="maxDuration != null">
+                    v.duration &lt;= #{maxDuration} and
+                </if>
+                <!-- 时长条件end -->
+
+                <!-- 画质条件start -->
+                <if test="definition != null">
+                    v.definition = #{definition} and
+                </if>
+
+
+                <if test="categoryId != null">
+                    cc.category_id = #{categoryId} and
+                </if>
+                <if test="subTitle != null">
+                    cc.sub_title = #{subTitle} and
+                </if>
+                <if test="contentDesc != null">
+                    cc.contentDesc = #{contentDesc} and
+                </if>
+                <if test="mode != null">
+                    cc.mode = #{mode} and
+                </if>
+                <if test="contentFlow != null">
+                    cc.content_flow = #{contentFlow} and
+                </if>
+                <if test="categoryTitle != null">
+                    cc.category_title like concat("%",#{categoryTitle},"%") and
+                </if>
+            </trim>
+        </where>
+    </select>
+
     <!-- PC内容列表 ↓ -->
    <select id="selectCategoryContentTableByPc" resultType="Map">
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
-       cc.category_title as 'categoryTitle',
+       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
        cc.create_time as 'createTime',c.category_name as 'categoryName',
        c.category_type as 'categoryType'
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-	LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id
+-- 	LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id
 	<where>
 		<trim suffixOverrides="and">
 			<if test="state != null">
@@ -567,7 +696,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    select count(*) 
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-	LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id
+-- 	LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id
 	<where>
 		<trim suffixOverrides="and">
 			<if test="state != null">

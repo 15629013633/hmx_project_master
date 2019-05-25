@@ -67,4 +67,8 @@ public interface HmxCategoryContentMapper{
     List<Map<String,Object>> selectRankingListByCategoryId();
 
     List<Map<String,Object>> queryByContentFlow(String contentFlow);
+
+    Integer countContentTable(Map<String, Object> parameter);
+
+    List<Map<String,Object>> selectContentTable(Map<String, Object> parameter);
 }

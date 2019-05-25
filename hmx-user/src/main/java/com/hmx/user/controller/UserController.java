@@ -115,7 +115,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/edit")
-	public ResultBean editUser(@ModelAttribute HmxUser hmxUser,String verifyCode,HttpServletRequest request){
+	public ResultBean editUser(@ModelAttribute HmxUser hmxUser,HttpServletRequest request){
 		if(null == hmxUser.getId() || 0 == hmxUser.getId()){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("用户id不能为空");
 		}
@@ -133,7 +133,7 @@ public class UserController {
 	}
 
 	/**
-	 * 注册用户
+	 * 获取用户信息
 	 * @param hmxUser
 	 * @return
 	 */

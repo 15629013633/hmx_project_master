@@ -9,6 +9,7 @@ import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.images.dto.HmxImagesDto;
 import com.hmx.movie.dto.HmxMovieDto;
+import com.hmx.system.entity.SearchModel;
 import com.hmx.utils.result.PageBean;
 import com.hmx.category.dto.HmxCategoryContentDto;
 /**
@@ -119,10 +120,10 @@ public interface HmxCategoryContentService {
 	/**
 	 * 高级搜索
 	 * @param page
-	 * @param hmxCategoryContentDto
+	 * @param searchModel
      * @return
      */
-	PageBean<Map<String,Object>> seniorSearch(PageBean<Map<String, Object>> page, HmxCategoryContentDto hmxCategoryContentDto);
+	PageBean<Map<String,Object>> seniorSearch(PageBean<Map<String, Object>> page, SearchModel searchModel);
 
 	List<Map<String,Object>> queryByContentFlow(String integer);
 

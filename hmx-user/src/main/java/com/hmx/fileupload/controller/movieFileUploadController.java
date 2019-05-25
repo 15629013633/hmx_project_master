@@ -63,7 +63,13 @@ public class movieFileUploadController {
 					hmxVideo.setVideoId(videoId);
 					BeanUtils.copyProperties(playInfo, hmxVideo);
 					try {
-						hmxVideoService.insert(hmxVideo);
+						//查询是否已经插入数据库
+						HmxVideoDto videoDto = new HmxVideoDto();
+						videoDto.setJobId(playInfo.getJobId());
+						List<HmxVideo> list = hmxVideoService.list(videoDto);
+						if(null == list || list.size() == 0){
+							hmxVideoService.insert(hmxVideo);
+						}
 						resultList.add(hmxVideo);
 					}catch (Exception e){
 						e.printStackTrace();

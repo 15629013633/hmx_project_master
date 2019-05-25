@@ -1,10 +1,6 @@
 package com.hmx.category.service.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 import com.hmx.base.entity.ContentModel;
 import com.hmx.base.entity.RcmbModel;
@@ -25,7 +21,9 @@ import com.hmx.movie.dao.HmxMovieMapper;
 import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.movie.entity.HmxMovie;
 import com.hmx.movie.entity.HmxMovieExample;
+import com.hmx.system.entity.SearchModel;
 import com.hmx.utils.common.CommonUtils;
+import com.hmx.utils.common.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -731,27 +729,81 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	}
 
 
-
-
-
-
 	@Override
-	public PageBean<Map<String, Object>> seniorSearch(PageBean<Map<String, Object>> page, HmxCategoryContentDto hmxCategoryContentDto) {
+	public PageBean<Map<String, Object>> seniorSearch(PageBean<Map<String, Object>> page, SearchModel searchModel) {
 		Map<String,Object> parameter = new HashMap<String,Object>();
 		parameter.put("offset", page.getStartOfPage());
 		parameter.put("limit", page.getPageSize());
 		parameter.put("state", DataState.正常.getState());
-		if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryTitle())){
-			parameter.put("categoryTitle", hmxCategoryContentDto.getCategoryTitle());
+		if(!StringUtils.isEmpty(searchModel.getCategoryTitle())){
+			parameter.put("categoryTitle", searchModel.getCategoryTitle());
 		}
-		parameter.put("categoryId", hmxCategoryContentDto.getCategoryId());
+		parameter.put("categoryId", searchModel.getCategoryId());
 
-		Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
+		if(null != searchModel.getDateTime()){
+			Integer dateTime = searchModel.getDateTime();
+			Date start = TimeUtils.getNeedTime(0,0,0,0);
+			Date end = TimeUtils.getNeedTime(23,59,59,0);
+			if(1 == dateTime){
+				parameter.put("beginDate",start);
+				parameter.put("endDate",end);
+			}
+			if(2 == dateTime){
+				parameter.put("beginDate",start);
+				parameter.put("endDate",TimeUtils.getPastWeak());
+			}
+			if(3 == dateTime){
+				parameter.put("beginDate",start);
+				parameter.put("endDate", TimeUtils.getPastMonth());
+			}
+			if(4 == dateTime){
+				parameter.put("beginDate",start);
+				parameter.put("endDate",TimeUtils.getPastYear());
+			}
+		}
+
+		if(null != searchModel.getDefinition()){
+			Integer definition = searchModel.getDefinition();
+			if(1 == definition){
+				parameter.put("definition","FD");
+			}
+			if(2 == definition){
+				parameter.put("definition","LD");
+			}
+			if(3 == definition){
+				parameter.put("definition","SD");
+			}
+			if(4 == definition){
+				parameter.put("definition","HD");
+			}
+
+		}
+
+		if(null != searchModel.getDuration()){
+			Integer duration = searchModel.getDuration();
+			if(1 == duration){
+				parameter.put("minDuration","60");
+			}
+			if(2 == duration){
+				parameter.put("minDuration","30");
+				parameter.put("maxDuration","60");
+			}
+			if(3 == duration){
+				parameter.put("minDuration","10");
+				parameter.put("maxDuration","30");
+			}
+			if(4 == duration){
+				parameter.put("minDuration","0");
+				parameter.put("maxDuration","10");
+			}
+		}
+
+		Integer count = hmxCategoryContentMapper.countContentTable(parameter);
 		Boolean haveData = page.setTotalNum((int)(long)count);
 		if(!haveData){
 			return page;
 		}
-		List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTable(parameter);
+		List<Map<String,Object>> data = hmxCategoryContentMapper.selectContentTable(parameter);
 		page.setPage(data);
 		return page;
 	}
@@ -986,6 +1038,21 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 	}
 
+
+
+//	private static Date getNeedTime(int hour,int minute,int second,int addDay,int ...args){
+//		Calendar calendar = Calendar.getInstance();
+//		if(addDay != 0){
+//			calendar.add(Calendar.DATE,addDay);
+//		}
+//		calendar.set(Calendar.HOUR_OF_DAY,hour);
+//		calendar.set(Calendar.MINUTE,minute);
+//		calendar.set(Calendar.SECOND,second);
+//		if(args.length==1){
+//			calendar.set(Calendar.MILLISECOND,args[0]);
+//		}
+//		return calendar.getTime();
+//	}
 
 }
  
