@@ -12,8 +12,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.hmx.user.entity.UserModel;
 import com.hmx.utils.sms.SMSHelper;
 import com.hmx.verifylog.dto.HmxVerifylogDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -224,7 +226,9 @@ public class UserController {
 			//用户类型默认1暂定
 			simpleUser.setUserUserType(1);
 			String token = jwtUtil.createJWT(simpleUser);
-			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token);
+			UserModel userModel = new UserModel();
+			BeanUtils.copyProperties(user, userModel);
+			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token).put("user",userModel);
 		} catch (Exception e) {
 			LogHelper.logger().error("登录失败", e);
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("登录失败" + e.getMessage());
@@ -232,7 +236,7 @@ public class UserController {
 	}
 
 	/**
-	 * 验证码登录  不注册
+	 * 验证码登录  检查如果未注册则注册，注册了就直接返回用户信息
 	 * @param hmxVerifylogDto
 	 * @param request
 	 * @return
@@ -240,18 +244,56 @@ public class UserController {
 	@PostMapping("/loginByCode")
 	public ResultBean loginByCode(HmxVerifylogDto hmxVerifylogDto, HttpServletRequest request){
 		try {
+			String userPhone = hmxVerifylogDto.getVerifyObject();
 			if(StringUtils.isEmpty(hmxVerifylogDto.getVerifyCode())){
 				return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("验证码不能为空");
 			}
-			if(StringUtils.isEmpty(hmxVerifylogDto.getVerifyObject())){
+			if(StringUtils.isEmpty(userPhone)){
 				return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("手机号码不能为空");
 			}
+			//检验验证码是否正确
 			List<HmxVerifylog> list = hmxVerifylogService.list(hmxVerifylogDto);
-
+			String ip = HttpUtils.getIp(request);
+			LoginUser simpleUser = new LoginUser();
+			simpleUser.setIp(ip);
+			//用户类型默认1暂定
+			simpleUser.setUserUserType(1);
 			if(null != list && list.size() > 0){
-				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("mobile", hmxVerifylogDto.getVerifyObject());
+				//检查该手机号是否已经注册
+				HmxUser hmxUser = hmxUserService.selectUserInfoByUserPhone(hmxVerifylogDto.getVerifyObject());
+				if(null == hmxUser){
+					//注册用户  用户名默认为手机号   密码默认手机号后六位
+					HmxUser registerUser = new HmxUser();
+					registerUser.setUserName(userPhone);
+					registerUser.setPassword(MD5Util.encode(userPhone.substring(userPhone.length()-6,userPhone.length())));
+					registerUser.setUserPhone(userPhone);
+					registerUser.setType(1);
+					Boolean flag = hmxUserService.insert(registerUser);
+					if(!flag){
+						return new ResultBean().setCode(Config.FAIL_CODE).setContent("后台自动注册失败");
+					}
+
+					simpleUser.setUserId(registerUser.getId());
+
+					String token = jwtUtil.createJWT(simpleUser);
+					UserModel userModel = new UserModel();
+					BeanUtils.copyProperties(registerUser, userModel);
+					return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token).put("user",userModel);
+				}else {
+					//String ip = HttpUtils.getIp(request);
+					//LoginUser simpleUser = new LoginUser();
+//					simpleUser.setIp(ip);
+					simpleUser.setUserId(hmxUser.getId());
+//					//用户类型默认1暂定
+//					simpleUser.setUserUserType(1);
+					String token = jwtUtil.createJWT(simpleUser);
+					UserModel userModel = new UserModel();
+					BeanUtils.copyProperties(hmxUser, userModel);
+					return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token).put("user",userModel);
+				}
+				//return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("mobile", hmxVerifylogDto.getVerifyObject());
 			}else {
-				return new ResultBean().setCode(Config.FAIL_CODE).setContent("登录失败");
+				return new ResultBean().setCode(Config.FAIL_CODE).setContent("验证码验证失败");
 			}
 		} catch (Exception e) {
 			LogHelper.logger().error("登录失败", e);
@@ -262,7 +304,9 @@ public class UserController {
 
 
 	public static void main(String[] arg0){
-		SMSHelper.sendSms("13076949806","1111");
+		//SMSHelper.sendSms("13076949806","1111");
+		String usrPhone = "130176949806";
+		System.out.println(usrPhone.substring(usrPhone.length()-6,usrPhone.length()));
 	}
 
 

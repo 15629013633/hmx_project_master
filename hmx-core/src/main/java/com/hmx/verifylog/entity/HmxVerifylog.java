@@ -8,7 +8,7 @@ public class HmxVerifylog{
     private Integer verifyLogId;
     private Integer verifyType;
     private String verifyCode;
-    private String verifyObject;
+    private String verifyObject;   //手机号
     private Date addTime;
     private Integer isVerify;
 
