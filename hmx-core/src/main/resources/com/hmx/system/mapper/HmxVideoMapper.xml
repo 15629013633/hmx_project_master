@@ -7,7 +7,7 @@
     <result column="width" property="width" jdbcType="INTEGER" />
     <result column="height" property="height" jdbcType="INTEGER" />
   	<result column="size" property="size" jdbcType="INTEGER" />
-  	<result column="play_url" property="playURL" jdbcType="VARCHAR" />
+  	<result column="play_url" property="playUrl" jdbcType="VARCHAR" />
   	<result column="bitrate" property="bitrate" jdbcType="VARCHAR" />
   	<result column="definition" property="definition" jdbcType="VARCHAR" />
   	<result column="duration" property="duration" jdbcType="VARCHAR" />
@@ -88,7 +88,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    videoId,width,height,size,playURL,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,jobId,preprocessStatus,watermarkId,status,creationTime,modificationTime,encryptType,narrowBandType
+    videoId,width,height,size,play_url,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,jobId,preprocessStatus,watermarkId,status,creationTime,modificationTime,encryptType,narrowBandType
   </sql>
   
   <!--<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.HmxVideoExample" >-->
@@ -151,9 +151,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.system.entity.HmxVideo" keyProperty="commentId" useGeneratedKeys="true">
-    insert into hmx_video  (videoId,width,height,size,playURL,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,
+    insert into hmx_video  (videoId,width,height,size,play_url,bitrate,definition,duration,format,fps,encrypt,plaintext,complexity,streamType,rand,
     jobId,preprocessStatus,watermarkId,status,creationTime,modificationTime,encryptType,narrowBandType)
-    values (#{videoId,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER},#{height,jdbcType=INTEGER},#{size,jdbcType=INTEGER},#{playURL,jdbcType=VARCHAR},
+    values (#{videoId,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER},#{height,jdbcType=INTEGER},#{size,jdbcType=INTEGER},#{playUrl,jdbcType=VARCHAR},
      #{bitrate,jdbcType=VARCHAR}, #{definition,jdbcType=VARCHAR},#{duration,jdbcType=VARCHAR},#{format,jdbcType=VARCHAR}, #{fps,jdbcType=VARCHAR},#{encrypt,jdbcType=INTEGER},
       #{plaintext,jdbcType=VARCHAR}, #{complexity,jdbcType=VARCHAR},#{streamType,jdbcType=VARCHAR}, #{rand,jdbcType=VARCHAR},#{jobId,jdbcType=VARCHAR},
       #{preprocessStatus,jdbcType=VARCHAR}, #{watermarkId,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR}, #{creationTime,jdbcType=VARCHAR},#{modificationTime,jdbcType=VARCHAR},

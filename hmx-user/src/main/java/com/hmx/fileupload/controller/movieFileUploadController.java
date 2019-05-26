@@ -38,6 +38,7 @@ public class movieFileUploadController {
 	 */
 	@RequestMapping("/getUrl")
 	public ResultBean getVideoPathUrl(String videoId){
+		//Map<String,Object> testMap = initVodClients.getUrl(videoId);
 		if(StringUtils.isEmpty(videoId)){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("视频编号不能为空");
 		}
@@ -62,6 +63,7 @@ public class movieFileUploadController {
 					HmxVideo hmxVideo = new HmxVideo();
 					hmxVideo.setVideoId(videoId);
 					BeanUtils.copyProperties(playInfo, hmxVideo);
+					hmxVideo.setPlayUrl(playInfo.getPlayURL());
 					try {
 						//查询是否已经插入数据库
 						HmxVideoDto videoDto = new HmxVideoDto();

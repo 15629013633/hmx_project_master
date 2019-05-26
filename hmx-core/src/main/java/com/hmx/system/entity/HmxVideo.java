@@ -8,7 +8,7 @@ public class HmxVideo {
     private long width;
     private long height;
     private long size;
-    private String playURL;
+    private String playUrl;
     private String bitrate;
     private String definition;
     private String duration;
@@ -68,12 +68,12 @@ public class HmxVideo {
         this.encrypt = encrypt;
     }
 
-    public String getPlayURL() {
-        return playURL;
+    public String getPlayUrl() {
+        return playUrl;
     }
 
-    public void setPlayURL(String playURL) {
-        this.playURL = playURL;
+    public void setPlayUrl(String playUrl) {
+        this.playUrl = playUrl;
     }
 
     public String getBitrate() {
