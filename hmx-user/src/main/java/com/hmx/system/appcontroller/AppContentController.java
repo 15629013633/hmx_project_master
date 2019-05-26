@@ -4,6 +4,7 @@ import com.hmx.base.entity.RcmbModel;
 import com.hmx.category.dto.HmxCategoryContentDto;
 import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.service.HmxCategoryContentService;
+import com.hmx.system.entity.SearchModel;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
@@ -157,7 +158,7 @@ public class AppContentController {
 	 * @return
 	 */
 	@GetMapping("/seniorSearch")
-	public ResultBean seniorSearch(HmxCategoryContentDto hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
+	public ResultBean seniorSearch(SearchModel hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
 
 		Map<String,Object> map = new HashMap<>();
 		if(null == hmxCategoryContentDto.getCategoryId() || 0 == hmxCategoryContentDto.getCategoryId()){

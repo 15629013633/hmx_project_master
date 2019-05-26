@@ -51,10 +51,10 @@ public class TimeUtils {
     }
     public static void main(String[] arg0){
 
-        System.out.println(new Date());
-        System.out.println(getPastMonth());
+//        System.out.println(new Date());
+//        System.out.println(getPastMonth());
 
-        Date start = getNeedTime(0,0,0,7);
+        Date start = getNeedTime(0,0,0,0);
         Date end = getNeedTime(23,59,59,0);
         Date now = new Date();
 //        if(now.getTime() >= start.getTime() && now.getTime() <= end.getTime()){

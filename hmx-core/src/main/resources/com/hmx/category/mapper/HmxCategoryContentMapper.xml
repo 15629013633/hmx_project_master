@@ -515,14 +515,12 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
         cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',
         cc.content_type as 'contentType',cc.content_images as 'contentImages',
         cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
-        cc.create_time as 'createTime',c.category_name as 'categoryName',
-        cc.category_type as 'categoryType'
-        from hmx_category_content cc,hmx_movie as m,hmx_video as v
+        cc.create_time as 'createTime',
+        c.category_type as 'categoryType'
+        from hmx_category_content as cc,hmx_movie as m,hmx_video as v,hmx_category as c
         <where>
             <trim suffixOverrides="and">
-                <if test="1=1">
-                    cc.category_content_id=m.category_content_id and m.video_id=v.videoId and
-                </if>
+                    cc.category_content_id=m.category_content_id and m.video_id=v.videoId and c.category_id=cc.category_id and
 
                 <!-- 日期条件start -->
                 <if test="beginDate != null">
@@ -584,12 +582,10 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
     <!-- 用于高级搜索 -->
     <select id="countContentTable" resultType="Integer">
         select count(1)
-        from hmx_category_content cc,hmx_movie as m,hmx_video as v
+        from hmx_category_content cc,hmx_movie as m,hmx_video as v,hmx_category as c
         <where>
             <trim suffixOverrides="and">
-                <if test="1=1">
-                    cc.category_content_id=m.category_content_id and m.video_id=v.videoId and
-                </if>
+                    cc.category_content_id=m.category_content_id and m.video_id=v.videoId and c.category_id=cc.category_id and
 
                 <!-- 日期条件start -->
                 <if test="beginDate != null">

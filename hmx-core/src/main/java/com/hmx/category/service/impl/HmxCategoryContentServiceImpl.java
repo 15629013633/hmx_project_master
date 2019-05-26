@@ -749,16 +749,16 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 				parameter.put("endDate",end);
 			}
 			if(2 == dateTime){
-				parameter.put("beginDate",start);
-				parameter.put("endDate",TimeUtils.getPastWeak());
+				parameter.put("beginDate",TimeUtils.getPastWeak());
+				parameter.put("endDate",start);
 			}
 			if(3 == dateTime){
-				parameter.put("beginDate",start);
-				parameter.put("endDate", TimeUtils.getPastMonth());
+				parameter.put("beginDate",TimeUtils.getPastMonth());
+				parameter.put("endDate", start);
 			}
 			if(4 == dateTime){
-				parameter.put("beginDate",start);
-				parameter.put("endDate",TimeUtils.getPastYear());
+				parameter.put("beginDate",TimeUtils.getPastYear());
+				parameter.put("endDate",start);
 			}
 		}
 
@@ -782,19 +782,19 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(null != searchModel.getDuration()){
 			Integer duration = searchModel.getDuration();
 			if(1 == duration){
-				parameter.put("minDuration","60");
+				parameter.put("minDuration",60*60+"");
 			}
 			if(2 == duration){
-				parameter.put("minDuration","30");
-				parameter.put("maxDuration","60");
+				parameter.put("minDuration",30*60+"");
+				parameter.put("maxDuration",60*60+"");
 			}
 			if(3 == duration){
-				parameter.put("minDuration","10");
-				parameter.put("maxDuration","30");
+				parameter.put("minDuration",10*60+"");
+				parameter.put("maxDuration",30*60+"");
 			}
 			if(4 == duration){
 				parameter.put("minDuration","0");
-				parameter.put("maxDuration","10");
+				parameter.put("maxDuration",10*60+"");
 			}
 		}
 
