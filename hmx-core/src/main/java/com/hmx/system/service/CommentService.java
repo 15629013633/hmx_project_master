@@ -2,6 +2,7 @@ package com.hmx.system.service;
 
 import com.hmx.system.dto.CommentDto;
 import com.hmx.system.entity.Comment;
+import com.hmx.system.entity.CommentModel;
 import com.hmx.system.entity.Message;
 import com.hmx.utils.result.PageBean;
 
@@ -51,7 +52,7 @@ public interface CommentService {
      * @param commentDto 查询条件
      * @return PageBean<HmxFiles> 查询到的分页值
      */
-    PageBean<Comment> getPage(PageBean<Comment> page, CommentDto commentDto);
+    PageBean<CommentModel> getPage(PageBean<CommentModel> page, CommentDto commentDto);
 
     /**
      * @Method: list

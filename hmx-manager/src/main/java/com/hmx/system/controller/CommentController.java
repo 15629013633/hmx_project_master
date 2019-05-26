@@ -3,6 +3,7 @@ package com.hmx.system.controller;
 import com.alibaba.druid.util.StringUtils;
 import com.hmx.system.dto.CommentDto;
 import com.hmx.system.entity.Comment;
+import com.hmx.system.entity.CommentModel;
 import com.hmx.system.service.CommentService;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
@@ -33,9 +34,9 @@ public class CommentController {
      * @return
      */
     @GetMapping("/AllList")
-    public ResultBean list(CommentDto commentDto, PageBean<Comment> page, Model model){
+    public ResultBean list(CommentDto commentDto, PageBean<CommentModel> page, Model model){
         page = commentService.getPage(page, commentDto);
-        List<Comment> list = page.getPage();
+        List<CommentModel> list = page.getPage();
         if(list == null || list.size() <= 0){
             if(page.getPageNum() == 1){
                 return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");

@@ -4,8 +4,12 @@ import com.hmx.system.dao.CommentMapper;
 import com.hmx.system.dto.CommentDto;
 import com.hmx.system.entity.Comment;
 import com.hmx.system.entity.CommentExample;
+import com.hmx.system.entity.CommentModel;
 import com.hmx.system.service.CommentService;
+import com.hmx.user.dao.HmxUserMapper;
+import com.hmx.user.entity.HmxUser;
 import com.hmx.utils.result.PageBean;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private HmxUserMapper hmxUserMapper;
 
     @Override
     public Boolean insert(Comment message) {
@@ -67,7 +73,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public PageBean<Comment> getPage(PageBean<Comment> page, CommentDto messageDto) {
+    public PageBean<CommentModel> getPage(PageBean<CommentModel> page, CommentDto messageDto) {
         CommentExample commentExample = new CommentExample();
 
         commentExample.setOffset(page.getStartOfPage());
@@ -96,8 +102,27 @@ public class CommentServiceImpl implements CommentService{
         }
 
         List<Comment> data = commentMapper.selectByExample( commentExample );
+        List<CommentModel> commentModelList = new ArrayList<>();
 
-        page.setPage(data);
+        if(null != data && data.size() > 0){
+           for(Comment comment : data){
+               String userPhone = comment.getUserId();   //手机号
+               if(!StringUtils.isEmpty(userPhone)){
+                   HmxUser hmxUser = hmxUserMapper.selectUserInfoByUserPhone(userPhone);
+                   CommentModel commentModel = new CommentModel();
+                   BeanUtils.copyProperties(comment,commentModel);
+                   if(null != hmxUser){
+                       commentModel.setUserAliase(hmxUser.getUserAliase());
+                       commentModel.setUserPhone(hmxUser.getUserPhone());
+                       commentModel.setHeadPic(hmxUser.getHeadPic());
+                   }
+                   commentModelList.add(commentModel);
+               }
+
+           }
+        }
+
+        page.setPage(commentModelList);
 
         return page;
     }
