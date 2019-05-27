@@ -288,9 +288,10 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if( hmxCategoryContentDto.getLimit() != null ){
 			hmxCategoryContentExample.setLimit( hmxCategoryContentDto.getLimit() );
 		}
-		if( !StringUtils.isEmpty( hmxCategoryContentDto.getOrderByClause() ) ){
-			hmxCategoryContentExample.setOrderByClause( hmxCategoryContentDto.getOrderByClause() );
-		}
+//		if( !StringUtils.isEmpty( hmxCategoryContentDto.getOrderByClause() ) ){
+//			hmxCategoryContentExample.setOrderByClause( hmxCategoryContentDto.getOrderByClause() );
+//		}
+		hmxCategoryContentExample.setOrderByClause( " sort,create_time " );
 		return hmxCategoryContentMapper.selectByExample(hmxCategoryContentExample);
 	}
 	/**
@@ -975,7 +976,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			}
 			HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
 			hmxCategoryContentExample.or().andCategoryIdIn(subCategoryIdList);
-			hmxCategoryContentExample.setOrderByClause("create_time");
+			hmxCategoryContentExample.setOrderByClause(" sort,create_time ");
 			hmxCategoryContentExample.setLimit(10);
 			hmxCategoryContentExample.setOffset(0);
 			List<HmxCategoryContent> contentList = hmxCategoryContentMapper.selectByExample(hmxCategoryContentExample);

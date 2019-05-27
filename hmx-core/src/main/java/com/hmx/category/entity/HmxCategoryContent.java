@@ -23,13 +23,14 @@ public class HmxCategoryContent{
     private Integer createid;
 	private Integer mode;      //内容展现方式    1普通类型   2轮播图类型  3首页大图类型
 	private String contentFlow; //内容流水号   由前端生成的一个唯一非0开头的数字字符串
+	private Integer sort;    //排序
 
     public HmxCategoryContent() {
 		super();
 	}
 
     
-    public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,Integer mode,
+    public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,Integer mode,Integer sort,
 			String categoryContent, Integer contentType, String contentImages, Integer movieId, Integer musicId,String contentFlow,
 			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid,String subTitle,String contentDesc) {
 		super();
@@ -51,6 +52,7 @@ public class HmxCategoryContent{
 		this.contentDesc = contentDesc;
 		this.mode = mode;
 		this.contentFlow = contentFlow;
+		this.sort = sort;
 	}
 
 
@@ -198,5 +200,13 @@ public class HmxCategoryContent{
 
 	public void setContentFlow(String contentFlow) {
 		this.contentFlow = contentFlow;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 }
