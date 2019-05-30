@@ -7,6 +7,7 @@ import com.hmx.system.entity.TagtabExample;
 import com.hmx.system.service.TagtabService;
 import com.hmx.utils.result.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by songjinbao on 2019/5/30.
  */
+@Service
 public class TagtabServiceImpl implements TagtabService {
 
     @Autowired

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hmx.system.dao.TagtabMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.Tagtab" >
+    <id column="tag_id" property="tagId" jdbcType="INTEGER" />
+    <result column="tagName" property="tagName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+      	<if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+          </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    tag_id,tagName,create_time
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.TagtabExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hmx_tag
+    <!--<where>-->
+      <!--<trim suffixOverrides="and">-->
+        <!--<if test="title != null">-->
+          <!--title like concat("%",#{title},"%")-->
+        <!--</if>-->
+      <!--</trim>-->
+    <!--</where>-->
+
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hmx_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hmx_tag
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.TagtabExample" >
+    delete from hmx_tag
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.hmx.system.entity.Tagtab" keyProperty="tagId" useGeneratedKeys="true">
+    insert into hmx_tag  (tag_id,tagName,create_time)
+    values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR},#{createTime,jdbcType=INTEGER})
+  </insert>
+  
+  
+
+  
+  <update  id="updateByExample" parameterType="map" >
+    update hmx_tag
+    set
+    tag_id = #{tagId,jdbcType=INTEGER},
+    tagName = #{tagName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="countByExample" parameterType="com.hmx.system.entity.TagtabExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_tag
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.Tagtab" >
+    update hmx_tag
+    <set >
+      <if test="tagId != null" >
+        tag_id = #{tagId,jdbcType=INTEGER} ,
+      </if>
+      <if test="tagName != null" >
+        tagName = #{tagName,jdbcType=VARCHAR} ,
+      </if>
+
+    </set >
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.Tagtab" >
+    update hmx_tag
+    set
+    tag_id = #{tagId,jdbcType=INTEGER},
+    tagName = #{tagName,jdbcType=VARCHAR}
+    where tag_id = #{tagId,jdbcType=INTEGER}
+  </update>
+   
+   
+</mapper>
