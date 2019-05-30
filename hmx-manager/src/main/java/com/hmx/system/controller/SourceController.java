@@ -103,7 +103,7 @@ public class SourceController {
             }else{
                 resultBean.setCode(Config.SUCCESS_CODE);
             }
-            resultBean.setContent("修改成功");
+            resultBean.setContent("删除成功");
 
         }
         return resultBean;
