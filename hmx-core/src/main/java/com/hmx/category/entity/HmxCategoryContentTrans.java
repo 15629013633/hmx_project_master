@@ -31,6 +31,7 @@ public class HmxCategoryContentTrans {
     private String subTitle;
     private Integer mode;
     private String contentFlow;
+    private Integer sort;    //排序
 //    private String transImage;   //横图
 //    private String verticalImage;   //竖图
     private List<HmxMovie> movieList = new ArrayList<>();
@@ -232,4 +233,13 @@ public class HmxCategoryContentTrans {
 //    public void setVerticalImage(String verticalImage) {
 //        this.verticalImage = verticalImage;
 //    }
+
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
 }

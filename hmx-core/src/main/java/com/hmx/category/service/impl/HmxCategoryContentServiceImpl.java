@@ -426,6 +426,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setSubTitle(hmxCategoryContent.getSubTitle());
 		hmxCategoryContentTrans.setMode(hmxCategoryContent.getMode());
 		hmxCategoryContentTrans.setContentFlow(hmxCategoryContent.getContentFlow());
+		hmxCategoryContentTrans.setSort(hmxCategoryContent.getSort());
     	//查询视频信息
 		String movieIds = "";
 		HmxMovieExample hmxMovieExample = new HmxMovieExample();
