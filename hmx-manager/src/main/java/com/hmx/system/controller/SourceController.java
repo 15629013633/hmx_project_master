@@ -1,16 +1,21 @@
 package com.hmx.system.controller;
 
 import com.hmx.system.dto.SourceModelDto;
+import com.hmx.system.entity.SourceModel;
 import com.hmx.system.service.SourceModelService;
 import com.hmx.utils.result.Config;
+import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 来源控制层
@@ -22,6 +27,50 @@ public class SourceController {
 
     @Autowired
     private SourceModelService sourceModelService;
+
+    /**
+     * 分页
+     * 获取所有评论列表
+     * @param sourceModelDto
+     * @return
+     */
+    @GetMapping("/sourceListPage")
+    public ResultBean tagListPage(SourceModelDto sourceModelDto, PageBean<SourceModel> page, Model model){
+        page = sourceModelService.getPage(page, sourceModelDto);
+        List<SourceModel> list = page.getPage();
+        if(list == null || list.size() <= 0){
+            if(page.getPageNum() == 1){
+                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+            }
+            else{
+                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+            }
+        }
+        return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询来源列表成功");
+    }
+
+    /**
+     * 不分页
+     * 获取所有评论列表
+     * @param sourceModelDto
+     * @return
+     */
+    @GetMapping("/sourceList")
+    public ResultBean tagList(SourceModelDto sourceModelDto, PageBean<SourceModel> page, Model model){
+        page.setPageNum(1);
+        page.setPageSize(100);
+        page = sourceModelService.getPage(page, sourceModelDto);
+        List<SourceModel> list = page.getPage();
+        if(list == null || list.size() <= 0){
+            if(page.getPageNum() == 1){
+                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+            }
+            else{
+                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+            }
+        }
+        return new ResultBean().put("sourceList", list).setCode(Config.SUCCESS_CODE).setContent("查询来源列表成功");
+    }
 
     /**
      * 增加来源
