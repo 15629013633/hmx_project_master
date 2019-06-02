@@ -429,6 +429,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setSort(hmxCategoryContent.getSort());
 		hmxCategoryContentTrans.setTagId(hmxCategoryContent.getTagId());
 		hmxCategoryContentTrans.setSourceId(hmxCategoryContent.getSourceId());
+		hmxCategoryContentTrans.setSourceTitle(hmxCategoryContent.getSourceTitle());
+		hmxCategoryContentTrans.setTagName(hmxCategoryContent.getTagName());
     	//查询视频信息
 		String movieIds = "";
 		HmxMovieExample hmxMovieExample = new HmxMovieExample();
@@ -742,7 +744,16 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(!StringUtils.isEmpty(searchModel.getCategoryTitle())){
 			parameter.put("categoryTitle", searchModel.getCategoryTitle());
 		}
-		parameter.put("categoryId", searchModel.getCategoryId());
+		//20190602  之前这个地方是传的二级分类，现在根据客户的意思是传一级分类
+		//修改：传一级分类id，根据一级分类id查询所有二级分类
+		HmxCategoryDto hmxCategoryDto = new HmxCategoryDto();
+		hmxCategoryDto.setParentId(searchModel.getCategoryId());
+		List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);
+		List<Integer> categoryIdsList = new ArrayList<>();
+		for(int i = 0; i < categoryList.size(); i++){
+			categoryIdsList.add(categoryList.get(i).getCategoryId());
+		}
+		parameter.put("categoryId", categoryIdsList);
 
 		if(null != searchModel.getDateTime()){
 			Integer dateTime = searchModel.getDateTime();

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,32 @@ public class UserController {
 		HmxUser user = hmxUserService.info(id);
 		return new ResultBean().put("user", user);
 	}
+
+	/**
+	 * 注册用户
+	 * @param hmxUser
+	 * @return
+	 */
+	@GetMapping("/testCodeIsOver")
+	public ResultBean testCodeIsOver(@ModelAttribute HmxUser hmxUser,HttpServletRequest request){
+		HmxVerifylog hmxVerifylog = hmxVerifylogService.selectNewVerifylog(hmxUser.getUserPhone());
+		Date addTime = hmxVerifylog.getAddTime();
+		Calendar dateOne=Calendar.getInstance();
+		Calendar dateTwo=Calendar.getInstance();
+		dateOne.setTime(new Date());//设置为当前系统时间
+		dateTwo.setTime(addTime); //获取数据库中的时间
+		long timeOne=dateOne.getTimeInMillis();
+		long timeTwo=dateTwo.getTimeInMillis();
+		long minute=(timeOne-timeTwo)/(1000*60);//转化minute
+        //判断账户锁定时间是否大于30分钟
+		if(minute>2){
+			System.out.println("minute=" + minute);
+		}else {
+			System.out.println("minute11=" + minute);
+		}
+		return null;
+	}
+
 	/**
 	 * 注册用户
 	 * @param hmxUser
@@ -169,13 +196,10 @@ public class UserController {
 		}
 		String code = RandomHelper.getRandomNum(6);
 		try {
-			HmxUser isHmxUser = hmxUserService.selectUserInfoByUserPhone(userPhone);
-			if(isHmxUser != null){
-				return new ResultBean().setCode(Config.FAIL_CODE).setContent("该手机号已经被注册");
-			}
-//			boolean flag = SMSSendOut.SMSSending(userPhone, code);
-//			if(!flag){
-//				return new ResultBean().setCode(Config.FAIL_CODE).setContent("发送验证码失败");
+			//-----delete at 20190602  验证码接口就是只用来发送验证码，不敢别的
+//			HmxUser isHmxUser = hmxUserService.selectUserInfoByUserPhone(userPhone);
+//			if(isHmxUser != null){
+//				return new ResultBean().setCode(Config.FAIL_CODE).setContent("该手机号已经被注册");
 //			}
 
 			boolean flag = SMSHelper.sendSms(userPhone,code);

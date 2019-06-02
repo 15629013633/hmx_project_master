@@ -26,38 +26,40 @@ public class HmxCategoryContent{
 	private Integer sort;    //排序
 	private Integer tagId;  //标签id
 	private Integer sourceId;  //来源id
+	private String tagName;   //标签名称
+	private String sourceTitle;     //来源名称
 
-    public HmxCategoryContent() {
+	public HmxCategoryContent() {
 		super();
 	}
 
     
-    public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,Integer mode,Integer sort,Integer tagId,Integer sourceId,
-			String categoryContent, Integer contentType, String contentImages, Integer movieId, Integer musicId,String contentFlow,
-			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid,String subTitle,String contentDesc) {
-		super();
-		this.categoryContentId = categoryContentId;
-		this.categoryId = categoryId;
-		this.categoryTitle = categoryTitle;
-		this.categoryContent = categoryContent;
-		this.contentType = contentType;
-		this.contentImages = contentImages;
-		this.movieId = movieId;
-		this.musicId = musicId;
-		this.browseNum = browseNum;
-		this.createTime = createTime;
-		this.newTime = newTime;
-		this.state = state;
-		this.version = version;
-		this.createid = createid;
-		this.subTitle = subTitle;
-		this.contentDesc = contentDesc;
-		this.mode = mode;
-		this.contentFlow = contentFlow;
-		this.sort = sort;
-		this.tagId = tagId;
-		this.sourceId = sourceId;
-	}
+//    public HmxCategoryContent(Integer categoryContentId, Integer categoryId, String categoryTitle,Integer mode,Integer sort,Integer tagId,Integer sourceId,
+//			String categoryContent, Integer contentType, String contentImages, Integer movieId, Integer musicId,String contentFlow,
+//			Integer browseNum, Date createTime, Date newTime, Integer state, Integer version, Integer createid,String subTitle,String contentDesc) {
+//		super();
+//		this.categoryContentId = categoryContentId;
+//		this.categoryId = categoryId;
+//		this.categoryTitle = categoryTitle;
+//		this.categoryContent = categoryContent;
+//		this.contentType = contentType;
+//		this.contentImages = contentImages;
+//		this.movieId = movieId;
+//		this.musicId = musicId;
+//		this.browseNum = browseNum;
+//		this.createTime = createTime;
+//		this.newTime = newTime;
+//		this.state = state;
+//		this.version = version;
+//		this.createid = createid;
+//		this.subTitle = subTitle;
+//		this.contentDesc = contentDesc;
+//		this.mode = mode;
+//		this.contentFlow = contentFlow;
+//		this.sort = sort;
+//		this.tagId = tagId;
+//		this.sourceId = sourceId;
+//	}
 
 
 	public Integer getCategoryId() {
@@ -228,5 +230,21 @@ public class HmxCategoryContent{
 
 	public void setSourceId(Integer sourceId) {
 		this.sourceId = sourceId;
+	}
+
+	public String getTagName() {
+		return tagName;
+	}
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+	public String getSourceTitle() {
+		return sourceTitle;
+	}
+
+	public void setSourceTitle(String sourceTitle) {
+		this.sourceTitle = sourceTitle;
 	}
 }
