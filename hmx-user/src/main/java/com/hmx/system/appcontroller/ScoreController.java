@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +47,44 @@ public class ScoreController {
             }
         }
         return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询评分列表成功");
+    }
+
+    /**
+     * 分页
+     * 获取评分
+     * @param scoreModelDto
+     * @return
+     */
+    @GetMapping("/getScoreByContentId")
+    public ResultBean getScoreByContentId(ScoreModelDto scoreModelDto, PageBean<ScoreModel> page, Model model){
+        ResultBean resultBean = new ResultBean();
+        if(StringUtils.isEmpty(scoreModelDto.getContentId())){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容id不能为空");
+            return resultBean;
+        }
+        page = scoreModelService.getPage(page, scoreModelDto);
+        List<ScoreModel> list = page.getPage();
+        ScoreModel model1 = new ScoreModel();
+        if(list == null || list.size() <= 0){
+            if(page.getPageNum() == 1){
+                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+            }
+            else{
+                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+            }
+        }else {
+            double count = 0;
+            int i = 0;
+            for(ScoreModel scoreModel : list){
+                count += scoreModel.getScore();
+                i++;
+            }
+            count = count / i;
+
+            model1.setContentId(scoreModelDto.getContentId());
+            model1.setScore(count);
+        }
+        return new ResultBean().put("scoreModel", model1).setCode(Config.SUCCESS_CODE).setContent("查询评分成功");
     }
 
     /**
