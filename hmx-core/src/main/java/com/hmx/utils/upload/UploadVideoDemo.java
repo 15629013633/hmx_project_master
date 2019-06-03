@@ -129,7 +129,7 @@ public class UploadVideoDemo {
      * @param title
      * @param fileName
      */
-    public Map<String,Object> hmxUploadVideo(InputStream inputStream,  String fileName , String title) {
+    public Map<String,Object> hmxUploadVideo(InputStream inputStream,  String fileName , String title,Integer isTransCode) {
 		logger.info("--------------------get in hmxUploadVideo---------------------");
     	Map<String,Object> resultMap = new HashMap<String,Object>();
     	resultMap.put("flag", false);
@@ -160,17 +160,22 @@ public class UploadVideoDemo {
            /* 封面图片(可选) */
            //request.setCoverURL("http://cover.sample.com/sample.jpg");
            /* 模板组ID(可选) */
-			if(fileName.endsWith("mp4") || fileName.endsWith("MP4")){
-				request.setTemplateGroupId("78045a3ca145cfd6fe2b13981f81a5bd");
-			}else if(fileName.endsWith("mp3") || fileName.endsWith("MP3")){
-				request.setTemplateGroupId("73b863cbefcf44721e7d5e07520b4964");
-			}else if(fileName.endsWith("flv") || fileName.endsWith("FLV")){
-				request.setTemplateGroupId("2734268fac6df6e3e1cf3140d8c2a7fe");
-			}else if(fileName.endsWith("hls") || fileName.endsWith("HLS")){
-				request.setTemplateGroupId("35d9474deab647aba262d52ea347fe88");
+			if(1 == isTransCode){
+				if(fileName.endsWith("mp4") || fileName.endsWith("MP4")){
+					request.setTemplateGroupId("78045a3ca145cfd6fe2b13981f81a5bd");
+				}else if(fileName.endsWith("mp3") || fileName.endsWith("MP3")){
+					request.setTemplateGroupId("73b863cbefcf44721e7d5e07520b4964");
+				}else if(fileName.endsWith("flv") || fileName.endsWith("FLV")){
+					request.setTemplateGroupId("2734268fac6df6e3e1cf3140d8c2a7fe");
+				}else if(fileName.endsWith("hls") || fileName.endsWith("HLS")){
+					request.setTemplateGroupId("35d9474deab647aba262d52ea347fe88");
+				}else {
+					request.setTemplateGroupId("VOD_NO_TRANSCODE");//默认不转码
+				}
 			}else {
-				request.setTemplateGroupId("VOD_NO_TRANSCODE");
+				request.setTemplateGroupId("VOD_NO_TRANSCODE");//默认不转码
 			}
+
            /* 工作流ID(可选) */
            //request.setWorkflowId("d4430d07361f0*be1339577859b0177b");
            /* 存储区域(可选) */

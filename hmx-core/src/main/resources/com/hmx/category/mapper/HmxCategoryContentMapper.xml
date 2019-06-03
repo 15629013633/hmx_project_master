@@ -578,6 +578,10 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
                     cc.category_content_id=m.category_content_id and m.video_id=v.videoId and c.category_id=cc.category_id
                 and cc.tag_id = t.tag_id and s.source_id = cc.source_id and
 
+                <if test="state != null">
+                    cc.state=#{state} and
+                </if>
+
                 <!-- 日期条件start -->
                 <if test="beginDate != null">
                     cc.create_time &gt;= #{beginDate} and
@@ -655,6 +659,10 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             <trim suffixOverrides="and">
                     cc.category_content_id=m.category_content_id and m.video_id=v.videoId and c.category_id=cc.category_id
                 and cc.tag_id = t.tag_id and s.source_id = cc.source_id and
+
+                <if test="state != null">
+                    cc.state=#{state} and
+                </if>
 
                 <!-- 日期条件start -->
                 <if test="beginDate != null">

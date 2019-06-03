@@ -3,7 +3,7 @@ package com.hmx.utils.enums;
 public enum DataState {
 
 	正常(0, "正常"),
-	删除(1, "删除"),
+	未发布(1, "未发布"),
 	;
 	
 	private Integer state;

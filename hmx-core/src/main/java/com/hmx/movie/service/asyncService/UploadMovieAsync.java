@@ -42,11 +42,12 @@ public class UploadMovieAsync {
         String url = null;
         logger.info("start uploadVideoAsync___________________________________");
         try{
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             //先上传video
             logger.info("start hmxUploadVideo___________________________________");
 //            InputStream in = file.getInputStream();
             Map<String,Object> map = uploadVideoDemo.hmxUploadVideo(in, UUID.randomUUID().toString() + ".mp4",
-                    title.trim());
+                    title.trim(),1);
             if(map != null && !map.get("videoId").equals("")){
                 videoId = (String) map.get("videoId");
                 updateVideoStatus(movieId,1,videoId);

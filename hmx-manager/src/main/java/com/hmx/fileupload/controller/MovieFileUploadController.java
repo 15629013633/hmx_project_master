@@ -32,10 +32,14 @@ public class MovieFileUploadController {
      * 视频上传
      * @param file 视频文件
      * @param title 视频标题
+     * @param isTransCode 是否转码  0不转  1转
      * @return
      */
     @RequestMapping("/upload")
-    public ResultBean fileMovieUpload(MultipartFile file, String title){
+    public ResultBean fileMovieUpload(MultipartFile file, String title,Integer isTransCode){
+        if(isTransCode != 1){
+            isTransCode = 0;
+        }
         if(file == null){
             return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("上传视频文件不能为空");
         }
@@ -43,7 +47,7 @@ public class MovieFileUploadController {
             return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("上传视频文件标题不能为空");
         }
         try {
-            Map<String,Object> resultMap = uploadVideoDemo.hmxUploadVideo(file.getInputStream(), file.getOriginalFilename(),title.trim());
+            Map<String,Object> resultMap = uploadVideoDemo.hmxUploadVideo(file.getInputStream(), file.getOriginalFilename(),title.trim(),isTransCode);
             boolean flag = Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
                 return new ResultBean().setCode(Config.FAIL_CODE).setContent(resultMap.get("content").toString());
