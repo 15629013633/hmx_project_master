@@ -29,6 +29,7 @@ public class ScheduledService {
     //以毫秒为单位
     @Scheduled(fixedRate = 600000)  //10分钟
     public void scheduled(){
+        System.out.println("内容状态更新定时任务");
         HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
         hmxCategoryContentDto.setState(1);
         List<HmxCategoryContent> list = hmxCategoryContentService.list(hmxCategoryContentDto);
