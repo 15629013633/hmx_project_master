@@ -746,16 +746,21 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(!StringUtils.isEmpty(searchModel.getCategoryTitle())){
 			parameter.put("categoryTitle", searchModel.getCategoryTitle());
 		}
-		//20190602  之前这个地方是传的二级分类，现在根据客户的意思是传一级分类
-		//修改：传一级分类id，根据一级分类id查询所有二级分类
-		HmxCategoryDto hmxCategoryDto = new HmxCategoryDto();
-		hmxCategoryDto.setParentId(searchModel.getCategoryId());
-		List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);
-		List<Integer> categoryIdsList = new ArrayList<>();
-		for(int i = 0; i < categoryList.size(); i++){
-			categoryIdsList.add(categoryList.get(i).getCategoryId());
+
+		//根据二级分类id查找
+		if(null != searchModel.getCategoryId() && 0 != searchModel.getCategoryId()){
+			parameter.put("categoryId", searchModel.getCategoryId());
+		}else if(null != searchModel.getParentCategoryId() && 0 != searchModel.getParentCategoryId()){//根据一级分类查找
+			HmxCategoryDto hmxCategoryDto = new HmxCategoryDto();
+			hmxCategoryDto.setParentId(searchModel.getParentCategoryId());
+			List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);
+			List<Integer> categoryIdsList = new ArrayList<>();
+			for(int i = 0; i < categoryList.size(); i++){
+				categoryIdsList.add(categoryList.get(i).getCategoryId());
+			}
+			parameter.put("parentCategoryId", categoryIdsList);
 		}
-		parameter.put("categoryId", categoryIdsList);
+
 
 		if(null != searchModel.getDateTime()){
 			Integer dateTime = searchModel.getDateTime();

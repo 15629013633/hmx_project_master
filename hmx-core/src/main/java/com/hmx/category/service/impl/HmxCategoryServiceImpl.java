@@ -236,7 +236,47 @@ import javax.servlet.http.HttpServletRequest;
 		//获取一级分类
 		Map<String,Object> parameter = new HashMap<String,Object>();
 		parameter.put("parentId",0);
-		List<Map<String,Object>> topCategoryList = hmxCategoryMapper.selectCategoryTable(parameter);
+		List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryTable(parameter);
+		List<Map<String,Object>> topCategoryList = new ArrayList<>();
+		//按sort为  1，2，7，4，3，9，8， 5，6排序
+		if(null != categoryList && categoryList.size() > 0){
+			for(int i = 0; i < 9; i++){
+				for(int j = 0; j < categoryList.size(); j++){
+					Map<String,Object> map = categoryList.get(j);
+					Integer sort = Integer.valueOf(map.get("sort")+"");
+					if(i == 0 && sort == 1){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 1 && sort == 2){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 2 && sort == 7){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 3 && sort == 4){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 4 && sort == 3){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 5 && sort == 9){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 6 && sort == 8){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 7 && sort == 5){
+						topCategoryList.add(map);
+						break;
+					}else if(i == 8 && sort == 6){
+						topCategoryList.add(map);
+						break;
+					}
+				}
+			}
+
+		}
+
 		//获取二级分类
 		if(null != topCategoryList && topCategoryList.size() > 0){
 			//获取二级分类及其下的内容

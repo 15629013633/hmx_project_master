@@ -18,6 +18,7 @@ public class SearchModel extends HmxCategoryContentDto {
     private String format;
     private String fps;
     private long encrypt;
+    private Integer parentCategoryId;
 //    private String plaintext;
 //    private String complexity;
 //    private String streamType;
@@ -136,5 +137,13 @@ public class SearchModel extends HmxCategoryContentDto {
 
     public void setDateTime(Integer dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Integer getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    public void setParentCategoryId(Integer parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
     }
 }

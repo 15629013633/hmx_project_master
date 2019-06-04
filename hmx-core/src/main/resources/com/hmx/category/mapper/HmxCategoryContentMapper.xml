@@ -605,12 +605,12 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
                     v.definition = #{definition} and
                 </if>
 
-                <!--<if test="categoryId != null">-->
-                    <!--cc.category_id = #{categoryId} and-->
-                <!--</if>-->
                 <if test="categoryId != null">
+                    cc.category_id = #{categoryId} and
+                </if>
+                <if test="parentCategoryId != null">
                     cc.category_id IN
-                    <foreach collection="categoryId" item="id" index="index" open="(" separator="," close=")" >
+                    <foreach collection="parentCategoryId" item="id" index="index" open="(" separator="," close=")" >
                         #{id}
                     </foreach>
                 </if>
@@ -688,12 +688,12 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
                 </if>
 
 
-                <!--<if test="categoryId != null">-->
-                    <!--cc.category_id = #{categoryId} and-->
-                <!--</if>-->
                 <if test="categoryId != null">
+                    cc.category_id = #{categoryId} and
+                </if>
+                <if test="parentCategoryId != null">
                     cc.category_id IN
-                    <foreach collection="categoryId" item="id" index="index" open="(" separator="," close=")" >
+                    <foreach collection="parentCategoryId" item="id" index="index" open="(" separator="," close=")" >
                         #{id}
                     </foreach>
                 </if>
