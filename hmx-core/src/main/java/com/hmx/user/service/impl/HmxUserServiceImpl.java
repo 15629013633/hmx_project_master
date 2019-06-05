@@ -333,5 +333,35 @@ public class HmxUserServiceImpl implements HmxUserService{
 //		userRoleDao.saveAndFlush(userRoleModel);
 		return result;
 	}
+
+	@Override
+	public boolean modifyPas(String userPhone, String oldPassword, String newPassword) {
+		//根据手机号查询验证码
+
+		//根据手机号查找用户信息
+		HmxUser hmxUser = hmxUserMapper.findUserBycellPhone(userPhone);
+		if(null == hmxUser){
+			return false;
+		}
+		//对比密码
+		String oldPasswordWd5 = MD5Util.encode(oldPassword);
+		if(!oldPasswordWd5.equals(hmxUser.getPassword())){
+			return false;
+		}
+		hmxUser.setPassword(MD5Util.encode(newPassword));
+		return hmxUserMapper.updateByPrimaryKeySelective( hmxUser ) > 0;
+	}
+
+	@Override
+	public boolean findPas(String userPhone, String newPassword) {
+		//根据手机号查找用户信息
+		HmxUser hmxUser = hmxUserMapper.findUserBycellPhone(userPhone);
+		if(null == hmxUser){
+			return false;
+		}
+		hmxUser.setPassword(MD5Util.encode(newPassword));
+		return hmxUserMapper.updateByPrimaryKeySelective( hmxUser ) > 0;
+	}
+
 }
  

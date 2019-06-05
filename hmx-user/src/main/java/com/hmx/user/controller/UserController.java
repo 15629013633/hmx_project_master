@@ -139,7 +139,7 @@ public class UserController {
 	}
 
 	/**
-	 * 修改用户
+	 * 修改用户信息
 	 * @param hmxUser
 	 * @return
 	 */
@@ -149,7 +149,7 @@ public class UserController {
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("用户id不能为空");
 		}
 		try {
-			hmxUser.setPassword(MD5Util.encode(hmxUser.getPassword()));
+			//hmxUser.setPassword(MD5Util.encode(hmxUser.getPassword()));
 			boolean flag = hmxUserService.update(hmxUser);
 			if(flag){
 				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("修改成功");
@@ -176,12 +176,98 @@ public class UserController {
 			if(null == isHmxUser){
 				return new ResultBean().setCode(Config.FAIL_CODE).setContent("通过该手机号没有查到用户信息");
 			}
-			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("查询到用户").put("user",isHmxUser);
+			UserModel userModel = new UserModel();
+			BeanUtils.copyProperties(isHmxUser,userModel);
+			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("查询到用户").put("user",userModel);
 		}catch (Exception e){
 			e.printStackTrace();
 			return new ResultBean().setCode(Config.FAIL_CODE).setContent("查询失败");
 		}
 	}
+
+	/**
+	 * 修改密码
+	 *  userPhone   手机号
+	 * oldPassword   旧密码
+	 * newPassword   新密码
+	 * verCode    短信验证码
+	 * @return
+	 */
+	@PostMapping("/modifyPas")
+	public ResultBean modifyPas(String userPhone,String oldPassword,String newPassword,String verCode,HttpServletRequest request){
+		if(StringUtils.isEmpty(userPhone)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("用户手机号不能为空");
+		}
+		if(StringUtils.isEmpty(oldPassword)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("旧密码不能为空");
+		}
+		if(StringUtils.isEmpty(newPassword)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("新密码不能为空");
+		}
+		if(StringUtils.isEmpty(verCode)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("验证码不能为空");
+		}
+		try {
+			HmxVerifylog hmxVerifylog = hmxVerifylogService.selectNewVerifylog(userPhone);
+			if(null == hmxVerifylog){
+				return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查询到验证码");
+			}else{
+				if(!verCode.equals(hmxVerifylog.getVerifyCode())){
+					return new ResultBean().setCode(Config.FAIL_CODE).setContent("验证码错误");
+				}
+			}
+			//hmxUser.setPassword(MD5Util.encode(hmxUser.getPassword()));
+			boolean flag = hmxUserService.modifyPas(userPhone,oldPassword,newPassword);
+			if(flag){
+				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("修改成功");
+			}
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}catch (Exception e){
+			e.printStackTrace();
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}
+	}
+
+	/**
+	 * 找回密码
+	 *  userPhone   手机号
+	 * newPassword   新密码
+	 * verCode    短信验证码
+	 * @return
+	 */
+	@PostMapping("/findPas")
+	public ResultBean findPas(String userPhone,String newPassword,String verCode,HttpServletRequest request){
+		if(StringUtils.isEmpty(userPhone)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("用户手机号不能为空");
+		}
+		if(StringUtils.isEmpty(newPassword)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("新密码不能为空");
+		}
+		if(StringUtils.isEmpty(verCode)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("验证码不能为空");
+		}
+		try {
+			HmxVerifylog hmxVerifylog = hmxVerifylogService.selectNewVerifylog(userPhone);
+			if(null == hmxVerifylog){
+				return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查询到验证码");
+			}else{
+				if(!verCode.equals(hmxVerifylog.getVerifyCode())){
+					return new ResultBean().setCode(Config.FAIL_CODE).setContent("验证码错误");
+				}
+			}
+			//hmxUser.setPassword(MD5Util.encode(hmxUser.getPassword()));
+			boolean flag = hmxUserService.findPas(userPhone,newPassword);
+			if(flag){
+				return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("修改成功");
+			}
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}catch (Exception e){
+			e.printStackTrace();
+			return new ResultBean().setCode(Config.FAIL_CODE).setContent("修改失败");
+		}
+	}
+
+
 
 	/**
 	 * 发送验证码

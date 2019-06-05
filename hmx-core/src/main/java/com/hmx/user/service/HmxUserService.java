@@ -75,5 +75,21 @@ public interface HmxUserService {
 
 	//增加或者修改用户信息
 	Result<Object> addOrUpdateUser(HmxUserDto hmxUserDto);
-	
+
+	/**
+	 * 修改用户密码
+	 * @param userPhone
+	 * @param oldPassword
+	 * @param newPassword
+     * @return
+     */
+	boolean modifyPas(String userPhone, String oldPassword, String newPassword);
+
+	/**
+	 * 找回密码
+	 * @param userPhone
+	 * @param newPassword
+     * @return
+     */
+	boolean findPas(String userPhone, String newPassword);
 }
