@@ -106,4 +106,11 @@ public interface HmxCategoryService {
 	 * @return
      */
 	Map<String,Object> categoryDelete(String categoryIds);
+
+	/**
+	 *  按序获取所有一级分类
+	 * @param hmxCategoryDto
+	 * @return
+     */
+	List<Map<String,Object>> allTopCategory(HmxCategoryDto hmxCategoryDto);
 }

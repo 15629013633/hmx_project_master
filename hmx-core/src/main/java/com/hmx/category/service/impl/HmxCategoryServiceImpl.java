@@ -240,41 +240,7 @@ import javax.servlet.http.HttpServletRequest;
 		List<Map<String,Object>> topCategoryList = new ArrayList<>();
 		//按sort为  1，2，7，4，3，9，8， 5，6排序
 		if(null != categoryList && categoryList.size() > 0){
-			for(int i = 0; i < 9; i++){
-				for(int j = 0; j < categoryList.size(); j++){
-					Map<String,Object> map = categoryList.get(j);
-					Integer sort = Integer.valueOf(map.get("sort")+"");
-					if(i == 0 && sort == 1){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 1 && sort == 2){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 2 && sort == 7){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 3 && sort == 4){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 4 && sort == 3){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 5 && sort == 9){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 6 && sort == 8){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 7 && sort == 5){
-						topCategoryList.add(map);
-						break;
-					}else if(i == 8 && sort == 6){
-						topCategoryList.add(map);
-						break;
-					}
-				}
-			}
-
+			sortCategory(categoryList,topCategoryList);
 		}
 
 		//获取二级分类
@@ -412,7 +378,18 @@ import javax.servlet.http.HttpServletRequest;
 			return resultMap;
 		}
 	}
-    /**
+
+	@Override
+	public List<Map<String,Object>> allTopCategory(HmxCategoryDto hmxCategoryDto) {
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		parameter.put("parentId",0);
+		List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryTable(parameter);
+		List<Map<String,Object>> topCategoryList = new ArrayList<>();
+		sortCategory(categoryList,topCategoryList);
+		return topCategoryList;
+	}
+
+	/**
      * 查询分类名是否重复
      * @return
      */
@@ -463,6 +440,48 @@ import javax.servlet.http.HttpServletRequest;
 	    page.setPage(data);
     	return page;
     }
+
+	/**
+	 * 分类排序
+	 * @param categoryList
+	 * @param topCategoryList
+     */
+	public void sortCategory(List<Map<String,Object>> categoryList,List<Map<String,Object>> topCategoryList){
+		for(int i = 0; i < 9; i++){
+			for(int j = 0; j < categoryList.size(); j++){
+				Map<String,Object> map = categoryList.get(j);
+				Integer sort = Integer.valueOf(map.get("sort")+"");
+				if(i == 0 && sort == 1){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 1 && sort == 2){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 2 && sort == 7){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 3 && sort == 4){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 4 && sort == 3){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 5 && sort == 9){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 6 && sort == 8){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 7 && sort == 5){
+					topCategoryList.add(map);
+					break;
+				}else if(i == 8 && sort == 6){
+					topCategoryList.add(map);
+					break;
+				}
+			}
+		}
+	}
 
 }
  
