@@ -412,7 +412,16 @@ import javax.servlet.http.HttpServletRequest;
 			return resultMap;
 		}
 	}
-    /**
+
+	@Override
+	public List<Map<String,Object>> allTopCategory(HmxCategoryDto hmxCategoryDto) {
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		parameter.put("parentId",0);
+		List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryTable(parameter);
+		return categoryList;
+	}
+
+	/**
      * 查询分类名是否重复
      * @return
      */
