@@ -16,6 +16,8 @@
   	<result column="version" property="version" jdbcType="INTEGER" />
   	<result column="createid" property="createid" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="wxId" property="wxId" jdbcType="VARCHAR" />
+    <result column="qqId" property="qqId" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -78,7 +80,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    id,user_name,user_aliase,user_phone,password,gender,head_pic,create_time,new_time,state,version,createid,type
+    id,user_name,user_aliase,user_phone,password,gender,head_pic,create_time,new_time,state,version,createid,type,wxId,qqId
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.user.entity.HmxUserExample" >
@@ -129,8 +131,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.user.entity.HmxUser" keyProperty="id" useGeneratedKeys="true">
-    insert into hmx_user  (id,user_name,user_aliase,user_phone,password,gender,head_pic,create_time,new_time,state,version,createid,type)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userAliase,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
+    insert into hmx_user  (id,user_name,user_aliase,user_phone,password,gender,head_pic,create_time,new_time,state,version,createid,type,wxId,qqId)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userAliase,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
+     #{createid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{wxId,jdbcType=VARCHAR}, #{qqId,jdbcType=VARCHAR})
   </insert>
   
   
@@ -176,6 +179,12 @@
       <if test="type != null" >
         type,
       </if>
+      <if test="wxId != null" >
+        wxId,
+      </if>
+      <if test="qqId != null" >
+        qqId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -217,6 +226,12 @@
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
       </if>
+      <if test="wxId != null" >
+        #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqId != null" >
+        #{qqId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   
@@ -234,7 +249,9 @@ new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-type = #{type,jdbcType=INTEGER}
+type = #{type,jdbcType=INTEGER},
+    wxId = #{wxId,jdbcType=VARCHAR},
+    qqId = #{wxId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -289,6 +306,12 @@ type = #{type,jdbcType=INTEGER}
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER} ,
       </if>
+      <if test="wxId != null" >
+        wxId = #{wxId,jdbcType=VARCHAR} ,
+      </if>
+      <if test="qqId != null" >
+        qqId = #{qqId,jdbcType=VARCHAR} ,
+      </if>
     </set >
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -308,7 +331,9 @@ new_time = #{newTime,jdbcType=TIMESTAMP},
 state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
-type = #{type,jdbcType=INTEGER}
+type = #{type,jdbcType=INTEGER},
+    wxId = #{wxId,jdbcType=VARCHAR},
+    qqId = #{qqId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
    

@@ -19,6 +19,8 @@ public class UserModel {
     private Integer version;
     private Integer createid;
     private Integer type;
+    private String wxId;
+    private String qqId;
 
     public Integer getId() {
         return id;
@@ -114,5 +116,21 @@ public class UserModel {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getWxId() {
+        return wxId;
+    }
+
+    public void setWxId(String wxId) {
+        this.wxId = wxId;
+    }
+
+    public String getQqId() {
+        return qqId;
+    }
+
+    public void setQqId(String qqId) {
+        this.qqId = qqId;
     }
 }

@@ -103,7 +103,9 @@ public class CategoryContentController {
 	 */
 	@GetMapping("/search")
 	public ResultBean search(String contentValue, PageBean<Map<String,Object>> page, Model model){
-
+		if(StringUtils.isEmpty(contentValue)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("搜索内容字段不能为空");
+		}
 		Map<String,Object> map = new HashMap<>();
 		//从文本和标题中查
 		page = hmxCategoryContentService.search(page, contentValue);

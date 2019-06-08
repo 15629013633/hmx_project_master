@@ -91,7 +91,6 @@ public class HmxUserServiceImpl implements HmxUserService{
 	/**
 	 * @Method: info
 	 * @Description: 根据自增主键查询对象信息
-	 * @param hmxUser 根据自增对象查询信息
 	 * @return HmxUser 查询的对象
 	 */
 	public HmxUser info (Integer hmxUserId) {
@@ -190,6 +189,12 @@ public class HmxUserServiceImpl implements HmxUserService{
 		}
 		if ( !StringUtils.isEmpty( hmxUserDto.getUserPhone() ) ) {
 			where.andUserPhoneEqualTo( hmxUserDto.getUserPhone() );
+		}
+		if ( !StringUtils.isEmpty( hmxUserDto.getWxId() ) ) {
+			where.andWxIdEqualTo( hmxUserDto.getWxId() );
+		}
+		if ( !StringUtils.isEmpty( hmxUserDto.getQqId() ) ) {
+			where.andQqIdEqualTo( hmxUserDto.getQqId() );
 		}
 		if ( !StringUtils.isEmpty( hmxUserDto.getPassword() ) ) {
 			where.andPasswordEqualTo( hmxUserDto.getPassword() );
