@@ -23,10 +23,11 @@ spring:
         enabled: true
         force: true
 
-#        spring.http.encoding.force=true
-#        spring.http.encoding.charset=UTF-8
-#        spring.http.encoding.enabled=true
-#        server.tomcat.uri-encoding=UTF-8
+#打印sql脚本
+logging:
+  level:
+    com.hmx: debug
+
 mybatis:
   mapper-locations: classpath*:com/hmx/*/mapper/*.xml
   configuration:
