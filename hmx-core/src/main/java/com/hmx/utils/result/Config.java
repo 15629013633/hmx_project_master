@@ -35,8 +35,42 @@ public class Config {
 	 * 验证码错误
 	 */
 	public static final Integer VERIFY_CODE_WRONG = 10003;
-	
-	
+
+	/**
+	 * 没有发送验证码
+	 */
+	public static final Integer VERIFY_CODE_NOTSEND = 10030;
+
+
+	/**
+	 * 验证码被使用
+	 */
+	public static final Integer VERIFY_CODE_OVER = 10031;
+
+	/**
+	 * 验证码为空
+	 */
+	public static final Integer VERIFY_CODE_EMPTY = 10032;
+
+	/**
+	 * 手机号不能为空
+	 */
+	public static final Integer FAIL_MOBILE_EMPTY = 10033;
+
+	/**
+	 * 第三方id不能为空
+	 */
+	public static final Integer FAIL_THID_EMPTY = 10034;
+
+	/**
+	 * 密码不能为空
+	 */
+	public static final Integer FAIL_PASSWORD_EMPTY = 10035;
+
+	/**
+	 * 手机号已经被注册
+	 */
+	public static final Integer FAIL_MOBILE_USED = 10036;
 	/**
 	 * 操作的数据重复
 	 */

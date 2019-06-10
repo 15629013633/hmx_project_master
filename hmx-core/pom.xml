@@ -131,6 +131,12 @@
 				  <version>1.8.13</version>
 			  </dependency>
 
+			  <!--极光推送需要的依赖包-->
+			  <dependency>
+				  <groupId>cn.jpush.api</groupId>
+				  <artifactId>jpush-client</artifactId>
+				  <version>3.3.2</version>
+			  </dependency>
 
 			
 		  </dependencies>

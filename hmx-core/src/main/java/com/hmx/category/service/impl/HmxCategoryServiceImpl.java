@@ -453,34 +453,46 @@ import javax.servlet.http.HttpServletRequest;
 				Map<String,Object> map = categoryList.get(j);
 				Integer sort = Integer.valueOf(map.get("sort")+"");
 				if(i == 0 && sort == 1){
+					//map.put("sort",1);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 1 && sort == 2){
+					//map.put("sort",2);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 2 && sort == 7){
+					//map.put("sort",3);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 3 && sort == 4){
+					//map.put("sort",4);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 4 && sort == 3){
+					//map.put("sort",5);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 5 && sort == 9){
+					//map.put("sort",6);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 6 && sort == 8){
+					//map.put("sort",7);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 7 && sort == 5){
+					//map.put("sort",8);
 					topCategoryList.add(map);
 					break;
 				}else if(i == 8 && sort == 6){
+					//map.put("sort",9);
 					topCategoryList.add(map);
 					break;
 				}
 			}
+		}
+		for(int i = 0; i < topCategoryList.size(); i++){
+			topCategoryList.get(i).put("sort",i+1);
 		}
 	}
 
