@@ -382,7 +382,7 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
                 imageUrl = #{imageUrl} and
             </if>
 		  <if test="categoryName != null">
-		   category_name like concat("%",#{categoryName},"%") and 
+		   category_name like concat('%',#{categoryName},'%') and 
 		  </if>
 		</trim>
 	</where>
@@ -420,7 +420,7 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
                 imageUrl = #{imageUrl} and
             </if>
 		  <if test="categoryName != null">
-		   category_name like concat("%",#{categoryName},"%") and 
+		   category_name like concat('%',#{categoryName},'%') and 
 		  </if>
 		</trim>
 	</where>

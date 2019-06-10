@@ -475,20 +475,26 @@ public class UserController {
 		}
 		try {
 			//之前该手机号用户已经通过非第三方注册方式完成注册
+			HmxVerifylog hmxVerifylog = hmxVerifylogService.selectNewVerifylog(userPhone);
 			HmxUser isHmxUser = hmxUserService.selectUserInfoByUserPhone(userPhone);
 			if(isHmxUser != null){
 //				if(wxId.equals(isHmxUser.getWxId()) || qqId.equals(isHmxUser.getQqId())){
-					if(wxId.equals(isHmxUser.getWxId())){
-						return new ResultBean().setCode(Config.USER_WX_EXITS).setContent("USER_WX_EXITS：已经微信注册过，请直接登录");
-					}
-					if(qqId.equals(isHmxUser.getQqId())){
-						return new ResultBean().setCode(Config.USER_QQ_EXITS).setContent("USER_QQ_EXITS：已经QQ注册过，请直接登录");
-					}
+//					if(wxId.equals(isHmxUser.getWxId())){
+//						return new ResultBean().setCode(Config.USER_WX_EXITS).setContent("USER_WX_EXITS：已经微信注册过，请直接登录");
+//					}
+//					if(qqId.equals(isHmxUser.getQqId())){
+//						return new ResultBean().setCode(Config.USER_QQ_EXITS).setContent("USER_QQ_EXITS：已经QQ注册过，请直接登录");
+//					}
 					//能查到但是没有第三方id，则更新用户信息，将第三方id更新进去，以保证第三方登录成功
+					hmxUser.setPassword(null);
 					boolean flag = hmxUserService.update(hmxUser);
 					if(!flag){
 						return new ResultBean().setCode(Config.FAIL_CODE).setContent("注册失败");
 					}else {
+						HmxVerifylog hmxVerifylogUpdate = new HmxVerifylog();
+						hmxVerifylogUpdate.setVerifyLogId(hmxVerifylog.getVerifyLogId());
+						hmxVerifylogUpdate.setIsVerify(IsVerify.已使用.getState());
+						hmxVerifylogService.update(hmxVerifylogUpdate);
 						return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("注册用户成功");
 					}
 //				}else {
@@ -502,14 +508,19 @@ public class UserController {
 //				}
 			}else if(isHmxUser != null && (StringUtils.isEmpty(isHmxUser.getWxId()) || StringUtils.isEmpty(isHmxUser.getQqId()))){
 				//能查到但是没有第三方id，则更新用户信息，将第三方id更新进去，以保证第三方登录成功
+				hmxUser.setPassword(null);
 				boolean flag = hmxUserService.update(hmxUser);
 				if(!flag){
 					return new ResultBean().setCode(Config.FAIL_CODE).setContent("注册失败");
 				}else {
+					HmxVerifylog hmxVerifylogUpdate = new HmxVerifylog();
+					hmxVerifylogUpdate.setVerifyLogId(hmxVerifylog.getVerifyLogId());
+					hmxVerifylogUpdate.setIsVerify(IsVerify.已使用.getState());
+					hmxVerifylogService.update(hmxVerifylogUpdate);
 					return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("注册用户成功");
 				}
 			} else {//用户不存在，走注册流程
-				HmxVerifylog hmxVerifylog = hmxVerifylogService.selectNewVerifylog(userPhone);
+				//HmxVerifylog hmxVerifylog = hmxVerifylogService.selectNewVerifylog(userPhone);
 				if(hmxVerifylog == null){
 					return new ResultBean().setCode(Config.FAIL_CODE).setContent("您还没有发送验证码");
 				}
