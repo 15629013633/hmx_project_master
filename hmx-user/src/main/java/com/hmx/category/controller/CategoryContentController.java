@@ -103,7 +103,9 @@ public class CategoryContentController {
 	 */
 	@GetMapping("/search")
 	public ResultBean search(String contentValue, PageBean<Map<String,Object>> page, Model model){
-
+		if(StringUtils.isEmpty(contentValue)){
+			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("搜索内容字段不能为空");
+		}
 		Map<String,Object> map = new HashMap<>();
 		//从文本和标题中查
 		page = hmxCategoryContentService.search(page, contentValue);
@@ -194,7 +196,7 @@ public class CategoryContentController {
 
 		Map<String,Object> map = new HashMap<>();
 		if((null == searchModel.getCategoryId() || 0 == searchModel.getCategoryId())
-				|| (null == searchModel.getParentCategoryId() || 0 == searchModel.getParentCategoryId())){
+				&& (null == searchModel.getParentCategoryId() || 0 == searchModel.getParentCategoryId())){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("分类id不能为空");
 		}
 		//从文本和标题中查  实际上目前只从标题中查了

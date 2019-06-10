@@ -108,7 +108,7 @@ public interface HmxCategoryService {
 	Map<String,Object> categoryDelete(String categoryIds);
 
 	/**
-	 *  按序获取所有一级分类
+	 * 获取所有一级分类
 	 * @param hmxCategoryDto
 	 * @return
      */

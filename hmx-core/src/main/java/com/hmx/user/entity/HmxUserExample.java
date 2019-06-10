@@ -362,6 +362,17 @@ public class HmxUserExample{
             return (Criteria) this;
         }
 
+        public Criteria andWxIdEqualTo(String value) {
+            addCriterion("wxId =", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQqIdEqualTo(String value) {
+            addCriterion("qqId =", value, "qqId");
+            return (Criteria) this;
+        }
+
+
         public Criteria andUserPhoneNotEqualTo(String value) {
             addCriterion("user_phone <>", value, "userPhone");
             return (Criteria) this;

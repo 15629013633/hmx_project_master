@@ -71,6 +71,21 @@ public class Config {
      * 用户没有注册
      */
     public static final Integer USER_NULL = 10011;
+
+	/**
+	 * 用户已经注册
+	 */
+	public static final Integer USER_EXITS = 10100;
+
+	/**
+	 * 用户已经注册过微信
+	 */
+	public static final Integer USER_WX_EXITS = 10101;
+
+	/**
+	 * 用户已经注册过qq
+	 */
+	public static final Integer USER_QQ_EXITS = 10102;
     /**
      * 是否是黑名单
      */

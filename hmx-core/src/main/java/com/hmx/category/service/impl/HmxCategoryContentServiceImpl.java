@@ -624,6 +624,15 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
 		resultMap.put("imagesList",hmxImagesList);
 		resultMap.put("fileUrl",fileUrl);
+		//add at 20190608  临时为前端给这个字段加上内容
+		if(null != hmxImagesList && hmxImagesList.size() > 0){
+			for(HmxImages images : hmxImagesList){
+				if(!StringUtils.isEmpty(images.getImageUrl())){
+					resultMap.put("contentImages",images.getImageUrl());
+					break;
+				}
+			}
+		}
     	return resultMap;
     }
     /**

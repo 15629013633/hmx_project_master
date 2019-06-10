@@ -384,9 +384,10 @@ import javax.servlet.http.HttpServletRequest;
 		Map<String,Object> parameter = new HashMap<String,Object>();
 		parameter.put("parentId",0);
 		List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryTable(parameter);
-		List<Map<String,Object>> topCategoryList = new ArrayList<>();
-		sortCategory(categoryList,topCategoryList);
-		return topCategoryList;
+//		List<Map<String,Object>> topCategoryList = new ArrayList<>();
+//		sortCategory(categoryList,topCategoryList);
+//		return topCategoryList;
+		return categoryList;
 	}
 
 	/**

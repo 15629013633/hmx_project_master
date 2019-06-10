@@ -96,7 +96,7 @@ public class CategoryController {
 
 	@GetMapping("/allTopCategory")
 	/**
-	 * 按序获取所有一级分类
+	 * 获取所有一级分类
 	 */
 	public ResultBean allTopCategory(HmxCategoryDto hmxCategoryDto){
 		//查询分类
