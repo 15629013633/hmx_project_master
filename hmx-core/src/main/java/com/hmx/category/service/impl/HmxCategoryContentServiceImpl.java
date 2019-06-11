@@ -671,16 +671,16 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			return page;
 		}
 	    List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTableByPc(parameter);
-		if("app".equals(type) && null != data && data.size() > 0){
+		if(null != data && data.size() > 0){
 			//获取内容的附属信息，图片，视频
-			getContentImagesAndVideo(data);
+			getContentImagesAndVideo(data,type);
 		}
 
 	    page.setPage(data);
     	return page;
     }
 
-	public void getContentImagesAndVideo(List<Map<String,Object>> data){
+	public void getContentImagesAndVideo(List<Map<String,Object>> data,String type){
 		for(Map<String,Object> map : data){
 
 			String contentId = map.get("categoryContentId")+"";
@@ -688,7 +688,26 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			hmxImagesExample.or().andCategoryContentIdEqualTo(Integer.valueOf(contentId));
 			//获取图片信息
 			List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
-			map.put("imagesList",hmxImagesList);
+			if("app".equals(type)){
+				map.put("imagesList",hmxImagesList);
+			}
+			if("pc".equals(type) && null != hmxImagesList && hmxImagesList.size() > 0){
+				for(HmxImages images : hmxImagesList){
+					if(!StringUtils.isEmpty(images.getImageUrl())){
+						map.put("contentImages",images.getImageUrl());
+						break;
+					}
+					if(!StringUtils.isEmpty(images.getTransImage())){
+						map.put("contentImages",images.getTransImage());
+						break;
+					}
+					if(!StringUtils.isEmpty(images.getVerticalImage())){
+						map.put("contentImages",images.getVerticalImage());
+						break;
+					}
+				}
+			}
+
 			//获取视频信息
 //			HmxMovieExample hmxMovieExample = new HmxMovieExample();
 //			hmxMovieExample.or().andCategoryContentIdEqualTo(contentId+"");

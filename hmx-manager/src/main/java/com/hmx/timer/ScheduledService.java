@@ -27,7 +27,8 @@ public class ScheduledService {
      * 每10分钟去数据库坐一次更新，入库时间超过8小时的则将状态更新为正常
      */
     //以毫秒为单位
-    @Scheduled(fixedRate = 600000)  //10分钟
+    //@Scheduled(fixedRate = 600000)  //10分钟
+    @Scheduled(fixedRate = 60000)  //1分钟
     public void scheduled(){
         System.out.println("内容状态更新定时任务");
         HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
@@ -44,10 +45,10 @@ public class ScheduledService {
                 long timeTwo=dateTwo.getTimeInMillis();
                 long minute=(timeOne-timeTwo)/(1000*60);//转化minute
                 //判断账户锁定时间是否大于480分钟
-                if(minute>480){
+                //if(minute>480){
                     content.setState(0);
                     hmxCategoryContentService.update(content);
-                }
+                //}
                 //System.out.println("title="+content.getCategoryTitle());
             }
         }

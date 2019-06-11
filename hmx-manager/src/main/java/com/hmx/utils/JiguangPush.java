@@ -1,5 +1,6 @@
 package com.hmx.utils;
 
+import cn.jpush.api.push.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import cn.jiguang.common.ClientConfig;
@@ -16,6 +17,7 @@ import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 
 /**
+ * 参考 https://www.cnblogs.com/fengwenzhee/p/6930016.html
  * Created by Administrator on 2019/6/10.
  */
 public class JiguangPush {
@@ -39,30 +41,6 @@ public class JiguangPush {
     }
 
     /**
-     * 生成极光推送对象PushPayload（采用java SDK）
-     * @return PushPayload
-     */
-    public static PushPayload buildPushObject_android_ios_alias_alert(String content){
-        return PushPayload.newBuilder()
-                .setPlatform(Platform.android_ios())
-                .setAudience(Audience.all())
-                .setNotification(Notification.newBuilder()
-                        .addPlatformNotification(AndroidNotification.newBuilder()
-                                .addExtra("type", "infomation")
-                                .setAlert(content)
-                                .build())
-                        .addPlatformNotification(IosNotification.newBuilder()
-                                .addExtra("type", "infomation")
-                                .setAlert(content)
-                                .build())
-                        .build())
-                .setOptions(Options.newBuilder()
-                        .setApnsProduction(false)//true-推送生产环境 false-推送开发环境（测试使用参数）
-                        .setTimeToLive(90)//消息在JPush服务器的失效时间（测试使用参数）
-                        .build())
-                .build();
-    }
-    /**
      * 极光推送方法(采用java SDK)
      * @return PushResult
      */
@@ -84,4 +62,49 @@ public class JiguangPush {
             return null;
         }
     }
+
+    /**
+     * 生成极光推送对象PushPayload（采用java SDK）
+     * @return PushPayload
+     */
+    public static PushPayload buildPushObject_android_ios_alias_alert(String content){
+        return PushPayload.newBuilder()
+                .setPlatform(Platform.android_ios())
+                .setAudience(Audience.all())
+                .setNotification(Notification.newBuilder()
+//                        .addPlatformNotification(AndroidNotification.newBuilder()
+//                                .addExtra("type", "infomation")
+//                                .setAlert(content)
+//                                .build())
+//                        .addPlatformNotification(IosNotification.newBuilder()
+//                                .addExtra("type", "infomation")
+//                                .setAlert(content)
+//                                .build())
+//                        .build())
+
+                         .addPlatformNotification(AndroidNotification.newBuilder()
+                                .addExtra("type", "infomation")
+                                .setAlert(content)
+                                .build())
+                        .addPlatformNotification(IosNotification.newBuilder()
+                                .addExtra("type", "infomation")
+                                .setAlert(content)
+                                .build())
+                        .build())
+                .setMessage(Message.newBuilder()
+
+                        .setMsgContent(content)
+
+                        .setTitle("黄梅戏")
+
+                        .addExtra("message extras key","扩展字段")
+
+                        .build())
+                .setOptions(Options.newBuilder()
+                        .setApnsProduction(false)//true-推送生产环境 false-推送开发环境（测试使用参数）
+                        .setTimeToLive(90)//消息在JPush服务器的失效时间（测试使用参数）
+                        .build())
+                .build();
+    }
+
 }
