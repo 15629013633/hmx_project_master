@@ -9,6 +9,10 @@ import java.util.HashMap;
 import com.hmx.category.dao.HmxCategoryContentMapper;
 import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.entity.HmxCategoryContentExample;
+import com.hmx.images.dao.HmxImagesMapper;
+import com.hmx.images.dto.HmxImagesDto;
+import com.hmx.images.entity.HmxImages;
+import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.user.entity.HmxUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 
 	@Autowired
 	private HmxCategoryContentMapper hmxCategoryContentMapper;
+
+	@Autowired
+	private HmxImagesMapper hmxImagesMapper;
 	
 	
 	/**
@@ -266,6 +273,27 @@ import javax.servlet.http.HttpServletRequest;
 					if(null != contenList && contenList.size() > 0){
 						for(HmxCategoryContent content : contenList){
 							content.setCategoryContent("");
+							//获取对应的图片
+							HmxImagesExample hmxImagesExample = new HmxImagesExample();
+							HmxImagesExample.Criteria where = hmxImagesExample.createCriteria();
+							where.andCategoryContentIdEqualTo(content.getCategoryContentId());
+							List<HmxImages> imagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+							if(null != imagesList && imagesList.size() > 0){
+								for(HmxImages images : imagesList){
+									if(!StringUtils.isEmpty(images.getImageUrl())){
+										content.setContentImages(images.getImageUrl());
+										break;
+									}
+									if(!StringUtils.isEmpty(images.getTransImage())){
+										content.setContentImages(images.getTransImage());
+										break;
+									}
+									if(!StringUtils.isEmpty(images.getVerticalImage())){
+										content.setContentImages(images.getVerticalImage());
+										break;
+									}
+								}
+							}
 						}
 					}
 					map.put("contentList",contenList);

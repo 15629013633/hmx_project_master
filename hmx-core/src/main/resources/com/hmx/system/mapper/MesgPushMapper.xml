@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hmx.system.dao.MesgPushMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.MesgPush" >
+    <id column="contentId" property="contentId" jdbcType="INTEGER" />
+    <result column="contentImage" property="contentImage" jdbcType="VARCHAR" />
+    <result column="contentTpye" property="contentTpye" jdbcType="INTEGER" />
+  	<result column="title" property="title" jdbcType="VARCHAR" />
+  	<result column="subTitle" property="subTitle" jdbcType="VARCHAR" />
+  	<result column="contentDes" property="contentDes" jdbcType="VARCHAR" />
+  	<result column="extend" property="extend" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+      	<if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+          </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    contentId,contentImage,contentTpye,title,subTitle,contentDes,extend,status,createTime
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.MesgPushExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hmx_mesgpush
+
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hmx_mesgpush
+    where contentId = #{contentId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hmx_mesgpush
+    where contentId = #{contentId,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.MesgPushExample" >
+    delete from hmx_mesgpush
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.hmx.system.entity.MesgPush" keyProperty="contentId" useGeneratedKeys="true">
+    insert into hmx_mesgpush  (contentId,contentImage,contentTpye,title,subTitle,contentDes,extend,status,createTime)
+    values (#{contentId,jdbcType=INTEGER}, #{contentImage,jdbcType=VARCHAR},#{contentTpye,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},
+    #{subTitle,jdbcType=VARCHAR}, #{contentDes,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.hmx.system.entity.MesgPush" keyProperty="contentId" useGeneratedKeys="true"  >
+    insert into hmx_mesgpush
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contentId != null" >
+        contentId,
+      </if>
+      <if test="contentImage != null" >
+        contentImage,
+      </if>
+      <if test="contentTpye != null" >
+        contentTpye,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        subTitle,
+      </if>
+      <if test="contentDes != null" >
+        contentDes,
+      </if>
+      <if test="extend != null" >
+        extend,
+      </if>
+
+      <if test="extend != null" >
+        extend,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contentId != null" >
+        #{contentId,jdbcType=INTEGER},
+      </if>
+      <if test="contentImage != null" >
+        #{contentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="contentTpye != null" >
+        #{contentTpye,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="contentDes != null" >
+        #{contentDes,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null" >
+        #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=INTEGER},
+      </if>
+
+
+    </trim>
+  </insert>
+
+  <update  id="updateByExample" parameterType="map" >
+    update hmx_mesgpush
+    set
+    contentId = #{contentId,jdbcType=INTEGER},
+    contentImage = #{contentImage,jdbcType=VARCHAR},
+    contentTpye = #{createDate,jdbcType=INTEGER},
+    title = #{title,jdbcType=VARCHAR},
+    subTitle = #{subTitle,jdbcType=VARCHAR},
+    contentDes = #{contentDes,jdbcType=VARCHAR},
+    extend = #{extend,jdbcType=VARCHAR},
+    status = #{status,jdbcType=INTEGER},
+    createTime = #{createTime,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="countByExample" parameterType="com.hmx.system.entity.MesgPushExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_mesgpush
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.MesgPush" >
+    update hmx_mesgpush
+    <set >
+      <if test="contentId != null" >
+        contentId,
+      </if>
+      <if test="contentImage != null" >
+        contentImage,
+      </if>
+      <if test="contentTpye != null" >
+        contentTpye,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        subTitle,
+      </if>
+      <if test="contentDes != null" >
+        contentDes,
+      </if>
+      <if test="extend != null" >
+        extend,
+      </if>
+
+      <if test="extend != null" >
+        extend,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+
+
+    </set >
+    where contentId = #{contentId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.MesgPush" >
+    update hmx_mesgpush
+    set
+   contentId = #{contentId,jdbcType=INTEGER},
+    contentImage = #{contentImage,jdbcType=VARCHAR},
+    contentTpye = #{createDate,jdbcType=INTEGER},
+    title = #{title,jdbcType=VARCHAR},
+    subTitle = #{subTitle,jdbcType=VARCHAR},
+    contentDes = #{contentDes,jdbcType=VARCHAR},
+    extend = #{extend,jdbcType=VARCHAR},
+    status = #{status,jdbcType=INTEGER},
+    createTime = #{createTime,jdbcType=INTEGER}
+    where contentId = #{contentId,jdbcType=INTEGER}
+  </update>
+   
+   
+</mapper>

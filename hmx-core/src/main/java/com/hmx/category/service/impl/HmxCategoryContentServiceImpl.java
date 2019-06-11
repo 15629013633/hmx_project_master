@@ -496,7 +496,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     	Map<String,Object> parameter = new HashMap<String,Object>();
     	parameter.put("offset", page.getStartOfPage());
     	parameter.put("limit", page.getPageSize());
-    	parameter.put("state", DataState.正常.getState());
+		parameter.put("state", DataState.正常.getState());
+
     	if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryTitle())){
     		parameter.put("categoryTitle", hmxCategoryContentDto.getCategoryTitle());
     	}

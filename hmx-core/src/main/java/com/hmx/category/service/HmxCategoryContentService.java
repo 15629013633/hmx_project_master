@@ -82,11 +82,13 @@ public interface HmxCategoryContentService {
 	/**
      * 查询内容详情
      * @param categoryContentId
+	 * type pc,app,manager（管理端"）
      * @return
      */
 	HmxCategoryContentTrans selectCategoryContentById(Integer categoryContentId);
     /**
      * 内容列表查询
+	 * type pc,app,manager（管理端"）
      * @return
      */
     PageBean<Map<String,Object>> selectCategoryContentTable(PageBean<Map<String,Object>> page,HmxCategoryContentDto hmxCategoryContentDto);
