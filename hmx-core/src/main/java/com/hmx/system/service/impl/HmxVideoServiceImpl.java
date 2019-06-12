@@ -28,13 +28,23 @@ public class HmxVideoServiceImpl implements HmxVideoService {
     @Override
     public List<HmxVideo> list(HmxVideoDto hmxVideoDto) {
         HmxVideoExample videoExample = new HmxVideoExample();
+        HmxVideoExample.Criteria where = videoExample.createCriteria();
         if(!StringUtils.isEmpty(hmxVideoDto.getVideoId())){
-            videoExample.or().andVideoIdEqualTo(hmxVideoDto.getVideoId());
+            where.andVideoIdEqualTo(hmxVideoDto.getVideoId());
         }
         if(!StringUtils.isEmpty(hmxVideoDto.getJobId())){
-            videoExample.or().andJobIdEqualTo(hmxVideoDto.getJobId());
+            where.andJobIdEqualTo(hmxVideoDto.getJobId());
         }
+        if(!StringUtils.isEmpty(hmxVideoDto.getDefinition())){
+            where.andDefinitionEqualTo(hmxVideoDto.getDefinition());
+        }
+
         List<HmxVideo> hmxVideoList = hmxVideoMapper.selectByExample(videoExample);
         return hmxVideoList;
+    }
+
+    @Override
+    public Boolean update(HmxVideo hmxVideo) {
+        return hmxVideoMapper.updateByPrimaryKeySelective( hmxVideo ) > 0;
     }
 }

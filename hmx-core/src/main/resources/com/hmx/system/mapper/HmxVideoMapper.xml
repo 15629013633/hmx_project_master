@@ -237,35 +237,16 @@
     <!--</if>-->
   <!--</select>-->
   
-  <!--<update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.HmxVideo" >-->
-    <!--update hmx_video-->
-    <!--<set >-->
-      <!--<if test="commentId != null" >-->
-        <!--comment_id,-->
-      <!--</if>-->
-      <!--<if test="status != null" >-->
-        <!--status,-->
-      <!--</if>-->
-      <!--<if test="content != null" >-->
-        <!--content,-->
-      <!--</if>-->
-      <!--<if test="createDate != null" >-->
-        <!--create_date,-->
-      <!--</if>-->
-      <!--<if test="categoryContentId != null" >-->
-        <!--categoryContent_id,-->
-      <!--</if>-->
-      <!--<if test="userId != null" >-->
-        <!--user_id,-->
-      <!--</if>-->
-      <!--<if test="parentId != null" >-->
-        <!--parent_id,-->
-      <!--</if>-->
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.HmxVideo" >
+    update hmx_video
+    <set >
+      <if test="playUrl != null" >
+        play_url = #{playUrl,jdbcType=VARCHAR} ,
+      </if>
 
-
-    <!--</set >-->
-    <!--where common_id = #{commonId,jdbcType=INTEGER}-->
-  <!--</update>-->
+    </set >
+    where jobId = #{jobId,jdbcType=VARCHAR}
+  </update>
   
   
   <!--<update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.HmxVideo" >-->

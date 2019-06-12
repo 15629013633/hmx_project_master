@@ -77,44 +77,56 @@ public class ScheduledService {
      * 每10分钟去数据库坐一次更新，入库时间超过8小时的则将状态更新为正常
      */
     //以毫秒为单位
-    //@Scheduled(fixedRate = 600000)  //10分钟
-    @Scheduled(fixedRate = 60000)  //1分钟
+    @Scheduled(fixedRate = 600000*3)  //30分钟
+    //@Scheduled(fixedRate = 60000)  //5分钟
     public void scheduledViode(){
         System.out.println("视频播放地址更新定时任务");
 
         HmxMovieDto hmxMovieDto = new HmxMovieDto();
+        //hmxMovieDto.setVideoId("4acdc813cc554a4d8d72aac79531e190");
         List<HmxMovie> movieList = hmxMovieService.list(hmxMovieDto);
         if(null != movieList && movieList.size() > 0){
             for(HmxMovie movie : movieList){
-                String videoId = movie.getVideoId();
-                Map<String,Object> resultMap = initVodClients.getUrl(videoId);
-                boolean flag = Boolean.parseBoolean(resultMap.get("flag").toString());
-                if(flag){
-                    List<GetPlayInfoResponse.PlayInfo> playInfoList = (List<GetPlayInfoResponse.PlayInfo>)resultMap.get("url");
-                    if(null != playInfoList && playInfoList.size() > 0){
-                        for(GetPlayInfoResponse.PlayInfo playInfo : playInfoList){
-                            HmxVideo hmxVideo = new HmxVideo();
-                            hmxVideo.setVideoId(videoId);
-                            BeanUtils.copyProperties(playInfo, hmxVideo);
-                            hmxVideo.setPlayUrl(playInfo.getPlayURL());
-                            try {
-                                //查询是否已经插入数据库
-                                HmxVideoDto videoDto = new HmxVideoDto();
-                                videoDto.setJobId(playInfo.getJobId());
-                                List<HmxVideo> list = hmxVideoService.list(videoDto);
-                                if(null == list || list.size() == 0){
-                                    hmxVideoService.insert(hmxVideo);
-                                }else if(list.size() == 0){//更新playUrl
-                                    HmxVideo video = list.get(0);
-                                    video.setPlayUrl(playInfo.getPlayURL());
-                                   // hmxVideoService.update(video);
+                try {
+                    String videoId = movie.getVideoId();
+                    Map<String,Object> resultMap = initVodClients.getUrl(videoId);
+                    boolean flag = Boolean.parseBoolean(resultMap.get("flag").toString());
+                    if(flag){
+                        List<GetPlayInfoResponse.PlayInfo> playInfoList = (List<GetPlayInfoResponse.PlayInfo>)resultMap.get("url");
+                        if(null != playInfoList && playInfoList.size() > 0){
+                            for(GetPlayInfoResponse.PlayInfo playInfo : playInfoList){
+                                try {
+                                    HmxVideo hmxVideo = new HmxVideo();
+                                    hmxVideo.setVideoId(videoId);
+                                    BeanUtils.copyProperties(playInfo, hmxVideo);
+                                    hmxVideo.setPlayUrl(playInfo.getPlayURL());
+                                    try {
+                                        //查询是否已经插入数据库
+                                        HmxVideoDto videoDto = new HmxVideoDto();
+                                        videoDto.setJobId(playInfo.getJobId());
+                                        videoDto.setDefinition(playInfo.getDefinition());
+                                        List<HmxVideo> list = hmxVideoService.list(videoDto);
+                                        if(null == list || list.size() == 0){
+                                            hmxVideoService.insert(hmxVideo);
+                                        }else if(list.size() == 1){//更新playUrl
+                                            HmxVideo video = list.get(0);
+                                            video.setPlayUrl(playInfo.getPlayURL());
+                                            hmxVideoService.update(video);
+                                        }
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
                                 }
-                            }catch (Exception e){
-                                e.printStackTrace();
+
                             }
                         }
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+
             }
         }
 

@@ -156,8 +156,8 @@
         extend,
       </if>
 
-      <if test="extend != null" >
-        extend,
+      <if test="status != null" >
+        status,
       </if>
       <if test="createTime != null" >
         createTime,
@@ -225,32 +225,32 @@
     update hmx_mesgpush
     <set >
       <if test="contentId != null" >
-        contentId,
+        contentId = #{contentId,jdbcType=INTEGER} ,
       </if>
       <if test="contentImage != null" >
-        contentImage,
+        contentImage = #{contentImage,jdbcType=VARCHAR} ,
       </if>
       <if test="contentTpye != null" >
-        contentTpye,
+        contentTpye = #{contentTpye,jdbcType=INTEGER} ,
       </if>
       <if test="title != null" >
-        title,
+        title = #{title,jdbcType=VARCHAR} ,
       </if>
       <if test="subTitle != null" >
-        subTitle,
+        subTitle = #{subTitle,jdbcType=VARCHAR} ,
       </if>
       <if test="contentDes != null" >
-        contentDes,
+        contentDes = #{contentDes,jdbcType=VARCHAR} ,
       </if>
       <if test="extend != null" >
-        extend,
+        extend = #{extend,jdbcType=VARCHAR} ,
       </if>
 
       <if test="extend != null" >
-        extend,
+        status = #{status,jdbcType=INTEGER} ,
       </if>
       <if test="createTime != null" >
-        createTime,
+        createTime = #{createTime,jdbcType=INTEGER} ,
       </if>
 
 
@@ -264,7 +264,7 @@
     set
    contentId = #{contentId,jdbcType=INTEGER},
     contentImage = #{contentImage,jdbcType=VARCHAR},
-    contentTpye = #{createDate,jdbcType=INTEGER},
+    contentTpye = #{contentTpye,jdbcType=INTEGER},
     title = #{title,jdbcType=VARCHAR},
     subTitle = #{subTitle,jdbcType=VARCHAR},
     contentDes = #{contentDes,jdbcType=VARCHAR},

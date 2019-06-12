@@ -27,4 +27,12 @@ public interface HmxVideoService {
      * @return List<HmxFiles> 符合条件的list集合
      */
     List<HmxVideo> list(HmxVideoDto hmxVideoDto );
+
+    /**
+     * @Method: update
+     * @Description: 修改
+     * @param hmxVideo 要修改的对象
+     * @return true 修改成功  false 修改失败
+     */
+    Boolean update ( HmxVideo hmxVideo );
 }

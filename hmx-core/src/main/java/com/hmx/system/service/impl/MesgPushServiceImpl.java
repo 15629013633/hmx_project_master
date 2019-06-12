@@ -1,10 +1,17 @@
 package com.hmx.system.service.impl;
 
+import com.google.gson.Gson;
+import com.hmx.category.entity.HmxCategoryContent;
+import com.hmx.category.service.HmxCategoryContentService;
+import com.hmx.images.dao.HmxImagesMapper;
+import com.hmx.images.entity.HmxImages;
+import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.system.dao.MesgPushMapper;
 import com.hmx.system.dto.MesgPushDto;
 import com.hmx.system.entity.MesgPush;
 import com.hmx.system.entity.MesgPushExample;
 import com.hmx.system.service.MesgPushService;
+import com.hmx.utils.Jpush.JpushClientUtil;
 import com.hmx.utils.result.PageBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +30,43 @@ public class MesgPushServiceImpl implements MesgPushService {
     @Autowired
     private MesgPushMapper mesgPushMapper;
 
+    @Autowired
+    private HmxCategoryContentService hmxCategoryContentService;
+
+    @Autowired
+    private HmxImagesMapper hmxImagesMapper;
+
+
     @Override
     public Boolean insert(MesgPush mesgPush) {
+        if(null != mesgPush && 0 != mesgPush.getContentId()){
+            HmxCategoryContent content = hmxCategoryContentService.info(mesgPush.getContentId());
+            mesgPush.setStatus(0);
+            mesgPush.setTitle(content.getCategoryTitle());
+            mesgPush.setContentTpye(content.getContentType());
+            mesgPush.setContentDes(content.getContentDesc());
+            mesgPush.setSubTitle(content.getSubTitle());
+            //获取图片
+            HmxImagesExample hmxImagesExample = new HmxImagesExample();
+            hmxImagesExample.or().andCategoryContentIdEqualTo(mesgPush.getContentId());
+            List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
+            if(null != hmxImagesList && hmxImagesList.size() > 0){
+                for(HmxImages images : hmxImagesList){
+                    if(!StringUtils.isEmpty(images.getImageUrl())){
+                        mesgPush.setContentImage(images.getImageUrl());
+                        break;
+                    }
+                    if(!StringUtils.isEmpty(images.getTransImage())){
+                        mesgPush.setContentImage(images.getTransImage());
+                        break;
+                    }
+                    if(!StringUtils.isEmpty(images.getVerticalImage())){
+                        mesgPush.setContentImage(images.getVerticalImage());
+                        break;
+                    }
+                }
+            }
+        }
         return mesgPushMapper.insertSelective( mesgPush ) > 0;
     }
 
@@ -169,6 +211,31 @@ public class MesgPushServiceImpl implements MesgPushService {
         return false;
     }
 
+    @Override
+    public boolean jpush(String ids) {
+        String[] idsArr = ids.split(",");
+        try {
+            if(null != idsArr && idsArr.length > 0){
+                for(String id : idsArr){
+                    MesgPush mesgPush = mesgPushMapper.selectByPrimaryKey(Integer.valueOf(id));
+                    if(null != mesgPush){
+                        //构建推送消息
+                        JpushClientUtil clientUtil = new JpushClientUtil();
+                        Gson gson=new Gson();
+                        String content=gson.toJson(mesgPush);
+                        clientUtil.sendToAll("11111", "2222222", content, "");
+                    }
+                    mesgPush.setStatus(1);
+                    mesgPushMapper.updateByPrimaryKey(mesgPush);
+                }
+            }
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 //    @Override
 //    public PageBean<Comment> list(PageBean<Comment> page, CommentDto commentDto,Integer type) {
 //        MessageExample messageExample = new MessageExample();
@@ -200,4 +267,10 @@ public class MesgPushServiceImpl implements MesgPushService {
 //        page.setPage(data);
 //        return page;
 //    }
+
+    public static void main(String[] argo){
+
+    }
+
+
 }

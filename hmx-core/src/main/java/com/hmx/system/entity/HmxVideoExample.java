@@ -139,6 +139,11 @@ public class HmxVideoExample {
             return (Criteria) this;
         }
 
+        public Criteria andDefinitionEqualTo(String value) {
+            addCriterion("definition =", value, "definition");
+            return (Criteria) this;
+        }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

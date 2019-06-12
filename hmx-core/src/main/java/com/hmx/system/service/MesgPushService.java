@@ -80,4 +80,12 @@ public interface MesgPushService {
      * @return
      */
     boolean updateStatus(String ids,String type);
+
+    /**
+     * 极光推送
+     * 内容id
+     * @param ids
+     * @return
+     */
+    boolean jpush(String ids);
 }

@@ -29,7 +29,7 @@ public interface HmxVideoMapper {
 //
 //    int updateByExample(@Param("record") HmxVideo record, @Param("example") HmxVideoExample example);
 //
-//    int updateByPrimaryKeySelective(HmxVideo record);
+    int updateByPrimaryKeySelective(HmxVideo record);
 //
 //    int updateByPrimaryKey(HmxVideo record);
 //

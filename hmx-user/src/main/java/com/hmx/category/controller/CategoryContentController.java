@@ -203,7 +203,9 @@ public class CategoryContentController {
 		page = hmxCategoryContentService.seniorSearch(page, searchModel);
 		//从pdf中查询关键字
 		try {
-			//slectStr(contentValue,page);
+			if(!StringUtils.isEmpty(searchModel.getCategoryTitle())){
+				slectStr(searchModel.getCategoryTitle(),page);
+			}
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -369,57 +371,57 @@ public class CategoryContentController {
 		}
 	}
 
-	public void slectStr1(String contentValue,PageBean<Map<String,Object>> page) throws Exception{
-		if(page == null ){
-			page = new PageBean<Map<String,Object>>();
-		}
-		// 保存索引文件的地方
-		String indexDirectory = "/home/back/targetIndex";
-		//String indexDirectory = "https://zhonghuazhu.oss-cn-hangzhou.aliyuncs.com/test/files/targetIndex";
-		// 创建Directory对象 ，也就是分词器对象
-		Directory directory = new SimpleFSDirectory(new File(indexDirectory));
-		// 创建 IndexSearcher对象，相比IndexWriter对象，这个参数就要提供一个索引的目录就行了
-		IndexSearcher indexSearch = new IndexSearcher(directory);
-		// 创建QueryParser对象,
-		// 第1个参数表示Lucene的版本,
-		// 第2个表示搜索Field的字段,
-		// 第3个表示搜索使用分词器
-		QueryParser queryParser = new QueryParser(Version.LUCENE_30,
-				"contents", new StandardAnalyzer(Version.LUCENE_30));
-		// 生成Query对象
-		Query query = queryParser.parse(contentValue);
-		// 搜索结果 TopDocs里面有scoreDocs[]数组，里面保存着索引值
-		TopDocs hits = indexSearch.search(query, 10);
-		// hits.totalHits表示一共搜到多少个
-		System.out.println("找到了" + hits.totalHits + "个");
-		// 循环hits.scoreDocs数据，并使用indexSearch.doc方法把Document还原，再拿出对应的字段的值
-		for (int i = 0; i < hits.scoreDocs.length; i++) {
-			ScoreDoc sdoc = hits.scoreDocs[i];
-			Document doc = indexSearch.doc(sdoc.doc);
-			System.out.println(doc.get("filename"));
-			String filename = doc.get("filename");
-			if(!StringUtils.isEmpty(filename)){
-				try {
-					String[] strArr = filename.split("_");
-					String contentId = strArr[3];
-					contentId = contentId.substring(0,contentId.length()-4);
-					Map<String,Object> map = hmxCategoryContentService.queryContentById(Integer.valueOf(contentId));
-					if(null == page.getPage() || page.getPage().size() < 1){
-						List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-						list.add(map);
-						page.setPage(list);
-					}else{
-						page.getPage().add(map);
-					}
-					page.setTotalNum(page.getTotalNum()+1);
-				}catch (Exception e){
-					e.printStackTrace();
-				}
-			}
-		}
-		indexSearch.close();
-		//=============测试end=======
-	}
+//	public void slectStr1(String contentValue,PageBean<Map<String,Object>> page) throws Exception{
+//		if(page == null ){
+//			page = new PageBean<Map<String,Object>>();
+//		}
+//		// 保存索引文件的地方
+//		String indexDirectory = "/home/back/targetIndex";
+//		//String indexDirectory = "https://zhonghuazhu.oss-cn-hangzhou.aliyuncs.com/test/files/targetIndex";
+//		// 创建Directory对象 ，也就是分词器对象
+//		Directory directory = new SimpleFSDirectory(new File(indexDirectory));
+//		// 创建 IndexSearcher对象，相比IndexWriter对象，这个参数就要提供一个索引的目录就行了
+//		IndexSearcher indexSearch = new IndexSearcher(directory);
+//		// 创建QueryParser对象,
+//		// 第1个参数表示Lucene的版本,
+//		// 第2个表示搜索Field的字段,
+//		// 第3个表示搜索使用分词器
+//		QueryParser queryParser = new QueryParser(Version.LUCENE_30,
+//				"contents", new StandardAnalyzer(Version.LUCENE_30));
+//		// 生成Query对象
+//		Query query = queryParser.parse(contentValue);
+//		// 搜索结果 TopDocs里面有scoreDocs[]数组，里面保存着索引值
+//		TopDocs hits = indexSearch.search(query, 10);
+//		// hits.totalHits表示一共搜到多少个
+//		System.out.println("找到了" + hits.totalHits + "个");
+//		// 循环hits.scoreDocs数据，并使用indexSearch.doc方法把Document还原，再拿出对应的字段的值
+//		for (int i = 0; i < hits.scoreDocs.length; i++) {
+//			ScoreDoc sdoc = hits.scoreDocs[i];
+//			Document doc = indexSearch.doc(sdoc.doc);
+//			System.out.println(doc.get("filename"));
+//			String filename = doc.get("filename");
+//			if(!StringUtils.isEmpty(filename)){
+//				try {
+//					String[] strArr = filename.split("_");
+//					String contentId = strArr[3];
+//					contentId = contentId.substring(0,contentId.length()-4);
+//					Map<String,Object> map = hmxCategoryContentService.queryContentById(Integer.valueOf(contentId));
+//					if(null == page.getPage() || page.getPage().size() < 1){
+//						List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+//						list.add(map);
+//						page.setPage(list);
+//					}else{
+//						page.getPage().add(map);
+//					}
+//					page.setTotalNum(page.getTotalNum()+1);
+//				}catch (Exception e){
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		indexSearch.close();
+//		//=============测试end=======
+//	}
 
 	/**
 	 * 内容相关推荐，根据分类来推荐

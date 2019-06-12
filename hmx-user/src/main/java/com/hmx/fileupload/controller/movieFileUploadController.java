@@ -38,6 +38,12 @@ public class movieFileUploadController {
 	 */
 	@RequestMapping("/getUrl")
 	public ResultBean getVideoPathUrl(String videoId){
+//		HmxVideoDto hmxVideoDto1 =  new HmxVideoDto();
+//		hmxVideoDto1.setVideoId("0fb0a24f7d414c57b80647208b9ccbee");
+//		List<HmxVideo> hmxVideoList = hmxVideoService.list(hmxVideoDto1);
+//		HmxVideo video = hmxVideoList.get(0);
+//		video.setPlayUrl("222222");
+//		hmxVideoService.update(video);
 		//Map<String,Object> testMap = initVodClients.getUrl(videoId);
 		if(StringUtils.isEmpty(videoId)){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("视频编号不能为空");

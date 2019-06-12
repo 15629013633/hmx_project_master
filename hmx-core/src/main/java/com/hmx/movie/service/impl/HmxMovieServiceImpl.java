@@ -87,7 +87,7 @@ import com.hmx.movie.dao.HmxMovieMapper;
 	/**
 	 * @Method: info 
 	 * @Description: 根据自增主键查询对象信息
-	 * @param hmxMovie 根据自增对象查询信息
+	 * @param hmxMovieId 根据自增对象查询信息
 	 * @return HmxMovie 查询的对象
 	 */
 	public HmxMovie info (Integer hmxMovieId) {
@@ -204,6 +204,9 @@ import com.hmx.movie.dao.HmxMovieMapper;
 		}
   		if ( hmxMovieDto.getCreateid() != null && hmxMovieDto.getCreateid() != 0 ) {
 			where.andCreateidEqualTo( hmxMovieDto.getCreateid() );
+		}
+		if ( !StringUtils.isEmpty(hmxMovieDto.getVideoId())) {
+			where.andVideoIdEqualTo( hmxMovieDto.getVideoId());
 		}
 		
 		if( hmxMovieDto.getLimit() != null ){
