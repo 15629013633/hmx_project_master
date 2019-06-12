@@ -103,10 +103,10 @@ public class CategoryContentController {
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容标题不能为空");
                 flag=false;
             }
-            if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
-                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容不能为空");
-                flag=false;
-            }
+//            if(StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
+//                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容不能为空");
+//                flag=false;
+//            }
             if(hmxCategoryContentDto.getCategoryId() == null){
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联首页分类不能为空");
                 flag=false;
