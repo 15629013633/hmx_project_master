@@ -36,4 +36,8 @@ public interface MesgPushMapper {
     Integer count(Map<String, Object> parameter);
 
     List<Map<String,Object>> list(Map<String, Object> parameter);
+
+    Integer countMesgTable(Map<String, Object> parameter);
+
+    List<Map<String,Object>> selectMesgTable(Map<String, Object> parameter);
 }

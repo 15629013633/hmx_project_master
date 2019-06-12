@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hmx.system.dao.UserRecordMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.UserRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contentId" property="contentId" jdbcType="INTEGER" />
+  	<result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+      	<if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+          </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    id,contentId,userId,createTime
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.UserRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hmx_userrecord
+
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hmx_userrecord
+    where contentId = #{contentId,jdbcType=INTEGER}
+  </select>
+  
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+    <!--delete from hmx_userrecord-->
+    <!--where contentId = #{contentId,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.UserRecordExample" >
+    delete from hmx_userrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  
+  <!--<insert id="insert" parameterType="com.hmx.system.entity.MesgPush" keyProperty="contentId" useGeneratedKeys="true">-->
+    <!--insert into hmx_userrecord  (,id,contentId,contentImage,contentTpye,title,subTitle,contentDes,extend,status,createTime)-->
+    <!--values (#{contentId,jdbcType=INTEGER}, #{contentImage,jdbcType=VARCHAR},#{contentTpye,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},-->
+    <!--#{subTitle,jdbcType=VARCHAR}, #{contentDes,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER})-->
+  <!--</insert>-->
+  
+  
+  <insert id="insertSelective" parameterType="com.hmx.system.entity.UserRecord" keyProperty="id" useGeneratedKeys="true"  >
+    insert into hmx_userrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contentId != null" >
+        contentId,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=INTEGER},
+      </if>
+
+    </trim>
+  </insert>
+
+  <!--<update  id="updateByExample" parameterType="map" >-->
+    <!--update hmx_userrecord-->
+    <!--set-->
+    <!--contentId = #{contentId,jdbcType=INTEGER},-->
+    <!--contentImage = #{contentImage,jdbcType=VARCHAR},-->
+    <!--contentTpye = #{createDate,jdbcType=INTEGER},-->
+    <!--title = #{title,jdbcType=VARCHAR},-->
+    <!--subTitle = #{subTitle,jdbcType=VARCHAR},-->
+    <!--contentDes = #{contentDes,jdbcType=VARCHAR},-->
+    <!--extend = #{extend,jdbcType=VARCHAR},-->
+    <!--status = #{status,jdbcType=INTEGER},-->
+    <!--createTime = #{createTime,jdbcType=INTEGER}-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Update_By_Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</update>-->
+  
+  <select id="countByExample" parameterType="com.hmx.system.entity.UserRecordExample" resultType="java.lang.Integer" >
+    select count(*) from hmx_userrecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <select id="selectContentTable" resultType="Map">
+    select u.userId
+    from hmx_userrecord as u
+    <where>
+      <trim suffixOverrides="and">
+
+      </trim>
+    </where>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  <!--<update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.MesgPush" >-->
+    <!--update hmx_userrecord-->
+    <!--<set >-->
+      <!--<if test="contentId != null" >-->
+        <!--contentId = #{contentId,jdbcType=INTEGER} ,-->
+      <!--</if>-->
+      <!--<if test="contentImage != null" >-->
+        <!--contentImage = #{contentImage,jdbcType=VARCHAR} ,-->
+      <!--</if>-->
+      <!--<if test="contentTpye != null" >-->
+        <!--contentTpye = #{contentTpye,jdbcType=INTEGER} ,-->
+      <!--</if>-->
+      <!--<if test="title != null" >-->
+        <!--title = #{title,jdbcType=VARCHAR} ,-->
+      <!--</if>-->
+      <!--<if test="subTitle != null" >-->
+        <!--subTitle = #{subTitle,jdbcType=VARCHAR} ,-->
+      <!--</if>-->
+      <!--<if test="contentDes != null" >-->
+        <!--contentDes = #{contentDes,jdbcType=VARCHAR} ,-->
+      <!--</if>-->
+      <!--<if test="extend != null" >-->
+        <!--extend = #{extend,jdbcType=VARCHAR} ,-->
+      <!--</if>-->
+
+      <!--<if test="extend != null" >-->
+        <!--status = #{status,jdbcType=INTEGER} ,-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--createTime = #{createTime,jdbcType=INTEGER} ,-->
+      <!--</if>-->
+
+
+    <!--</set >-->
+    <!--where contentId = #{contentId,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!---->
+  
+  <!--<update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.MesgPush" >-->
+    <!--update hmx_userrecord-->
+    <!--set-->
+   <!--contentId = #{contentId,jdbcType=INTEGER},-->
+    <!--contentImage = #{contentImage,jdbcType=VARCHAR},-->
+    <!--contentTpye = #{contentTpye,jdbcType=INTEGER},-->
+    <!--title = #{title,jdbcType=VARCHAR},-->
+    <!--subTitle = #{subTitle,jdbcType=VARCHAR},-->
+    <!--contentDes = #{contentDes,jdbcType=VARCHAR},-->
+    <!--extend = #{extend,jdbcType=VARCHAR},-->
+    <!--status = #{status,jdbcType=INTEGER},-->
+    <!--createTime = #{createTime,jdbcType=INTEGER}-->
+    <!--where contentId = #{contentId,jdbcType=INTEGER}-->
+  <!--</update>-->
+   
+   
+</mapper>

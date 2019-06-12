@@ -1,6 +1,7 @@
 package com.hmx.system.service;
 
 import com.hmx.system.dto.MesgPushDto;
+import com.hmx.system.dto.UserRecordDto;
 import com.hmx.system.entity.MesgPush;
 import com.hmx.utils.result.PageBean;
 
@@ -88,4 +89,13 @@ public interface MesgPushService {
      * @return
      */
     boolean jpush(String ids);
+
+    /**
+     * 获取分页
+     * @param page
+     * @param mesgPushDto
+     * @param type
+     * @return
+     */
+    PageBean<Map<String,Object>> allListPage(PageBean<Map<String,Object>> page, MesgPushDto mesgPushDto, UserRecordDto userRecordDto,Integer type);
 }

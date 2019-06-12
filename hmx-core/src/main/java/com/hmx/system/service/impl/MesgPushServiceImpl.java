@@ -8,6 +8,7 @@ import com.hmx.images.entity.HmxImages;
 import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.system.dao.MesgPushMapper;
 import com.hmx.system.dto.MesgPushDto;
+import com.hmx.system.dto.UserRecordDto;
 import com.hmx.system.entity.MesgPush;
 import com.hmx.system.entity.MesgPushExample;
 import com.hmx.system.service.MesgPushService;
@@ -234,6 +235,36 @@ public class MesgPushServiceImpl implements MesgPushService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * type 1查询已读消息，2查询未读消息，0查询所有消息
+     * @param page
+     * @param mesgPushDto
+     * @param type
+     * @return
+     */
+    @Override
+    public PageBean<Map<String,Object>> allListPage(PageBean<Map<String,Object>> page, MesgPushDto mesgPushDto, UserRecordDto userRecordDto, Integer type) {
+        Map<String,Object> parameter = new HashMap<String,Object>();
+        parameter.put("offset", page.getStartOfPage());
+        parameter.put("limit", page.getPageSize());
+        parameter.put("msgType",type);
+        if(null  != userRecordDto.getContentId() && 0 != userRecordDto.getContentId()){
+            parameter.put("contentId",userRecordDto.getContentId());
+        }
+        if(!StringUtils.isEmpty(userRecordDto.getUserId())){
+            parameter.put("userId",userRecordDto.getUserId());
+        }
+
+        Integer count = mesgPushMapper.countMesgTable(parameter);
+        Boolean haveData = page.setTotalNum((int)(long)count);
+        if(!haveData){
+            return page;
+        }
+        List<Map<String,Object>> data = mesgPushMapper.selectMesgTable(parameter);
+        page.setPage(data);
+        return page;
     }
 
 //    @Override

@@ -273,6 +273,52 @@
     createTime = #{createTime,jdbcType=INTEGER}
     where contentId = #{contentId,jdbcType=INTEGER}
   </update>
+
+
+  <select id="countMesgTable" resultType="Integer">
+    select count(1)
+    from hmx_mesgpush as m
+    <where>
+      <trim suffixOverrides="and">
+        <!--查询已读消息 -->
+        <if test="msgType == '1'">
+          EXISTS(select 1 from hmx_userrecord u where u.userId=#{userId} and m.contentId=u.contentId)
+        </if>
+
+        <if test="msgType == '2'">
+          NOT EXISTS(select 1 from hmx_userrecord u where u.userId=#{userId} and m.contentId=u.contentId)
+        </if>
+      </trim>
+    </where>
+  </select>
+
+  <select id="selectMesgTable" parameterType="java.lang.Integer" resultType="Map">
+    select contentId,contentImage,contentTpye,title,subTitle,contentDes,extend,status,createTime
+    from hmx_mesgpush as m
+    <where>
+      <trim suffixOverrides="and">
+
+        <!--查询已读消息 -->
+        <if test="msgType == 1">
+          EXISTS(select 1 from hmx_userrecord u where u.userId=#{userId} and m.contentId=u.contentId)
+        </if>
+
+        <if test="msgType == 2">
+          NOT EXISTS(select 1 from hmx_userrecord u where u.userId=#{userId} and m.contentId=u.contentId)
+        </if>
+
+      </trim>
+    </where>
+    ORDER BY m.createTime DESC
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
    
    
 </mapper>

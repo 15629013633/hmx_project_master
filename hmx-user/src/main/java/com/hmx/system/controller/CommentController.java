@@ -78,10 +78,10 @@ public class CommentController {
         List<CommentModel> list = page.getPage();
         if(list == null || list.size() <= 0){
             if(page.getPageNum() == 1){
-                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+                return new ResultBean().setCode(Config.CONTENT_NULL).put("contentPage", page).setContent("暂无数据");
             }
             else{
-                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+                return new ResultBean().setCode(Config.PAGE_NULL).put("contentPage", page).setContent("没有更多数据了");
             }
         }
         return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");

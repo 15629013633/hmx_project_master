@@ -28,6 +28,8 @@ public class MesgPushController {
     @Autowired
     private MesgPushService mesgPushService;
 
+
+
     /**
      * 分页
      * 获取所有消息推送列表
