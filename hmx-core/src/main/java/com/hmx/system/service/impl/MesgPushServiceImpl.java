@@ -67,6 +67,15 @@ public class MesgPushServiceImpl implements MesgPushService {
                     }
                 }
             }
+            MesgPush push = mesgPushMapper.selectByPrimaryKey(mesgPush.getContentId());
+            if(null != push){
+                push.setContentDes(mesgPush.getContentDes());
+                push.setContentImage(mesgPush.getContentImage());
+                push.setTitle(mesgPush.getTitle());
+                push.setSubTitle(mesgPush.getSubTitle());
+                push.setContentTpye(mesgPush.getContentTpye());
+                return mesgPushMapper.updateByPrimaryKeySelective(push) > 0;
+            }
         }
         return mesgPushMapper.insertSelective( mesgPush ) > 0;
     }

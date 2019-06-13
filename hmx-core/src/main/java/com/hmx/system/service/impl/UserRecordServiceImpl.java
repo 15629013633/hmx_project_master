@@ -22,6 +22,18 @@ public class UserRecordServiceImpl implements UserRecordService {
 
     @Override
     public Boolean insert(UserRecord userRecord) {
+        UserRecordExample userRecordExample = new UserRecordExample();
+        UserRecordExample.Criteria where = userRecordExample.createCriteria();
+        if(null != userRecord.getContentId() && userRecord.getContentId() != 0){
+            where.andContentIdEqualTo(userRecord.getContentId());
+        }
+        if(!StringUtils.isEmpty(userRecord.getUserId())){
+            where.andUserIdEqualTo(userRecord.getUserId());
+        }
+        List<UserRecord> list = userRecordMapper.selectByExample(userRecordExample);
+        if(null != list && list.size() > 0){//已经阅读过则不插入
+            return true;
+        }
         return userRecordMapper.insertSelective( userRecord ) > 0;
     }
 
