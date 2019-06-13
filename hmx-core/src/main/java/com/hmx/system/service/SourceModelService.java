@@ -16,7 +16,7 @@ public interface SourceModelService {
      * @param sourceModel 要添加的对象
      * @return
      */
-    Boolean insert ( SourceModel sourceModel);
+    int insert ( SourceModel sourceModel);
 
     /**
      * @Method: deleteByIdArray

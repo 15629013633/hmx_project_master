@@ -88,13 +88,12 @@ public class SourceController {
         }
         if(flag){
             sourceModelDto.setCreateTime(System.currentTimeMillis());
-            flag = sourceModelService.insert(sourceModelDto);
-            if(!flag){
-                resultBean.setCode(Config.FAIL_CODE);
-            }else{
-                resultBean.setCode(Config.SUCCESS_CODE);
+            int sourId = sourceModelService.insert(sourceModelDto);
+            if(0 != sourId){
+                resultBean.setCode(Config.SUCCESS_CODE).put("sourceId",sourId).setContent("添加成功");
+            }else {
+                resultBean.setCode(Config.FAIL_CODE).put("sourceId",sourId).setContent("添加失败");
             }
-            resultBean.setContent("添加成功");
 
         }
         return resultBean;

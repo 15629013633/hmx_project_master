@@ -23,8 +23,9 @@ public class TagtabServiceImpl implements TagtabService {
     private TagtabMapper tagtabMapper;
 
     @Override
-    public Boolean insert(Tagtab tagtab) {
-        return tagtabMapper.insert(tagtab) > 0;
+    public int insert(Tagtab tagtab) {
+         tagtabMapper.insert(tagtab) ;
+        return tagtab.getTagId();
     }
 
     @Override

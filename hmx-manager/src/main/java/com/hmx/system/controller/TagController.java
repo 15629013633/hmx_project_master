@@ -89,13 +89,13 @@ public class TagController {
         }
         if(flag){
             tagtabDto.setCreateTime(System.currentTimeMillis());
-            flag = tagtabService.insert(tagtabDto);
-            if(!flag){
-                resultBean.setCode(Config.FAIL_CODE);
-            }else{
-                resultBean.setCode(Config.SUCCESS_CODE);
+            int tagId = tagtabService.insert(tagtabDto);
+
+            if(0 != tagId){
+                resultBean.setCode(Config.SUCCESS_CODE).put("tagId",tagId).setContent("添加成功");
+            }else {
+                resultBean.setCode(Config.FAIL_CODE).put("tagId",tagId).setContent("添加失败");
             }
-            resultBean.setContent("添加成功");
 
         }
         return resultBean;

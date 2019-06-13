@@ -17,7 +17,7 @@ public interface SourceModelMapper {
 
     int deleteByPrimaryKey(Integer configId);
 
-    int insert(SourceModel record);
+    int insert(SourceModel sourceModel);
 
     int insertSelective(SourceModel record);
 

@@ -21,8 +21,10 @@ public class SourceModelServiceImpl implements SourceModelService {
     private SourceModelMapper sourceModelMapper;
 
     @Override
-    public Boolean insert(SourceModel sourceModel) {
-        return sourceModelMapper.insert(sourceModel) > 0;
+    public int insert(SourceModel sourceModel) {
+        int count = sourceModelMapper.insert(sourceModel) ;
+        int num = sourceModel.getSourceId();
+        return num;
     }
 
     @Override

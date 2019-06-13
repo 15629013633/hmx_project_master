@@ -481,7 +481,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 
 		</trim>
 	</where>
-	ORDER BY cc.sort,cc.create_time DESC
+	ORDER BY cc.sort DESC,cc.create_time DESC
 		<if test="limit != null" >
 	      <if test="offset != null" >
 	        limit ${offset}, ${limit}
@@ -650,7 +650,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
                 </if>
             </trim>
         </where>
-        ORDER BY cc.sort,cc.create_time DESC
+        ORDER BY cc.sort DESC,cc.create_time DESC
         <if test="limit != null" >
             <if test="offset != null" >
                 limit ${offset}, ${limit}
@@ -790,7 +790,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 		    </if>
 		</trim>
 	</where>
-	ORDER BY cc.sort,cc.create_time DESC
+	ORDER BY cc.sort DESC,cc.create_time DESC
 		<if test="limit != null" >
 	      <if test="offset != null" >
 	        limit ${offset}, ${limit}

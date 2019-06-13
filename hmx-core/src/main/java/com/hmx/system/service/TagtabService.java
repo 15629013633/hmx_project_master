@@ -17,7 +17,7 @@ public interface TagtabService {
      * @param tagtab 要添加的对象
      * @return
      */
-    Boolean insert ( Tagtab tagtab);
+    int insert ( Tagtab tagtab);
 
     /**
      * @Method: deleteByIdArray
