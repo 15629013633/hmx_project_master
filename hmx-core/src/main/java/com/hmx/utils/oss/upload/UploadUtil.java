@@ -170,19 +170,19 @@ public class UploadUtil {
 				File pdfFile = new File(realPath);
 				if(pdfFile.exists()){
 					//在多线程中执行pdf转成html和txt提高效率
-//					new Thread(new Runnable() {
-//						@Override
-//						public void run(){
-//							try {
-//								FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
-//								FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
-//							}catch (Exception e){
-//								e.printStackTrace();
-//							}
-//						}
-//					}).start();
-					FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
-					FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
+					new Thread(new Runnable() {
+						@Override
+						public void run(){
+							try {
+								FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
+								FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
+							}catch (Exception e){
+								e.printStackTrace();
+							}
+						}
+					}).start();
+//					FileUtil.pdfToHtml(pdfDir,htmlDir,newName,name);
+//					FileUtil.pdfToTxt(pdfDir,txtFileDir,newName);
 				}
 
 			}
