@@ -484,7 +484,7 @@ import javax.servlet.http.HttpServletRequest;
 					//map.put("sort",1);
 					topCategoryList.add(map);
 					break;
-				}else if(i == 1 && sort == 2){
+				}else if(i == 1 && sort == 11){//剧目资料，换成，音乐影视
 					//map.put("sort",2);
 					topCategoryList.add(map);
 					break;
