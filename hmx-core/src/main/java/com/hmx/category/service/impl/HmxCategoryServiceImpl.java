@@ -376,19 +376,19 @@ import javax.servlet.http.HttpServletRequest;
     			return resultMap;
     		}
 			//更新了一级分类的类型，二级分类类型也得跟着变更
-			if(null == hmxCategoryDto.getParentId() || 0 == hmxCategoryDto.getParentId()){
-				HmxCategoryExample hmxCategoryExample = new HmxCategoryExample();
-
-				Criteria where = hmxCategoryExample.createCriteria();
-				where.andParentIdEqualTo(hmxCategoryDto.getCategoryId());
-				List<HmxCategory> categoryList = hmxCategoryMapper.selectByExample(hmxCategoryExample);
-				if(null != categoryList && categoryList.size() > 0){
-					for(HmxCategory category : categoryList){
-						category.setCategoryType(hmxCategoryDto.getCategoryType());
-						hmxCategoryMapper.updateByPrimaryKeySelective(category);
-					}
-				}
-			}
+//			if(null == hmxCategoryDto.getParentId() || 0 == hmxCategoryDto.getParentId()){
+//				HmxCategoryExample hmxCategoryExample = new HmxCategoryExample();
+//
+//				Criteria where = hmxCategoryExample.createCriteria();
+//				where.andParentIdEqualTo(hmxCategoryDto.getCategoryId());
+//				List<HmxCategory> categoryList = hmxCategoryMapper.selectByExample(hmxCategoryExample);
+//				if(null != categoryList && categoryList.size() > 0){
+//					for(HmxCategory category : categoryList){
+//						category.setCategoryType(hmxCategoryDto.getCategoryType());
+//						hmxCategoryMapper.updateByPrimaryKeySelective(category);
+//					}
+//				}
+//			}
     		resultMap.put("flag", true);
     		resultMap.put("content", "更新分类信息成功");
     		return resultMap;
