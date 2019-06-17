@@ -130,27 +130,27 @@ public class ScheduledService {
             }
         }
 
-        HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
-        hmxCategoryContentDto.setState(1);
-        List<HmxCategoryContent> list = hmxCategoryContentService.list(hmxCategoryContentDto);
-        if(null != list && list.size() > 0){
-            for(HmxCategoryContent content : list){
-                Date addTime = content.getCreateTime();
-                Calendar dateOne=Calendar.getInstance();
-                Calendar dateTwo=Calendar.getInstance();
-                dateOne.setTime(new Date());//设置为当前系统时间
-                dateTwo.setTime(addTime); //获取数据库中的时间
-                long timeOne=dateOne.getTimeInMillis();
-                long timeTwo=dateTwo.getTimeInMillis();
-                long minute=(timeOne-timeTwo)/(1000*60);//转化minute
-                //判断账户锁定时间是否大于480分钟
-                //if(minute>480){
-                content.setState(0);
-                hmxCategoryContentService.update(content);
-                //}
-                //System.out.println("title="+content.getCategoryTitle());
-            }
-        }
+//        HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
+//        hmxCategoryContentDto.setState(1);
+//        List<HmxCategoryContent> list = hmxCategoryContentService.list(hmxCategoryContentDto);
+//        if(null != list && list.size() > 0){
+//            for(HmxCategoryContent content : list){
+//                Date addTime = content.getCreateTime();
+//                Calendar dateOne=Calendar.getInstance();
+//                Calendar dateTwo=Calendar.getInstance();
+//                dateOne.setTime(new Date());//设置为当前系统时间
+//                dateTwo.setTime(addTime); //获取数据库中的时间
+//                long timeOne=dateOne.getTimeInMillis();
+//                long timeTwo=dateTwo.getTimeInMillis();
+//                long minute=(timeOne-timeTwo)/(1000*60);//转化minute
+//                //判断账户锁定时间是否大于480分钟
+//                //if(minute>480){
+//                content.setState(0);
+//                hmxCategoryContentService.update(content);
+//                //}
+//                //System.out.println("title="+content.getCategoryTitle());
+//            }
+//        }
     }
 
 }

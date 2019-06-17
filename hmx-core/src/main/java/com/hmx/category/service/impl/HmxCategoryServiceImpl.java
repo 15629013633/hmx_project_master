@@ -265,6 +265,7 @@ import javax.servlet.http.HttpServletRequest;
 						subCategoryIdList.add(Integer.valueOf(objectMap.get("categoryId")+""));
 					}
 					HmxCategoryContentExample example = new HmxCategoryContentExample();
+					//这里要改成and连接
 					example.or().andCategoryIdIn(subCategoryIdList);
 					example.setOrderByClause("create_time");
 					example.setOffset(0);

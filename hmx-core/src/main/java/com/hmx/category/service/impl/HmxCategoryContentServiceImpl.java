@@ -313,7 +313,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			Date date = new Date();
 			hmxCategoryContentDto.setCreateTime(date);
 			hmxCategoryContentDto.setNewTime(date);
-			hmxCategoryContentDto.setState(1);
+			hmxCategoryContentDto.setState(0);
 			if(!insert(hmxCategoryContentDto)){
 				resultMap.put("content", "添加内容失败");
 	    		return resultMap;
@@ -358,7 +358,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		resultMap.put("flag", false);
 		try {
 			hmxCategoryContentDto.setNewTime(new Date());
-			hmxCategoryContentDto.setState(1);
+			hmxCategoryContentDto.setState(0);
 			if(!update(hmxCategoryContentDto)){
 				resultMap.put("content", "编辑内容失败");
 	    		return resultMap;
