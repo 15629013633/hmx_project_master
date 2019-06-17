@@ -24,7 +24,7 @@ public class HmxCategoryContent{
 	private Integer mode;      //内容展现方式    1普通类型   2轮播图类型  3首页大图类型
 	private String contentFlow; //内容流水号   由前端生成的一个唯一非0开头的数字字符串
 	private Integer sort;    //排序
-	private Integer tagId;  //标签id
+	private String tagId;  //标签id,以逗号分隔
 	private Integer sourceId;  //来源id
 	private String tagName;   //标签名称
 	private String sourceTitle;     //来源名称
@@ -216,11 +216,11 @@ public class HmxCategoryContent{
 		this.sort = sort;
 	}
 
-	public Integer getTagId() {
+	public String getTagId() {
 		return tagId;
 	}
 
-	public void setTagId(Integer tagId) {
+	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
 

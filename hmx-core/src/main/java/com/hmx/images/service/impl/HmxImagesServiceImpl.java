@@ -108,13 +108,14 @@ import com.hmx.utils.result.PageBean;
 		
 		hmxImagesExample.setOffset(page.getStartOfPage());
 		hmxImagesExample.setLimit(page.getPageSize());
+		hmxImagesExample.setOrderByClause("create_time");
 		
 		Criteria where = hmxImagesExample.createCriteria();
 		
   		if ( hmxImagesDto.getImageId() != null && hmxImagesDto.getImageId() != 0 ) {
 			where.andImageIdEqualTo( hmxImagesDto.getImageId() );
 		}
-  		if ( StringUtils.isEmpty( hmxImagesDto.getImageUrl() ) ) {
+  		if ( !StringUtils.isEmpty( hmxImagesDto.getImageUrl() ) ) {
 			where.andImageUrlEqualTo( hmxImagesDto.getImageUrl() );
 		}
   		if ( hmxImagesDto.getCreateTime() != null ) {

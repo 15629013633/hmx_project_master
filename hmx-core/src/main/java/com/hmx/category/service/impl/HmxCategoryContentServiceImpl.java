@@ -22,6 +22,8 @@ import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.movie.entity.HmxMovie;
 import com.hmx.movie.entity.HmxMovieExample;
 import com.hmx.system.entity.SearchModel;
+import com.hmx.system.entity.Tagtab;
+import com.hmx.system.service.TagtabService;
 import com.hmx.utils.common.CommonUtils;
 import com.hmx.utils.common.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +71,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 
 	@Autowired
 	private HmxCategoryService hmxCategoryService;
+
+	@Autowired
+	private TagtabService tagtabService;
 	
 	
 	/**
@@ -429,10 +434,28 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setMode(hmxCategoryContent.getMode());
 		hmxCategoryContentTrans.setContentFlow(hmxCategoryContent.getContentFlow());
 		hmxCategoryContentTrans.setSort(hmxCategoryContent.getSort());
-		hmxCategoryContentTrans.setTagId(hmxCategoryContent.getTagId());
+
 		hmxCategoryContentTrans.setSourceId(hmxCategoryContent.getSourceId());
 		hmxCategoryContentTrans.setSourceTitle(hmxCategoryContent.getSourceTitle());
-		hmxCategoryContentTrans.setTagName(hmxCategoryContent.getTagName());
+		String tagName = "";
+		//获取标签信息
+		if(!StringUtils.isEmpty(hmxCategoryContent.getTagId())){
+			String[] tagIdsArr = hmxCategoryContent.getTagId().split(",");
+			for(String tagId : tagIdsArr){
+				if(CommonUtils.isInteger(tagId)){
+					Tagtab tagtab = tagtabService.info(Integer.valueOf(tagId));
+					if(null != tagtab){
+						tagName += tagtab.getTagName() + ",";
+					}
+				}
+
+			}
+		}
+		if(tagName.endsWith(",")){
+			tagName = tagName.substring(0,tagName.length() - 1);
+		}
+		hmxCategoryContentTrans.setTagId(hmxCategoryContent.getTagId());
+		hmxCategoryContentTrans.setTagName(tagName);
     	//查询视频信息
 		String movieIds = "";
 		HmxMovieExample hmxMovieExample = new HmxMovieExample();
@@ -556,6 +579,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
     public Map<String,Object> selectContentInfoByContentId(Integer categoryContentId,String type){
     	Map<String,Object> resultMap = hmxCategoryContentMapper.selectContentInfoByContentId(categoryContentId);
     	resultMap.put("videoUrl", null);
+		resultMap.put("tagName",null);
     	if(resultMap != null){
     		HmxCategoryContent hmxCategoryContent = new HmxCategoryContent();
     		hmxCategoryContent.setCategoryContentId(categoryContentId);
@@ -577,6 +601,28 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 //    				}
 //    			}
 //    		}
+			//获取内容的标签
+			List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
+			data.add(resultMap);
+			getTagInfo(data);
+//			String tagName = "";
+//			//获取标签信息
+//			if(!StringUtils.isEmpty(resultMap.get("tagId")+"")){
+//				String[] tagIdsArr = resultMap.get("tagId").toString().split(",");
+//				for(String tagId : tagIdsArr){
+//					if(CommonUtils.isInteger(tagId)){
+//						Tagtab tagtab = tagtabService.info(Integer.valueOf(tagId));
+//						if(null != tagtab){
+//							tagName += tagtab.getTagName() + ",";
+//						}
+//					}
+//
+//				}
+//			}
+//			if(tagName.endsWith(",")){
+//				tagName = tagName.substring(0,tagName.length() - 1);
+//			}
+//			resultMap.put("tagName",tagName);
     	}
 		//查询内容下的视频信息
 		String movieIds = "";
@@ -674,12 +720,49 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	    List<Map<String,Object>> data = hmxCategoryContentMapper.selectCategoryContentTableByPc(parameter);
 		if(null != data && data.size() > 0){
 			//获取内容的附属信息，图片，视频
-			getContentImagesAndVideo(data,type);
+			try {
+				getContentImagesAndVideo(data,type);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
+			//获取标签
+			try {
+				getTagInfo(data);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+
 		}
 
 	    page.setPage(data);
     	return page;
     }
+
+	public void getTagInfo(List<Map<String,Object>> data){
+		for(Map<String,Object> map : data){
+			map.put("tagName","");
+			String tagIds = map.get("tagId")+"";
+			String tagName = "";
+			//获取标签信息
+			if(!StringUtils.isEmpty(tagIds)){
+				String[] tagIdsArr = tagIds.split(",");
+				for(String tagId : tagIdsArr){
+					if(CommonUtils.isInteger(tagId)){
+						Tagtab tagtab = tagtabService.info(Integer.valueOf(tagId));
+						if(null != tagtab){
+							tagName += tagtab.getTagName() + ",";
+						}
+					}
+
+				}
+			}
+			if(tagName.endsWith(",")){
+				tagName = tagName.substring(0,tagName.length() - 1);
+			}
+			map.put("tagName",tagName);
+		}
+	}
 
 	public void getContentImagesAndVideo(List<Map<String,Object>> data,String type){
 		for(Map<String,Object> map : data){
@@ -743,6 +826,12 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		//如果是从内容中查找的则只显示关键字的前后15个文字
 		//如果是标题查找到的则将内容的开头30个字展示出来
 		if(null != data && data.size() > 0){
+			//查找标签内容
+			try {
+				getTagInfo(data);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 			for(Map<String,Object> map : data){
 				try {
 					String content = CommonUtils.clearNotChinese(map.get("categoryContent")+"");

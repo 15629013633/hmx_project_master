@@ -414,13 +414,12 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    <!-- 内容详情 ↓ -->
    <select id="selectCategoryContentById" resultType="com.hmx.category.entity.HmxCategoryContent">
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
-       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',t.tagName as 'tagName',s.title as 'sourceTitle',
+       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
        cc.create_time as 'createTime',c.category_name as 'categoryName'
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-	LEFT JOIN hmx_tag t on cc.tag_id = t.tag_id
     LEFT JOIN hmx_source s on s.source_id = cc.source_id
 	where cc.category_content_id = #{categoryContentId} and cc.state=0
    </select>
@@ -429,13 +428,12 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    <!-- 内容列表 ↓ -->
    <select id="selectCategoryContentTable" resultType="Map">
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
-       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',t.tagName as 'tagName',s.title as 'sourceTitle',
+       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
        cc.create_time as 'createTime',c.category_name as 'categoryName'
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-       LEFT JOIN hmx_tag t on cc.tag_id = t.tag_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
 	<where>
 		<trim suffixOverrides="and">
@@ -495,7 +493,6 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    select count(1)
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-       LEFT JOIN hmx_tag t on cc.tag_id = t.tag_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
 	<where>
 		<trim suffixOverrides="and">
@@ -549,14 +546,13 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    	<select id="selectContentInfoByContentId" resultMap="contentInfoResultMap">
   	  select cc.category_content_id,
 		cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
-		cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',t.tagName as 'tagName',s.title as 'sourceTitle',
+		cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
 		cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',
 		cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num+1 as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
 		cc.create_time as 'createTime',cc.new_time as 'newTime',
 		c.category_type as 'categoryType' 
 		from hmx_category_content cc 
 		LEFT JOIN hmx_category c on c.category_id=cc.category_id and c.state=0
-		LEFT JOIN hmx_tag t on cc.tag_id = t.tag_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
 		where cc.category_content_id=#{categoryContentId} and cc.state=0
    	</select>
@@ -570,7 +566,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
     <!-- 用于高级搜索 ↓ -->
     <select id="selectContentTable" resultType="Map">
         select distinct cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
-        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',t.tagName as 'tagName',s.title as 'sourceTitle',
+        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
         cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',
         cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
         cc.create_time as 'createTime',
@@ -580,7 +576,6 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
         LEFT join hmx_category as c on c.category_id=cc.category_id
         LEFT join hmx_movie as m on cc.category_content_id=m.category_content_id
         LEFT join hmx_video as v on m.video_id=v.videoId
-        LEFT JOIN hmx_tag as t ON cc.tag_id = t.tag_id
         LEFT JOIN hmx_source as s ON s.source_id = cc.source_id
         <where>
             <trim suffixOverrides="and">
@@ -669,7 +664,6 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
         LEFT join hmx_category as c on c.category_id=cc.category_id
         LEFT join hmx_movie as m on cc.category_content_id=m.category_content_id
         LEFT join hmx_video as v on m.video_id=v.videoId
-        LEFT JOIN hmx_tag as t ON cc.tag_id = t.tag_id
         LEFT JOIN hmx_source as s ON s.source_id = cc.source_id
         <where>
             <trim suffixOverrides="and">
@@ -740,14 +734,13 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
     <!-- PC内容列表 ↓ -->
    <select id="selectCategoryContentTableByPc" resultType="Map">
    select cc.category_content_id as 'categoryContentId',cc.category_id as 'categoryId',
-       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',t.tagName as 'tagName',s.title as 'sourceTitle',
+       cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
        cc.create_time as 'createTime',c.category_name as 'categoryName',
        c.category_type as 'categoryType'
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-       LEFT JOIN hmx_tag t on cc.tag_id = t.tag_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
 -- 	LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id
 	<where>
@@ -804,7 +797,6 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
    select count(*) 
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
-       LEFT JOIN hmx_tag t on cc.tag_id = t.tag_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
 -- 	LEFT JOIN hmx_movie m on m.movie_id=cc.movie_id
 	<where>

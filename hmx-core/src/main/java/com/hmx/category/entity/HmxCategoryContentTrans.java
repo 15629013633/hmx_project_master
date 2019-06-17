@@ -32,7 +32,7 @@ public class HmxCategoryContentTrans {
     private Integer mode;
     private String contentFlow;
     private Integer sort;    //排序
-    private Integer tagId;  //标签id
+    private String tagId;  //标签id,以逗号分隔
     private Integer sourceId;  //来源id
     private String tagName;   //标签名称
     private String sourceTitle;     //来源名称
@@ -247,11 +247,11 @@ public class HmxCategoryContentTrans {
         this.sort = sort;
     }
 
-    public Integer getTagId() {
+    public String getTagId() {
         return tagId;
     }
 
-    public void setTagId(Integer tagId) {
+    public void setTagId(String tagId) {
         this.tagId = tagId;
     }
 
