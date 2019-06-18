@@ -28,6 +28,8 @@ public class HmxCategoryContent{
 	private Integer sourceId;  //来源id
 	private String tagName;   //标签名称
 	private String sourceTitle;     //来源名称
+	private Integer isPublish;    //是否发布   0未发布  1发布   默认0
+	private Integer isShowHomePage;     //是否在首页展示   0展示   1不展示  默认0
 
 	public HmxCategoryContent() {
 		super();
@@ -246,5 +248,21 @@ public class HmxCategoryContent{
 
 	public void setSourceTitle(String sourceTitle) {
 		this.sourceTitle = sourceTitle;
+	}
+
+	public Integer getIsPublish() {
+		return isPublish;
+	}
+
+	public void setIsPublish(Integer isPublish) {
+		this.isPublish = isPublish;
+	}
+
+	public Integer getIsShowHomePage() {
+		return isShowHomePage;
+	}
+
+	public void setIsShowHomePage(Integer isShowHomePage) {
+		this.isShowHomePage = isShowHomePage;
 	}
 }

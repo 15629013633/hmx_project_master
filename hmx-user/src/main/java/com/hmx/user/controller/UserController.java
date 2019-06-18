@@ -59,6 +59,9 @@ public class UserController {
 	private HmxVerifylogService hmxVerifylogService;
 	@Autowired
 	private JwtUtil jwtUtil;
+
+	@Autowired
+	private SMSSendOut smsSendOut;
 	
 	@GetMapping("/{id}")
 	@NeedLogin
@@ -295,7 +298,7 @@ public class UserController {
 //			if(isHmxUser != null){
 //				return new ResultBean().setCode(Config.FAIL_CODE).setContent("该手机号已经被注册");
 //			}
-
+			Boolean isSend = smsSendOut.SMSSending(userPhone,code);
 			boolean flag = SMSHelper.sendSms(userPhone,code);
 
 			if(!flag){

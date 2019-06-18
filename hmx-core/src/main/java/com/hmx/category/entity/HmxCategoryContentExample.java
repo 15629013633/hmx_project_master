@@ -288,6 +288,16 @@ public class HmxCategoryContentExample{
             return (Criteria) this;
         }
 
+        public Criteria andIsPublishEqualTo(Integer value) {
+            addCriterion("isPublish =", value, "isPublish");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowHomePageEqualTo(Integer value) {
+            addCriterion("isShowHomePage =", value, "isShowHomePage");
+            return (Criteria) this;
+        }
+
         public Criteria andCategoryTitleEqualTo(String value) {
             addCriterion("category_title =", value, "categoryTitle");
             return (Criteria) this;
