@@ -270,7 +270,7 @@ import javax.servlet.http.HttpServletRequest;
 					examplewhere.andIsShowHomePageEqualTo(0);
 					//这里要改成and连接
 					//example.or().andCategoryIdIn(subCategoryIdList);
-					//example.setOrderByClause("create_time");
+					example.setOrderByClause("create_time");
 					example.setOffset(0);
 					example.setLimit(10);
 					List<HmxCategoryContent> contenList = hmxCategoryContentMapper.selectByExample(example);
