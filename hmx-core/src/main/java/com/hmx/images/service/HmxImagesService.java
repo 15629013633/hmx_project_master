@@ -49,7 +49,7 @@ public interface HmxImagesService {
 	 * @param hmxImagesDto 查询条件
 	 * @return PageBean<HmxImages> 查询到的分页值
 	 */
-	PageBean<HmxImages> getPage(PageBean<HmxImages> page,HmxImagesDto hmxImagesDto);
+	PageBean<HmxImages> getPage(PageBean<HmxImages> page,HmxImagesDto hmxImagesDto,String type);
 	
 	/**
 	 * @Method: list 

@@ -33,7 +33,7 @@ public class HmxImagesController {
      */
     @GetMapping("/getImagesList")
     public ResultBean list(HmxImagesDto hmxImagesDto, PageBean<HmxImages> page, Model model){
-        page = hmxImagesService.getPage(page, hmxImagesDto);
+        page = hmxImagesService.getPage(page, hmxImagesDto,"manage");
         List<HmxImages> list = page.getPage();
         if(list == null || list.size() <= 0){
             if(page.getPageNum() == 1){

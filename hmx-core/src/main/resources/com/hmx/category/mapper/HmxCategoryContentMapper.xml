@@ -586,7 +586,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 		cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
 		cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num+1 as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
 		cc.create_time as 'createTime',cc.new_time as 'newTime',
-		c.category_type as 'categoryType' 
+		c.category_type as 'categoryType',c.category_name as 'categoryName'
 		from hmx_category_content cc 
 		LEFT JOIN hmx_category c on c.category_id=cc.category_id and c.state=0
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
@@ -605,7 +605,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
         cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
         cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
         cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
-        cc.create_time as 'createTime',
+        cc.create_time as 'createTime',c.category_name as 'categoryName',
         c.category_type as 'categoryType'
         /*from hmx_category_content as cc,hmx_movie as m,hmx_video as v,hmx_category as c,hmx_tag as t,hmx_source as s*/
         from hmx_category_content as cc

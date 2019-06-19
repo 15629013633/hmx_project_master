@@ -102,7 +102,7 @@ import com.hmx.utils.result.PageBean;
 	 * @param hmxImagesDto 查询条件
 	 * @return PageBean<HmxImages> 查询到的分页值
 	 */
-	public PageBean<HmxImages> getPage(PageBean<HmxImages> page,HmxImagesDto hmxImagesDto) {
+	public PageBean<HmxImages> getPage(PageBean<HmxImages> page,HmxImagesDto hmxImagesDto,String type) {
 		
 		HmxImagesExample hmxImagesExample = new HmxImagesExample();
 		
@@ -124,9 +124,17 @@ import com.hmx.utils.result.PageBean;
   		if ( hmxImagesDto.getNewTime() != null ) {
   			where.andNewTimeEqualTo( hmxImagesDto.getNewTime() );
   		}
-  		if ( hmxImagesDto.getState() != null && hmxImagesDto.getState() != 0 ) {
-			where.andStateEqualTo( hmxImagesDto.getState() );
+		if("manage".equals(type)){
+			List<Integer> list = new ArrayList<>();
+			list.add(-1);
+			list.add(-2);
+			where.andStateIn(list);
+		}else {
+			if ( hmxImagesDto.getState() != null && hmxImagesDto.getState() != 0 ) {
+				where.andStateEqualTo( hmxImagesDto.getState() );
+			}
 		}
+
   		if ( hmxImagesDto.getVersion() != null && hmxImagesDto.getVersion() != 0 ) {
 			where.andVersionEqualTo( hmxImagesDto.getVersion() );
 		}

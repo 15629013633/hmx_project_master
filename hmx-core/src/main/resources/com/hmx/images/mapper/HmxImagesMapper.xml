@@ -4,6 +4,7 @@
 
   <resultMap id="BaseResultMap" type="com.hmx.images.entity.HmxImages" >
     <id column="image_id" property="imageId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
   	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   	<result column="new_time" property="newTime" jdbcType="TIMESTAMP" />
@@ -75,7 +76,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    image_id,image_url,create_time,new_time,state,version,createid,category_content_id,transImage,verticalImage
+    image_id,title,image_url,create_time,new_time,state,version,createid,category_content_id,transImage,verticalImage
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.images.entity.HmxImagesExample" >
@@ -126,8 +127,8 @@
   
   
   <insert id="insert" parameterType="com.hmx.images.entity.HmxImages" keyProperty="imageId" useGeneratedKeys="true">
-    insert into hmx_images  (image_id,image_url,create_time,new_time,state,version,createid,category_content_id,transImage,verticalImage)
-    values (#{imageId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
+    insert into hmx_images  (image_id,title,image_url,create_time,new_time,state,version,createid,category_content_id,transImage,verticalImage)
+    values (#{imageId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},#{imageUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
      #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{categoryContentId,jdbcType=INTEGER}, #{transImage,jdbcType=VARCHAR}, #{verticalImage,jdbcType=VARCHAR})
   </insert>
   
@@ -137,6 +138,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="imageId != null" >
         image_id,
+      </if>
+      <if test="title != null" >
+        title,
       </if>
       <if test="imageUrl != null" >
         image_url,
@@ -169,6 +173,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="imageId != null" >
         #{imageId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=VARCHAR},
@@ -204,6 +211,7 @@
   <update  id="updateByExample" parameterType="map" >
     update hmx_images 
     set image_id = #{imageId,jdbcType=INTEGER},
+    title = #{title,jdbcType=VARCHAR},
 image_url = #{imageUrl,jdbcType=VARCHAR},
 create_time = #{createTime,jdbcType=TIMESTAMP},
 new_time = #{newTime,jdbcType=TIMESTAMP},
@@ -230,6 +238,9 @@ category_content_id = #{categoryContentId,jdbcType=INTEGER},
     <set >
       <if test="imageId != null" >
         image_id = #{imageId,jdbcType=INTEGER} ,
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR} ,
       </if>
       <if test="imageUrl != null" >
         image_url = #{imageUrl,jdbcType=VARCHAR} ,
@@ -266,6 +277,7 @@ category_content_id = #{categoryContentId,jdbcType=INTEGER},
   <update id="updateByPrimaryKey" parameterType="com.hmx.images.entity.HmxImages" >
     update hmx_images
     set image_id = #{imageId,jdbcType=INTEGER},
+    title = #{title,jdbcType=VARCHAR},
 image_url = #{imageUrl,jdbcType=VARCHAR},
 create_time = #{createTime,jdbcType=TIMESTAMP},
 new_time = #{newTime,jdbcType=TIMESTAMP},

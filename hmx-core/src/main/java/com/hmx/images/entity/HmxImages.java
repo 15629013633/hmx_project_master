@@ -6,22 +6,24 @@ import java.util.Date;
 
 public class HmxImages{
     private Integer imageId;
+	private String title;   //图片名称
     private String imageUrl;   //大海报    主要用于pc端图片显示大横图
     private Date createTime;
     private Date newTime;
-    private Integer state;
+    private Integer state;  //-1表示首页大图   -2表示注册页大图
     private Integer version;
     private Integer createid;
 	private Integer categoryContentId;
 	private String transImage;   //横图
 	private String verticalImage;   //竖图
 
+
     public HmxImages() {
 		super();
 	}
 
     public HmxImages(Integer imageId, String imageUrl, Date createTime, Date newTime, Integer state, Integer version, Integer createid,
-					 Integer categoryContentId,String transImage,String verticalImage) {
+					 Integer categoryContentId,String transImage,String verticalImage,String title) {
 		super();
 		this.imageId = imageId;
 		this.imageUrl = imageUrl;
@@ -33,6 +35,7 @@ public class HmxImages{
 		this.categoryContentId = categoryContentId;
 		this.verticalImage = verticalImage;
 		this.transImage = transImage;
+		this.title = title;
 	}
 	
     public Integer getImageId() {
@@ -113,5 +116,13 @@ public class HmxImages{
 
 	public void setVerticalImage(String verticalImage) {
 		this.verticalImage = verticalImage;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
