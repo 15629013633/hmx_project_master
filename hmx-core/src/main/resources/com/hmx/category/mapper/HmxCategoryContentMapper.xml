@@ -104,7 +104,7 @@
     </if>
     
     <if test="orderByClause != null" >
-      order by ${orderByClause} DESC
+        ORDER BY sort DESC,create_time DESC
     </if>
     
     <if test="limit != null" >
