@@ -52,7 +52,7 @@ public class CategoryContentController {
 		}
 		Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(categoryContentId,"pc");
 		if(resultMap == null){
-			return new ResultBean().setCode(Config.FAIL_CODE).setContent("没有查找到内容详情信息");
+			return new ResultBean().setCode(Config.FAIL_CODE).put("categoryContentInfo", resultMap).setContent("没有查找到内容详情信息");
 		}
 		return new ResultBean().setCode(Config.SUCCESS_CODE).put("categoryContentInfo", resultMap).setContent("获取内容详情成功");
 	}
