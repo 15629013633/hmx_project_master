@@ -148,7 +148,7 @@
       <!--<include refid="Example_Where_Clause" />-->
     <!--</if>-->
   <!--</delete>-->
-  <delete id="deleteByExample" parameterType="com.hmx.files.entity.HmxVideoExample" >
+  <delete id="deleteByExample" parameterType="com.hmx.system.entity.HmxVideoExample" >
     delete from hmx_video
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
