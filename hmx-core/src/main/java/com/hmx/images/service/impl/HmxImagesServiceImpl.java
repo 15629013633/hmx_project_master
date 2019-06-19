@@ -66,7 +66,7 @@ import com.hmx.utils.result.PageBean;
 			hmxImagesExample.or().andImageIdIn( idArray );
 			
 			int ret = hmxImagesMapper.deleteByExample( hmxImagesExample );
-			return ret > 0;
+			return true;
 		}catch( Exception e ){
 			e.printStackTrace();
 		}
@@ -211,12 +211,7 @@ import com.hmx.utils.result.PageBean;
 		Criteria where = hmxImagesExample.createCriteria();
 		where.andImageUrlEqualTo(imageUrl);
 		int num = hmxImagesMapper.deleteByExample(hmxImagesExample);
-		if(num == 0){
-			return false;
-		}else {
-			return true;
-		}
-
+		return true;
 	}
 
 }

@@ -74,7 +74,7 @@ import com.hmx.movie.dao.HmxMovieMapper;
 			Criteria where = hmxMovieExample.createCriteria();
 			where.andVideoIdIn(idArray);
 			int ret = hmxMovieMapper.deleteByExample( hmxMovieExample );
-			return ret > 0;
+			return true;
 		}catch( Exception e ){
 			e.printStackTrace();
 		}

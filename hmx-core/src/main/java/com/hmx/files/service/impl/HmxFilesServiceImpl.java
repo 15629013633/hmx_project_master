@@ -131,16 +131,12 @@ public class HmxFilesServiceImpl implements HmxFilesService{
             flag = true;
         }
 
-        if(flag){
+        if(true){
             HmxFilesExample hmxFilesExample = new HmxFilesExample();
             HmxFilesExample.Criteria where = hmxFilesExample.createCriteria();
             where.andFileUrlEqualTo( fileUrl );
-            int num = hmxFilesMapper.deleteByExample(hmxFilesExample);
-            if(num == 0){
-                flag = false;
-            }else {
-                flag = true;
-            }
+            hmxFilesMapper.deleteByExample(hmxFilesExample);
+            flag = true;
         }
         return  flag;
     }

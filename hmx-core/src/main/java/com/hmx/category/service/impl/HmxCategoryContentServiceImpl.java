@@ -434,7 +434,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setMode(hmxCategoryContent.getMode());
 		hmxCategoryContentTrans.setContentFlow(hmxCategoryContent.getContentFlow());
 		hmxCategoryContentTrans.setSort(hmxCategoryContent.getSort());
-
+		hmxCategoryContentTrans.setIsShowHomePage(hmxCategoryContent.getIsShowHomePage());
+		hmxCategoryContentTrans.setIsPublish(hmxCategoryContent.getIsPublish());
 		hmxCategoryContentTrans.setSourceId(hmxCategoryContent.getSourceId());
 		hmxCategoryContentTrans.setSourceTitle(hmxCategoryContent.getSourceTitle());
 		String tagName = "";

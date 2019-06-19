@@ -214,12 +214,12 @@ public class HmxFilesExample {
 
 
         public Criteria andFileUrlIsNull() {
-            addCriterion("image_url is null");
+            addCriterion("file_url is null");
             return (Criteria) this;
         }
 
         public Criteria andFileUrlIsNotNull() {
-            addCriterion("image_url is not null");
+            addCriterion("file_url is not null");
             return (Criteria) this;
         }
 
