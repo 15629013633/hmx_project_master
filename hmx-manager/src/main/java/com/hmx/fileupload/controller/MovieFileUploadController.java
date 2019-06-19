@@ -82,20 +82,21 @@ public class MovieFileUploadController {
     }
 
     /**
+     * vidoeId 以逗号隔开
      * 视频删除
      * @return
      */
     @PostMapping(value = "/delete")
-    public ResultBean delete(String ids){
+    public ResultBean delete(String vidoeIds){
         Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
-        if(com.alibaba.druid.util.StringUtils.isEmpty(ids)){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("视频主键不能为空");
+        if(com.alibaba.druid.util.StringUtils.isEmpty(vidoeIds)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("视频id不能为空");
             flag=false;
         }
         if(flag){
-            flag = hmxMovieService.deleteByIdArray(ids);
+            flag = hmxMovieService.deleteByIdArray(vidoeIds);
             if(!flag){
                 resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
                 return resultBean;

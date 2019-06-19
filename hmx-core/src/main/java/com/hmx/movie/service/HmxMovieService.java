@@ -21,10 +21,10 @@ public interface HmxMovieService {
 	/**
 	 * @Method: deleteByIdArray 
 	 * @Description: 批量删除
-	 * @param ids 将要删除的对象主键字符串 例如:1,5,10,12
+	 * @param vidoeIds 将要删除的对象主键字符串 例如:1,5,10,12
 	 * @return true 删除成功  false 删除失败
 	 */
-	Boolean deleteByIdArray(String ids);
+	Boolean deleteByIdArray(String vidoeIds);
 	
 	/**
 	 * @Method: update 

@@ -13,7 +13,7 @@ import java.util.Map;
 public interface HmxVideoMapper {
 //    int countByExample(HmxVideoExample example);
 //
-//    int deleteByExample(HmxVideoExample example);
+    int deleteByExample(HmxVideoExample example);
 //
 //    int deleteByPrimaryKey(Integer configId);
 

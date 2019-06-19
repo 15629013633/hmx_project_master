@@ -54,16 +54,21 @@ public class ImageFileUploadController {
      * @return
      */
     @PostMapping(value = "/delete")
-    public ResultBean delete(String ids){
+    public ResultBean delete(String imageUrl,String ids){
         Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
-        if(com.alibaba.druid.util.StringUtils.isEmpty(ids)){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("文件主键不能为空");
+        if(com.alibaba.druid.util.StringUtils.isEmpty(ids) && StringUtils.isEmpty(imageUrl)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("图片id和图片地址不能为空");
             flag=false;
         }
         if(flag){
-            flag = hmxImagesService.deleteByIdArray(ids);
+            if(!StringUtils.isEmpty(ids)){
+                flag = hmxImagesService.deleteByIdArray(ids);
+            }else if(!StringUtils.isEmpty(imageUrl)){
+                flag = hmxImagesService.deleteByImageUrl(imageUrl);
+            }
+
             if(!flag){
                 resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
                 return resultBean;

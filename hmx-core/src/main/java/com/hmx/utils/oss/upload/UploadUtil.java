@@ -215,14 +215,7 @@ public class UploadUtil {
 
 
 
-	public static void main(String[] arg0){
-		File pdfFile = new File("E:\\fileTest\\pdfFile\\被评估人_123456781.pdf");
-		if(pdfFile.exists()){
-			System.out.println("Y");
-		}else {
-			System.out.println("N");
-		}
-	}
+
 
 	public String uploadImage(BufferedImage image, String path, String name) throws FileIsNullException, FileSizeOutException, FileSizeSmallException,
 	FileIllegalException, UploadException {
@@ -402,4 +395,56 @@ public class UploadUtil {
 		}
 	}
 
+
+	public static boolean deleteByFileUrl(String fileUrl) throws Exception{
+		//  http://www.sskj.art:8080/htmlFile/MeZg7Lb1.html
+		String htmlCode =  fileUrl.substring(fileUrl.length() - 13,fileUrl.length());
+		String code = htmlCode.split(".html")[0];
+		System.out.println("code=" + code);
+		//删除txt文件
+		String txtFilePath = txtFileDir + code + ".txt";
+		System.out.println("txtFilePath=" + txtFilePath);
+		File txtFile = new File(txtFilePath);
+		if(txtFile.exists() && txtFile.isFile()){
+			txtFile.delete();
+		}
+		//删除pdf文件
+		String pdfFilePath = pdfDir + code + ".pdf";
+		System.out.println("pdfFilePath=" + pdfFilePath);
+		File pdfFile = new File(pdfFilePath);
+		if(pdfFile.exists() && pdfFile.isFile()){
+			pdfFile.delete();
+		}
+		//删除html文件
+		//1删除构成html文件的图片
+		String imagesFilePath = htmlDir + File.separator + code + "_img";
+		File imagesFile = new File(imagesFilePath);
+		if(imagesFile.exists() && !imagesFile.isFile()){
+			for(File file : imagesFile.listFiles()){
+				if(file.exists() && file.isFile()){
+					file.delete();
+				}
+			}
+			imagesFile.delete();
+		}
+		//1删除html
+		String htmlFilePath = htmlDir + File.separator + code + ".html";
+		File htmlFile = new File(htmlFilePath);
+		if(htmlFile.exists() && htmlFile.isFile()){
+			htmlFile.delete();
+		}
+		return true;
+	}
+
+	public static void main(String[] arg0){
+//		File pdfFile = new File("E:\\fileTest\\pdfFile\\被评估人_123456781.pdf");
+//		if(pdfFile.exists()){
+//			System.out.println("Y");
+//		}else {
+//			System.out.println("N");
+//		}
+		String fileUrl = "http://www.sskj.art:8080/htmlFile/MeZg7Lb1.html";
+		String code =  fileUrl.substring(fileUrl.length() - 13,fileUrl.length());
+		System.out.println("code=" + code.split(".html")[0]);
+	}
 }

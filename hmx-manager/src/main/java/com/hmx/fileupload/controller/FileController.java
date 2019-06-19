@@ -103,20 +103,20 @@ public class FileController {
     }
 
     /**
-     * 文件删除
+     * 根据文件地址删除文件 pdf 和epub
      * @return
      */
     @PostMapping(value = "/delete")
-    public ResultBean delete(String ids){
+    public ResultBean delete(String fileUrl){
         Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
-        if(com.alibaba.druid.util.StringUtils.isEmpty(ids)){
-            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("文件主键不能为空");
+        if(com.alibaba.druid.util.StringUtils.isEmpty(fileUrl)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("文件地址不能为空");
             flag=false;
         }
         if(flag){
-            flag = hmxFilesService.deleteByIdArray(ids);
+            flag = hmxFilesService.deleteByFileUrl(fileUrl);
             if(!flag){
                 resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
                 return resultBean;

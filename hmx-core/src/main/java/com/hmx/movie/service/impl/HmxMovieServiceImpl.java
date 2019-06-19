@@ -2,6 +2,9 @@ package com.hmx.movie.service.impl;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.hmx.system.dao.HmxVideoMapper;
+import com.hmx.system.entity.HmxVideoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,8 @@ import com.hmx.movie.dao.HmxMovieMapper;
  
  	@Autowired
 	private HmxMovieMapper hmxMovieMapper;
+	@Autowired
+	private HmxVideoMapper hmxVideoMapper;
 	
 	
 	/**
@@ -45,25 +50,29 @@ import com.hmx.movie.dao.HmxMovieMapper;
 	 */
 	 @Override
 	 @Transactional
-	 public Boolean deleteByIdArray(String ids) {
-	 	List<Integer> idArray = new ArrayList<Integer>();
+	 public Boolean deleteByIdArray(String vidoeIds) {
+	 	List<String> idArray = new ArrayList<String>();
 		String[] arrayStr = null ;
 		try{
-			if( ids == null || ids == "" ){
+			if( vidoeIds == null || vidoeIds == "" ){
 				return false;
 			}
 			
-			if( ids.length() > 0 ){
-				arrayStr = ids.split(",");
+			if( vidoeIds.length() > 0 ){
+				arrayStr = vidoeIds.split(",");
 			}
 			
 			for(String strid: arrayStr){
-				Integer id = Integer.parseInt(strid);
-				idArray.add(id);
+				//删除视频表hmx_video
+				HmxVideoExample hmxVideoExample = new HmxVideoExample();
+				HmxVideoExample.Criteria where = hmxVideoExample.createCriteria();
+				where.andVideoIdEqualTo(strid);
+				hmxVideoMapper.deleteByExample(hmxVideoExample);
+				idArray.add(strid);
 			}
 			HmxMovieExample hmxMovieExample = new HmxMovieExample();
-			hmxMovieExample.or().andMovieIdIn( idArray );
-			
+			Criteria where = hmxMovieExample.createCriteria();
+			where.andVideoIdIn(idArray);
 			int ret = hmxMovieMapper.deleteByExample( hmxMovieExample );
 			return ret > 0;
 		}catch( Exception e ){

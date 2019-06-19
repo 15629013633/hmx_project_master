@@ -59,4 +59,10 @@ public interface HmxFilesService {
      */
     List<HmxFiles> list(HmxFilesDto HmxFilesDto );
 
+    /**
+     * 根据文件地址删除文件
+     * @param fileUrl
+     * @return
+     */
+    boolean deleteByFileUrl(String fileUrl);
 }

@@ -58,5 +58,11 @@ public interface HmxImagesService {
 	 * @return List<HmxImages> 符合条件的list集合
 	 */
 	List<HmxImages> list( HmxImagesDto hmxImagesDto );
-	
+
+	/**
+	 * 根据图片地址删除url
+	 * @param imageUrl
+	 * @return
+     */
+	boolean deleteByImageUrl(String imageUrl);
 }

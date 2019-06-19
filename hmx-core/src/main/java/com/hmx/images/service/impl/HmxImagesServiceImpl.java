@@ -203,7 +203,22 @@ import com.hmx.utils.result.PageBean;
 		}
 		return hmxImagesMapper.selectByExample(hmxImagesExample);
 	}
-	
+
+	@Override
+	public boolean deleteByImageUrl(String imageUrl) {
+		HmxImagesExample hmxImagesExample = new HmxImagesExample();
+
+		Criteria where = hmxImagesExample.createCriteria();
+		where.andImageUrlEqualTo(imageUrl);
+		int num = hmxImagesMapper.deleteByExample(hmxImagesExample);
+		if(num == 0){
+			return false;
+		}else {
+			return true;
+		}
+
+	}
+
 }
  
  

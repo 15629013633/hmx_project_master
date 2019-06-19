@@ -5,9 +5,11 @@ import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.files.entity.HmxFiles;
 import com.hmx.files.entity.HmxFilesExample;
 import com.hmx.files.service.HmxFilesService;
+import com.hmx.utils.oss.upload.UploadUtil;
 import com.hmx.utils.result.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
  * Created by Administrator on 2019/4/26.
  */
 @Service
+@Transactional
 public class HmxFilesServiceImpl implements HmxFilesService{
 
     @Autowired
@@ -110,5 +113,35 @@ public class HmxFilesServiceImpl implements HmxFilesService{
     @Override
     public List<HmxFiles> list(HmxFilesDto HmxFilesDto) {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteByFileUrl(String fileUrl) {
+        boolean flag = false;
+        if(fileUrl.endsWith("html")){
+            try {
+                flag = UploadUtil.deleteByFileUrl(fileUrl);
+            }catch (Exception e){
+                flag = false;
+                e.printStackTrace();
+            }
+
+        }else {//删除epub
+            flag = true;
+        }
+
+        if(flag){
+            HmxFilesExample hmxFilesExample = new HmxFilesExample();
+            HmxFilesExample.Criteria where = hmxFilesExample.createCriteria();
+            where.andFileUrlEqualTo( fileUrl );
+            int num = hmxFilesMapper.deleteByExample(hmxFilesExample);
+            if(num == 0){
+                flag = false;
+            }else {
+                flag = true;
+            }
+        }
+        return  flag;
     }
 }
