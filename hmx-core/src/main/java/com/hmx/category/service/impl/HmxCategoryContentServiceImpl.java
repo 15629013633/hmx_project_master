@@ -438,6 +438,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setIsPublish(hmxCategoryContent.getIsPublish());
 		hmxCategoryContentTrans.setSourceId(hmxCategoryContent.getSourceId());
 		hmxCategoryContentTrans.setSourceTitle(hmxCategoryContent.getSourceTitle());
+		hmxCategoryContentTrans.setUserLevel(hmxCategoryContent.getUserLevel());
 		String tagName = "";
 		//获取标签信息
 		if(!StringUtils.isEmpty(hmxCategoryContent.getTagId())){

@@ -26,6 +26,7 @@
       <result column="source_id" property="sourceId" jdbcType="INTEGER" />
       <result column="isShowHomePage" property="isShowHomePage" jdbcType="INTEGER" />
       <result column="isPublish" property="isPublish" jdbcType="INTEGER" />
+      <result column="userLevel" property="userLevel" jdbcType="INTEGER" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -88,7 +89,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    category_content_id,category_id,category_title,category_content,content_type,content_images,movie_id,music_id,browse_num,create_time,new_time,state,version,createid,sub_title,sub_title,mode,content_flow,sort,tag_id,source_id
+    category_content_id,category_id,category_title,category_content,content_type,content_images,movie_id,music_id,browse_num,create_time,new_time,state,version,createid,sub_title,sub_title,mode,content_flow,sort,tag_id,source_id,userLevel
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.category.entity.HmxCategoryContentExample" >
@@ -139,9 +140,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.category.entity.HmxCategoryContent" keyProperty="categoryContentId" useGeneratedKeys="true">
-    insert into hmx_category_content  (category_content_id,category_id,category_title,category_content,content_type,content_images,movie_id,music_id,browse_num,create_time,new_time,state,version,createid,sub_title,contentDesc,mode,content_flow,sort,tag_id,source_id,isPublish,isShowHomePage)
+    insert into hmx_category_content  (category_content_id,category_id,category_title,category_content,content_type,content_images,movie_id,music_id,browse_num,create_time,new_time,state,version,createid,sub_title,contentDesc,mode,content_flow,sort,tag_id,source_id,isPublish,isShowHomePage,userLevel)
     values (#{categoryContentId,jdbcType=INTEGER},#{categoryId,jdbcType=INTEGER}, #{categoryTitle,jdbcType=VARCHAR}, #{categoryContent,jdbcType=VARCHAR}, #{contentType,jdbcType=INTEGER}, #{contentImages,jdbcType=VARCHAR}, #{movieId,jdbcType=INTEGER}, #{musicId,jdbcType=INTEGER}, #{browseNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP},
-    #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},#{subTitle,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR}, #{mode,jdbcType=INTEGER}, #{contentFlow,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER},#{tagId,jdbcType=INTEGER},#{sourceId,jdbcType=INTEGER},#{isPublish,jdbcType=INTEGER},#{isShowHomePage,jdbcType=INTEGER})
+    #{state,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},#{subTitle,jdbcType=VARCHAR}, #{contentDesc,jdbcType=VARCHAR}, #{mode,jdbcType=INTEGER}, #{contentFlow,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER},#{tagId,jdbcType=INTEGER},#{sourceId,jdbcType=INTEGER},#{isPublish,jdbcType=INTEGER},#{isShowHomePage,jdbcType=INTEGER},#{userLevel,jdbcType=INTEGER})
   </insert>
   
   
@@ -217,6 +218,9 @@
         <if test="isShowHomePage != null" >
             isShowHomePage,
         </if>
+        <if test="userLevel != null" >
+            userLevel,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="categoryContentId != null" >
@@ -288,6 +292,9 @@
         <if test="isShowHomePage != null" >
             #{isShowHomePage,jdbcType=INTEGER},
         </if>
+        <if test="userLevel != null" >
+            #{userLevel,jdbcType=INTEGER},
+        </if>
     </trim>
   </insert>
   
@@ -315,7 +322,8 @@ createid = #{createid,jdbcType=INTEGER},
       tag_id = #{tagId,jdbcType=INTEGER},
       source_id = #{sourceId,jdbcType=INTEGER},
       source_id = #{isPublish,jdbcType=INTEGER},
-      source_id = #{isShowHomePage,jdbcType=INTEGER}
+      source_id = #{isShowHomePage,jdbcType=INTEGER},
+      userLevel = #{userLevel,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -403,6 +411,9 @@ createid = #{createid,jdbcType=INTEGER},
         <if test="isShowHomePage != null" >
             isShowHomePage = #{isShowHomePage,jdbcType=INTEGER} ,
         </if>
+        <if test="userLevel != null" >
+            userLevel = #{userLevel,jdbcType=INTEGER} ,
+        </if>
     </set >
     where category_content_id = #{categoryContentId,jdbcType=INTEGER}
   </update>
@@ -432,7 +443,8 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
       tag_id = #{tagId,jdbcType=INTEGER},
       source_id = #{sourceId,jdbcType=INTEGER},
       isPublish = #{isPublish,jdbcType=INTEGER},
-      isShowHomePage = #{isShowHomePage,jdbcType=INTEGER}
+      isShowHomePage = #{isShowHomePage,jdbcType=INTEGER},
+      userLevel = #{userLevel,jdbcType=INTEGER}
     where category_content_id = #{categoryContentId,jdbcType=INTEGER}
   </update>
    <!-- 内容详情 ↓ -->
@@ -441,7 +453,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
-       cc.create_time as 'createTime',c.category_name as 'categoryName'
+       cc.create_time as 'createTime',c.category_name as 'categoryName',cc.userLevel
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
     LEFT JOIN hmx_source s on s.source_id = cc.source_id
@@ -455,7 +467,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
        cc.category_title as 'categoryTitle',cc.category_content as 'categoryContent',s.title as 'sourceTitle',
        cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
-       cc.create_time as 'createTime',c.category_name as 'categoryName'
+       cc.create_time as 'createTime',c.category_name as 'categoryName',cc.userLevel
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
@@ -499,6 +511,9 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             </if>
             <if test="isShowHomePage != null">
                 cc.isShowHomePage = #{isShowHomePage} and
+            </if>
+            <if test="userLevel != null">
+                cc.userLevel = #{userLevel} and
             </if>
 		    <if test="categoryTitle != null">
 		       cc.category_title like concat('%',#{categoryTitle},'%') and 
@@ -565,6 +580,9 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             <if test="sourceId != null">
                 cc.isShowHomePage = #{isShowHomePage} and
             </if>
+            <if test="userLevel != null">
+                cc.userLevel = #{userLevel} and
+            </if>
             <if test="categoryTitle != null">
                 cc.category_title like concat('%',#{categoryTitle},'%') and
             </if>
@@ -586,7 +604,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 		cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
 		cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num+1 as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
 		cc.create_time as 'createTime',cc.new_time as 'newTime',
-		c.category_type as 'categoryType',c.category_name as 'categoryName'
+		c.category_type as 'categoryType',c.category_name as 'categoryName',cc.userLevel
 		from hmx_category_content cc 
 		LEFT JOIN hmx_category c on c.category_id=cc.category_id and c.state=0
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
@@ -606,7 +624,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
         cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
         cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
         cc.create_time as 'createTime',c.category_name as 'categoryName',
-        c.category_type as 'categoryType'
+        c.category_type as 'categoryType',cc.userLevel
         /*from hmx_category_content as cc,hmx_movie as m,hmx_video as v,hmx_category as c,hmx_tag as t,hmx_source as s*/
         from hmx_category_content as cc
         LEFT join hmx_category as c on c.category_id=cc.category_id
@@ -675,6 +693,9 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
                 </if>
                 <if test="isShowHomePage != null">
                     cc.isShowHomePage = #{isShowHomePage} and
+                </if>
+                <if test="userLevel != null">
+                    cc.userLevel = #{userLevel} and
                 </if>
                 <if test="categoryTitle != null">
                     cc.category_title like concat('%',#{categoryTitle},'%') and
@@ -766,6 +787,9 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
                 <if test="isShowHomePage != null">
                     cc.isShowHomePage = #{isShowHomePage} and
                 </if>
+                <if test="userLevel != null">
+                    cc.userLevel = #{userLevel} and
+                </if>
                 <if test="categoryTitle != null">
                     cc.category_title like concat('%',#{categoryTitle},'%') and
                 </if>
@@ -786,7 +810,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
        cc.content_type as 'contentType',cc.content_images as 'contentImages',cc.sort as 'sort',cc.tag_id as 'tagId',cc.source_id as 'sourceId',cc.isPublish,cc.isShowHomePage,
        cc.movie_id as 'movieId',cc.music_id as 'musicId',cc.browse_num as 'browseNum',cc.sub_title as 'subTitle',cc.contentDesc as 'contentDesc',cc.mode as 'mode',cc.content_flow as 'contentFlow',
        cc.create_time as 'createTime',c.category_name as 'categoryName',
-       c.category_type as 'categoryType'
+       c.category_type as 'categoryType',cc.userLevel
 	from hmx_category_content cc 
 	LEFT JOIN hmx_category c on c.category_id=cc.category_id
        LEFT JOIN hmx_source s on s.source_id = cc.source_id
@@ -831,6 +855,9 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             </if>
             <if test="isShowHomePage != null">
                 cc.isShowHomePage = #{isShowHomePage} and
+            </if>
+            <if test="userLevel != null">
+                cc.userLevel = #{userLevel} and
             </if>
 		    <if test="categoryTitle != null">
 		       cc.category_title like concat('%',#{categoryTitle},'%') and 
@@ -890,6 +917,9 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             </if>
             <if test="isShowHomePage != null">
                 cc.isShowHomePage = #{isShowHomePage} and
+            </if>
+            <if test="userLevel != null">
+                cc.userLevel = #{userLevel} and
             </if>
 		    <if test="categoryTitle != null">
 		       cc.category_title like concat('%',#{categoryTitle},'%') and 

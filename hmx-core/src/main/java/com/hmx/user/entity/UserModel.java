@@ -21,6 +21,7 @@ public class UserModel {
     private Integer type;
     private String wxId;
     private String qqId;
+    private Integer userLevel;    //级别   默认0
 
     public Integer getId() {
         return id;
@@ -132,5 +133,13 @@ public class UserModel {
 
     public void setQqId(String qqId) {
         this.qqId = qqId;
+    }
+
+    public Integer getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(Integer userLevel) {
+        this.userLevel = userLevel;
     }
 }

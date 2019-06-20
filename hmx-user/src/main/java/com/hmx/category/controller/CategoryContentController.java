@@ -70,10 +70,10 @@ public class CategoryContentController {
 		List<Map<String,Object>> list = page.getPage();
 		if(list == null || list.size() <= 0){
 			if(page.getPageNum() == 1){
-				return new ResultBean().put("contentPage", page).setCode(Config.CONTENT_NULL).setContent("暂无数据");
+				return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("暂无数据");
    	    	}
    	    	else{
-   	    		return new ResultBean().setCode(Config.PAGE_NULL).put("contentPage", page).setContent("没有更多数据了");
+   	    		return new ResultBean().setCode(Config.SUCCESS_CODE).put("contentPage", page).setContent("没有更多数据了");
    	    	}
 		}
 		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
@@ -89,7 +89,7 @@ public class CategoryContentController {
 //		}
 		List<Map<String,Object>> list = hmxCategoryContentService.selectRankingListByCategoryId();
 		if(list == null){
-			return new ResultBean().setCode(Config.FAIL_CODE).put("rankingContent", list).setContent("没有查找到排行信息");
+			return new ResultBean().setCode(Config.SUCCESS_CODE).put("rankingContent", list).setContent("没有查找到排行信息");
 		}
 		return new ResultBean().setCode(Config.SUCCESS_CODE).put("rankingContent", list).setContent("获取排行信息成功");
 	}

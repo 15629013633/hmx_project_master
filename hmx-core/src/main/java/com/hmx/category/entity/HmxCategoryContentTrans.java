@@ -38,6 +38,7 @@ public class HmxCategoryContentTrans {
     private String sourceTitle;     //来源名称
     private Integer isPublish;    //是否发布   0未发布  1发布   默认0
     private Integer isShowHomePage;     //是否在首页展示   0展示   1不展示  默认0
+    private Integer userLevel;    //内容级别，与用户级别对应   默认0
 //    private String transImage;   //横图
 //    private String verticalImage;   //竖图
     private List<HmxMovie> movieList = new ArrayList<>();
@@ -295,5 +296,13 @@ public class HmxCategoryContentTrans {
 
     public void setIsShowHomePage(Integer isShowHomePage) {
         this.isShowHomePage = isShowHomePage;
+    }
+
+    public Integer getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(Integer userLevel) {
+        this.userLevel = userLevel;
     }
 }
