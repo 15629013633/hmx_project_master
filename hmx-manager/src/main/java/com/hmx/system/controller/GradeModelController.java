@@ -50,6 +50,29 @@ public class GradeModelController {
         return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询列表成功");
     }
 
+    /**
+     * 不分页
+     * 获取所有评论列表
+     * @param gradeModelDto
+     * @return
+     */
+    @GetMapping("/gradeList")
+    public ResultBean tagList(GradeModelDto gradeModelDto, PageBean<GradeModel> page, Model model){
+        page.setPageNum(1);
+        page.setPageSize(100);
+        page = gradeModelService.getPage(page, gradeModelDto);
+        List<GradeModel> list = page.getPage();
+        if(list == null || list.size() <= 0){
+            if(page.getPageNum() == 1){
+                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+            }
+            else{
+                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+            }
+        }
+        return new ResultBean().put("gradeList", list).setCode(Config.SUCCESS_CODE).setContent("查询标签列表成功");
+    }
+
 
     /**
      * 增加标签

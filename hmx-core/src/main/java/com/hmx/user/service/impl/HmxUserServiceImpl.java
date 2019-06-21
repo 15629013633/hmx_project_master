@@ -3,6 +3,7 @@ package com.hmx.user.service.impl;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.hmx.utils.common.CommonUtils;
 import com.hmx.utils.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,22 +117,22 @@ public class HmxUserServiceImpl implements HmxUserService{
 		if ( hmxUserDto.getId() != null && hmxUserDto.getId() != 0 ) {
 			where.andIdEqualTo( hmxUserDto.getId() );
 		}
-		if ( StringUtils.isEmpty( hmxUserDto.getUserName() ) ) {
+		if ( !StringUtils.isEmpty( hmxUserDto.getUserName() ) ) {
 			where.andUserNameEqualTo( hmxUserDto.getUserName() );
 		}
-		if ( StringUtils.isEmpty( hmxUserDto.getUserAliase() ) ) {
+		if ( !StringUtils.isEmpty( hmxUserDto.getUserAliase() ) ) {
 			where.andUserAliaseEqualTo( hmxUserDto.getUserAliase() );
 		}
-		if ( StringUtils.isEmpty( hmxUserDto.getUserPhone() ) ) {
+		if ( !StringUtils.isEmpty( hmxUserDto.getUserPhone() ) ) {
 			where.andUserPhoneEqualTo( hmxUserDto.getUserPhone() );
 		}
-		if ( StringUtils.isEmpty( hmxUserDto.getPassword() ) ) {
+		if ( !StringUtils.isEmpty( hmxUserDto.getPassword() ) ) {
 			where.andPasswordEqualTo( hmxUserDto.getPassword() );
 		}
 		if ( hmxUserDto.getGender() != null && hmxUserDto.getGender() != 0 ) {
 			where.andGenderEqualTo( hmxUserDto.getGender() );
 		}
-		if ( StringUtils.isEmpty( hmxUserDto.getHeadPic() ) ) {
+		if ( !StringUtils.isEmpty( hmxUserDto.getHeadPic() ) ) {
 			where.andHeadPicEqualTo( hmxUserDto.getHeadPic() );
 		}
 		if ( hmxUserDto.getCreateTime() != null ) {
@@ -366,6 +367,26 @@ public class HmxUserServiceImpl implements HmxUserService{
 		}
 		hmxUser.setPassword(MD5Util.encode(newPassword));
 		return hmxUserMapper.updateByPrimaryKeySelective( hmxUser ) > 0;
+	}
+
+	@Override
+	public boolean updateUserLever(String ids, Integer userLevel) {
+		try {
+			String[] idsArr = ids.split(",");
+			if(null != idsArr && idsArr.length > 0){
+				for(String id : idsArr){
+					if(CommonUtils.isInteger(id)){
+						HmxUser user = hmxUserMapper.selectByPrimaryKey(Integer.valueOf(id));
+						user.setUserLevel(userLevel);
+						hmxUserMapper.updateByPrimaryKey(user);
+					}
+				}
+			}
+			return true;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

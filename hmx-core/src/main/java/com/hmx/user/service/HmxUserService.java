@@ -92,4 +92,6 @@ public interface HmxUserService {
      * @return
      */
 	boolean findPas(String userPhone, String newPassword);
+
+	boolean updateUserLever(String ids, Integer userLevel);
 }

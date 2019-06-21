@@ -8,6 +8,7 @@ import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,5 +50,37 @@ public class UserController {
             }
         }
         return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");
+    }
+
+    //修改用户等级
+    /**
+     * 修改标签
+     * @param ids
+     * @return
+     */
+    @PostMapping("/updateUserLevel")
+    public ResultBean edit(String ids,Integer userLevel, HttpServletRequest request){
+
+        ResultBean resultBean = new ResultBean();
+        boolean flag=true;
+        if(StringUtils.isEmpty(ids)){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("ids不能为空");
+            flag=false;
+        }
+        if(null == userLevel || 0 == userLevel){
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("userLevel不能为空");
+            flag=false;
+        }
+        if(flag){
+            flag = hmxUserService.updateUserLever(ids,userLevel);
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE);
+            }else{
+                resultBean.setCode(Config.SUCCESS_CODE);
+            }
+            resultBean.setContent("修改成功");
+
+        }
+        return resultBean;
     }
 }
