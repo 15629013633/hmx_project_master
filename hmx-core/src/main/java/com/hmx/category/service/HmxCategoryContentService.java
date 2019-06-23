@@ -134,4 +134,6 @@ public interface HmxCategoryContentService {
 	 * @return
      */
 	List<RcmbModel> getHomeInfo();
+
+	List<HmxCategoryContent> selectNewest(HmxCategoryContentDto hmxCategoryContentDto);
 }

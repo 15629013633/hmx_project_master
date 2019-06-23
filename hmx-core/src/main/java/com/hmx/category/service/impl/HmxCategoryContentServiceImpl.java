@@ -978,6 +978,62 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		return rcmbModelList;
 	}
 
+	@Override
+	public List<HmxCategoryContent> selectNewest(HmxCategoryContentDto hmxCategoryContentDto) {
+		HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
+
+		Criteria where = hmxCategoryContentExample.createCriteria();
+
+		if ( hmxCategoryContentDto.getCategoryContentId() != null && hmxCategoryContentDto.getCategoryContentId() != 0 ) {
+			where.andCategoryContentIdEqualTo( hmxCategoryContentDto.getCategoryContentId() );
+		}
+		if ( hmxCategoryContentDto.getCategoryId() != null && hmxCategoryContentDto.getCategoryId() != 0 ) {
+			where.andCategoryIdEqualTo( hmxCategoryContentDto.getCategoryId() );
+		}
+		if ( !StringUtils.isEmpty( hmxCategoryContentDto.getCategoryTitle() ) ) {
+			where.andCategoryTitleEqualTo( hmxCategoryContentDto.getCategoryTitle() );
+		}
+		if ( !StringUtils.isEmpty( hmxCategoryContentDto.getCategoryContent() ) ) {
+			where.andCategoryContentEqualTo( hmxCategoryContentDto.getCategoryContent() );
+		}
+		if ( !StringUtils.isEmpty( hmxCategoryContentDto.getContentImages() ) ) {
+			where.andContentImagesEqualTo( hmxCategoryContentDto.getContentImages() );
+		}
+		if ( hmxCategoryContentDto.getMovieId() != null && hmxCategoryContentDto.getMovieId() != 0 ) {
+			where.andMovieIdEqualTo( hmxCategoryContentDto.getMovieId() );
+		}
+		if ( hmxCategoryContentDto.getMusicId() != null && hmxCategoryContentDto.getMusicId() != 0 ) {
+			where.andMusicIdEqualTo( hmxCategoryContentDto.getMusicId() );
+		}
+		if ( hmxCategoryContentDto.getBrowseNum() != null && hmxCategoryContentDto.getBrowseNum() != 0 ) {
+			where.andBrowseNumEqualTo( hmxCategoryContentDto.getBrowseNum() );
+		}
+		if ( hmxCategoryContentDto.getCreateTime() != null ) {
+			where.andCreateTimeEqualTo( hmxCategoryContentDto.getCreateTime() );
+		}
+		if ( hmxCategoryContentDto.getNewTime() != null ) {
+			where.andNewTimeEqualTo( hmxCategoryContentDto.getNewTime() );
+		}
+		if ( hmxCategoryContentDto.getState() != null && hmxCategoryContentDto.getState() != 0 ) {
+			where.andStateEqualTo( hmxCategoryContentDto.getState() );
+		}
+		if ( hmxCategoryContentDto.getVersion() != null && hmxCategoryContentDto.getVersion() != 0 ) {
+			where.andVersionEqualTo( hmxCategoryContentDto.getVersion() );
+		}
+		if ( hmxCategoryContentDto.getCreateid() != null && hmxCategoryContentDto.getCreateid() != 0 ) {
+			where.andCreateidEqualTo( hmxCategoryContentDto.getCreateid() );
+		}
+		if(hmxCategoryContentDto.getMode() != null && hmxCategoryContentDto.getMode() > 0){
+			where.andModeEqualTo(hmxCategoryContentDto.getMode());
+		}
+
+		if( hmxCategoryContentDto.getLimit() != null ){
+			hmxCategoryContentExample.setLimit( hmxCategoryContentDto.getLimit() );
+		}
+		hmxCategoryContentExample.setOrderByClause( " create_time " );
+		return hmxCategoryContentMapper.selectNewestByExample(hmxCategoryContentExample);
+	}
+
 	/**
 	 * 轮播图组装
 	 * @param rcmbModelList

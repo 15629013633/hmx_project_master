@@ -130,14 +130,14 @@ public class GradeModelExample {
 
 
         public Criteria andGradeIdEqualTo(Integer value) {
-            addCriterion("grade_id =", value, "gradeId");
+            addCriterion("gradeId =", value, "gradeId");
             return (Criteria) this;
         }
 
 
 
         public Criteria andGradeIdIn(List<Integer> values) {
-            addCriterion("grade_id in", values, "gradeId");
+            addCriterion("gradeId in", values, "gradeId");
             return (Criteria) this;
         }
 

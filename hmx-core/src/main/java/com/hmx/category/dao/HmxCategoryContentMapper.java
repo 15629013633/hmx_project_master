@@ -25,6 +25,8 @@ public interface HmxCategoryContentMapper{
 
     List<HmxCategoryContent> selectByExample(HmxCategoryContentExample example);
 
+    List<HmxCategoryContent> selectNewestByExample(HmxCategoryContentExample example);
+
     HmxCategoryContent selectByPrimaryKey(Integer hmxCategoryContentId);
 
     int updateByExampleSelective(@Param("record") HmxCategoryContent record, @Param("example") HmxCategoryContentExample example);

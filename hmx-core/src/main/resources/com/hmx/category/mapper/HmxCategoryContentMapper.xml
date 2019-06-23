@@ -117,6 +117,22 @@
       </if>
     </if>
   </select>
+
+    <!-- 用于定时任务 查最新的一条内容 -->
+    <select id="selectNewestByExample" resultMap="BaseResultMap" parameterType="com.hmx.category.entity.HmxCategoryContentExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from hmx_category_content
+
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+
+            ORDER BY create_time DESC limit 1
+    </select>
   
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

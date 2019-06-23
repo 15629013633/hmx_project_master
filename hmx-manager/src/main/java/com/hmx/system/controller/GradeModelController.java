@@ -89,7 +89,7 @@ public class GradeModelController {
             flag=false;
         }
         if(flag){
-            gradeModelDto.setUserLevel(0);
+            //gradeModelDto.setUserLevel(0);
             int gradeId = gradeModelService.insert(gradeModelDto);
 
             if(0 != gradeId){
@@ -123,11 +123,10 @@ public class GradeModelController {
         if(flag){
             flag = gradeModelService.update(gradeModelDto);
             if(!flag){
-                resultBean.setCode(Config.FAIL_CODE);
+                resultBean.setCode(Config.FAIL_CODE).setContent("修改失败");
             }else{
-                resultBean.setCode(Config.SUCCESS_CODE);
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("修改成功");
             }
-            resultBean.setContent("修改成功");
 
         }
         return resultBean;
@@ -150,11 +149,10 @@ public class GradeModelController {
         if(flag){
             flag = gradeModelService.deleteByIdArray(ids);
             if(!flag){
-                resultBean.setCode(Config.FAIL_CODE);
+                resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
             }else{
-                resultBean.setCode(Config.SUCCESS_CODE);
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("删除成功");
             }
-            resultBean.setContent("删除成功");
 
         }
         return resultBean;
