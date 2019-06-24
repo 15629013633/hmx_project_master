@@ -16,6 +16,7 @@ public class ContentModel{
     private Integer contentType;
     private String transImage;
     private String verticalImage;
+    private Integer userLevel;
 
     public String getImageUrl() {
         return imageUrl;
@@ -95,5 +96,13 @@ public class ContentModel{
 
     public void setVerticalImage(String verticalImage) {
         this.verticalImage = verticalImage;
+    }
+
+    public Integer getUserLevel() {
+        return userLevel;
+    }
+
+    public void setUserLevel(Integer userLevel) {
+        this.userLevel = userLevel;
     }
 }

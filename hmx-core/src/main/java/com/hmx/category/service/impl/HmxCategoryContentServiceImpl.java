@@ -1069,6 +1069,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 				contentModel.setCreateTime(content.getCreateTime());
 				contentModel.setDesc(content.getContentDesc());
 				contentModel.setContentType(content.getContentType());
+				contentModel.setUserLevel(content.getUserLevel());
 				//获取内容的图片
 				String imageUrl = "";
 				String transImage = "";   //横图
@@ -1187,6 +1188,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 					contentModel.setCreateTime(content.getCreateTime());
 					contentModel.setDesc(content.getContentDesc());
 					contentModel.setContentType(content.getContentType());
+					contentModel.setUserLevel(content.getUserLevel());
 					//获取内容的图片
 					String imageUrl = "";
 					String transImage = "";   //横图
