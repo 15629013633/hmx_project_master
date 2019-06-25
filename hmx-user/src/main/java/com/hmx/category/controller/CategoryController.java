@@ -69,6 +69,7 @@ public class CategoryController {
 			map.put("categoryTitle",hmxCategoryContent.getCategoryTitle());
 			map.put("contentType",hmxCategoryContent.getContentType());
 			map.put("mode",hmxCategoryContent.getMode());
+			map.put("userLevel",hmxCategoryContent.getUserLevel());
 			//查询内容的图片
 			HmxImagesDto hmxImagesDto = new HmxImagesDto();
 			hmxImagesDto.setCategoryContentId(hmxCategoryContent.getCategoryContentId());

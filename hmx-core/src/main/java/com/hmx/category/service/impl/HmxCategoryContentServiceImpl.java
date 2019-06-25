@@ -860,8 +860,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	@Override
 	public PageBean<Map<String, Object>> seniorSearch(PageBean<Map<String, Object>> page, SearchModel searchModel) {
 		Map<String,Object> parameter = new HashMap<String,Object>();
-		parameter.put("offset", page.getStartOfPage());
-		parameter.put("limit", page.getPageSize());
+		//高级搜索不支持分页
+//		parameter.put("offset", page.getStartOfPage());
+//		parameter.put("limit", page.getPageSize());
 		parameter.put("state", DataState.正常.getState());
 		if(!StringUtils.isEmpty(searchModel.getCategoryTitle())){
 			parameter.put("categoryTitle", searchModel.getCategoryTitle());

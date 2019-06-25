@@ -193,7 +193,9 @@ public class CategoryContentController {
 	 */
 	@GetMapping("/seniorSearch")
 	public ResultBean seniorSearch(SearchModel searchModel, PageBean<Map<String,Object>> page, Model model){
-
+		System.out.println("pageSize：----" + page.getPageSize());
+		System.out.println("pageNum：----" + page.getPageNum());
+		int pageNum = page.getPageNum();
 		Map<String,Object> map = new HashMap<>();
 		if((null == searchModel.getCategoryId() || 0 == searchModel.getCategoryId())
 				&& (null == searchModel.getParentCategoryId() || 0 == searchModel.getParentCategoryId())){
@@ -223,8 +225,27 @@ public class CategoryContentController {
 			}
 		}
 		if(null != page && page.getPage() != null){
+			System.out.println("查询之后pageNum：----" + page.getPageNum());
 			page.getPage().clear();
-			page.setPage(resultList);
+			System.out.println("清理之后pageNum：----" + pageNum);
+			int startIndex = (pageNum - 1) * page.getPageSize();
+			int endIndex = startIndex + page.getPageSize();
+			System.out.println("startIndex：----" + startIndex);
+			System.out.println("endIndex：----" + endIndex);
+			System.out.println("pageSize：===========" + page.getPageSize());
+			System.out.println("resultList.size：===========" + resultList.size());
+			if(endIndex >= resultList.size()){
+				endIndex = resultList.size();
+			}
+			System.out.println("page.getPage内容：" + page.getPage().size());
+			System.out.println("高级搜索分页起始值：" + startIndex);
+			System.out.println("高级搜索分页结束值：" + endIndex);
+			if(startIndex >= endIndex){
+				page.setPage(new ArrayList<Map<String,Object>>());
+			}else {
+				page.setPage(resultList.subList(startIndex,endIndex));
+			}
+
 		}
 		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
 	}
