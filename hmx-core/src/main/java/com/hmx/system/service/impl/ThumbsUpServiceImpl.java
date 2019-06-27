@@ -24,6 +24,10 @@ public class ThumbsUpServiceImpl implements ThumbsUpService {
     
     @Override
     public Boolean insert(ThumbsUp thumbsUp) {
+        List<ThumbsUp> upList = selectByuserPhoneAndContentId(thumbsUp.getUserPhone(),thumbsUp.getContentId());
+        if(null != upList && upList.size() > 0){
+            return true;
+        }
         return thumbsUpMapper.insert(thumbsUp) > 0;
     }
 
