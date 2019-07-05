@@ -3,7 +3,10 @@ package com.hmx.category.controller;
 import java.io.*;
 import java.util.*;
 
+import com.hmx.aop.BaseController;
+import com.hmx.aop.Operation;
 import com.hmx.system.entity.SearchModel;
+import com.hmx.user.entity.HmxUser;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryParser.QueryParser;
@@ -28,9 +31,11 @@ import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/categoryContent")
-public class CategoryContentController {
+public class CategoryContentController extends BaseController {
 
 	//window下
 	//private static final String txtFileDir = "E:\\fileTest\\txtFile";
@@ -46,7 +51,12 @@ public class CategoryContentController {
 	 * @return
      */
 	@GetMapping("/getContentById")
-	public ResultBean getCategoryContentById(Integer categoryContentId){
+	@Operation("测试log,getContentById")
+	public ResultBean getCategoryContentById(Integer categoryContentId, HttpSession httpSession){
+		httpSession.setAttribute("user","songjinbao");
+		HmxUser user = new HmxUser();
+		user.setUserPhone("13076949806");
+		setAccount(user);
 		if(categoryContentId == null){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容编号不能为空");
 		}
