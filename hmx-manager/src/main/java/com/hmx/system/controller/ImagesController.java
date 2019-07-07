@@ -1,6 +1,7 @@
 package com.hmx.system.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.hmx.aop.Operation;
 import com.hmx.images.dto.HmxImagesDto;
 import com.hmx.images.entity.HmxImages;
 import com.hmx.images.service.HmxImagesService;
@@ -34,6 +35,7 @@ public class ImagesController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("图片添加")
     public ResultBean add(HmxImagesDto hmxImagesDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -61,6 +63,7 @@ public class ImagesController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("图片修改")
     public ResultBean edit(HmxImagesDto hmxImagesDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -88,6 +91,7 @@ public class ImagesController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("图片删除")
     public ResultBean delete(String ids){
 
         ResultBean resultBean = new ResultBean();

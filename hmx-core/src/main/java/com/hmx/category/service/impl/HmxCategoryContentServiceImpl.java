@@ -13,6 +13,10 @@ import com.hmx.files.dao.HmxFilesMapper;
 import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.files.entity.HmxFiles;
 import com.hmx.files.entity.HmxFilesExample;
+import com.hmx.hotWords.dao.HotWordsMapper;
+import com.hmx.hotWords.dto.HotWordsDto;
+import com.hmx.hotWords.entity.HotWords;
+import com.hmx.hotWords.entity.HotWordsExample;
 import com.hmx.images.dao.HmxImagesMapper;
 import com.hmx.images.dto.HmxImagesDto;
 import com.hmx.images.entity.HmxImages;
@@ -74,6 +78,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 
 	@Autowired
 	private TagtabService tagtabService;
+
+	@Autowired
+	private HotWordsMapper hotWordsMapper;
 	
 	
 	/**
@@ -819,6 +826,29 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		parameter.put("limit", page.getPageSize());
 		parameter.put("state", DataState.正常.getState());
 		parameter.put("title", contentValue);
+		//统计搜索关键字次数
+		try {
+			HotWordsExample hotWordsExample = new HotWordsExample();
+			HotWordsExample.Criteria where = hotWordsExample.createCriteria();
+			where.andTitleEqualTo(contentValue);
+			List<HotWords> data = hotWordsMapper.selectByExample(hotWordsExample);
+			if(null == data || data.size() == 0){
+				//增加到数据库
+				HotWords record = new HotWords();
+				record.setFrequency(1);
+				record.setTitle(contentValue);
+				record.setType(1);
+				record.setCreateDate(new Date());
+				record.setSort(0);
+				hotWordsMapper.insert(record);
+			}else {
+				HotWords words = data.get(0);
+				words.setFrequency(words.getFrequency() + 1);
+				hotWordsMapper.updateByPrimaryKey(words);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
 		Boolean haveData = page.setTotalNum((int)(long)count);
 		if(!haveData){
@@ -866,6 +896,29 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		parameter.put("state", DataState.正常.getState());
 		if(!StringUtils.isEmpty(searchModel.getCategoryTitle())){
 			parameter.put("categoryTitle", searchModel.getCategoryTitle());
+			//统计搜索关键字次数
+			try {
+				HotWordsExample hotWordsExample = new HotWordsExample();
+				HotWordsExample.Criteria where = hotWordsExample.createCriteria();
+				where.andTitleEqualTo(searchModel.getCategoryTitle());
+				List<HotWords> data = hotWordsMapper.selectByExample(hotWordsExample);
+				if(null == data){
+					//增加到数据库
+					HotWords record = new HotWords();
+					record.setFrequency(1);
+					record.setTitle(searchModel.getCategoryTitle());
+					record.setType(1);
+					record.setCreateDate(new Date());
+					record.setSort(0);
+					hotWordsMapper.insert(record);
+				}else {
+					HotWords words = data.get(0);
+					words.setFrequency(words.getFrequency() + 1);
+					hotWordsMapper.updateByPrimaryKey(words);
+				}
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 
 		//根据二级分类id查找

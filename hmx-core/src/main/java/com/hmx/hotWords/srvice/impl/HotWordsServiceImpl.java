@@ -142,14 +142,28 @@ public class HotWordsServiceImpl implements HotWordsService{
     @Override
     public PageBean<HotWords> list(PageBean<HotWords> page, HotWordsDto hotWordsDto) {
         HotWordsExample hotWordsExample = new HotWordsExample();
-        if(!StringUtils.isEmpty(hotWordsDto.getTitle())){
-            hotWordsExample.or().andTitleLikeTo(hotWordsDto.getTitle());
-        }
+        hotWordsExample.setOrderByClause("sort");
+        return getWordList(page,hotWordsDto,hotWordsExample);
+    }
+
+    @Override
+    public PageBean<HotWords> rankList(PageBean<HotWords> page, HotWordsDto hotWordsDto) {
+        HotWordsExample hotWordsExample = new HotWordsExample();
+        hotWordsExample.setOrderByClause("frequency");
+        return getWordList(page,hotWordsDto,hotWordsExample);
+    }
+
+    public PageBean<HotWords> getWordList(PageBean<HotWords> page, HotWordsDto hotWordsDto,HotWordsExample hotWordsExample){
         hotWordsExample.setLimit(page.getPageSize());
         hotWordsExample.setOffset(page.getStartOfPage());
-        hotWordsExample.setOrderByClause("sort");
 
-
+        HotWordsExample.Criteria where = hotWordsExample.createCriteria();
+        if(!StringUtils.isEmpty(hotWordsDto.getTitle())){
+            where.andTitleEqualTo(hotWordsDto.getTitle());
+        }
+        if(null != hotWordsDto.getType()){
+            where.andTypeEqualTo(hotWordsDto.getType());
+        }
         Integer count = hotWordsMapper.countByExample(hotWordsExample);
         Boolean haveData = page.setTotalNum((int)(long)count);
         if(!haveData){

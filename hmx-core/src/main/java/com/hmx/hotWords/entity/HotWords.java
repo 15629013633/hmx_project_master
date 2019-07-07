@@ -11,6 +11,8 @@ public class HotWords {
     private String title;   //热词名称
     private Integer sort;  //热词排序
     private Date createDate;   //创建时间
+    private Integer type;       //0表示从管理系统添加的热词  1表示搜索时候保存到数据库的关键词  默认0
+    private Integer frequency;   //搜索次数
 
     public HotWords(){
         super();
@@ -54,5 +56,21 @@ public class HotWords {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
     }
 }

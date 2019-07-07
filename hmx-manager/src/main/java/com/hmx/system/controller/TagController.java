@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.system.dto.TagtabDto;
 import com.hmx.system.entity.Tagtab;
 import com.hmx.system.service.TagtabService;
@@ -36,6 +37,7 @@ public class TagController {
      * @return
      */
     @GetMapping("/tagListPage")
+    @Operation("获取标签分页列表")
     public ResultBean tagListPage(TagtabDto tagtabDto, PageBean<Tagtab> page, Model model){
         page = tagtabService.getPage(page, tagtabDto);
         List<Tagtab> list = page.getPage();
@@ -57,6 +59,7 @@ public class TagController {
      * @return
      */
     @GetMapping("/tagList")
+    @Operation("获取标签不分页列表")
     public ResultBean tagList(TagtabDto tagtabDto, PageBean<Tagtab> page, Model model){
         page.setPageNum(1);
         page.setPageSize(100);
@@ -79,6 +82,7 @@ public class TagController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("增加标签")
     public ResultBean add(TagtabDto tagtabDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -107,6 +111,7 @@ public class TagController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("修改标签")
     public ResultBean edit(TagtabDto tagtabDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -138,6 +143,7 @@ public class TagController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("删除标签")
     public ResultBean delete(String ids, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();

@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.system.dto.SourceModelDto;
 import com.hmx.system.entity.SourceModel;
 import com.hmx.system.service.SourceModelService;
@@ -35,6 +36,7 @@ public class SourceController {
      * @return
      */
     @GetMapping("/sourceListPage")
+    @Operation("获取分页来源列表")
     public ResultBean tagListPage(SourceModelDto sourceModelDto, PageBean<SourceModel> page, Model model){
         page = sourceModelService.getPage(page, sourceModelDto);
         List<SourceModel> list = page.getPage();
@@ -56,6 +58,7 @@ public class SourceController {
      * @return
      */
     @GetMapping("/sourceList")
+    @Operation("获取不分页来源列表")
     public ResultBean tagList(SourceModelDto sourceModelDto, PageBean<SourceModel> page, Model model){
         page.setPageNum(1);
         page.setPageSize(100);
@@ -78,6 +81,7 @@ public class SourceController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("增加来源")
     public ResultBean add(SourceModelDto sourceModelDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -105,6 +109,7 @@ public class SourceController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("修改来源")
     public ResultBean edit(SourceModelDto sourceModelDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -136,6 +141,7 @@ public class SourceController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("删除来源")
     public ResultBean delete(String ids, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();

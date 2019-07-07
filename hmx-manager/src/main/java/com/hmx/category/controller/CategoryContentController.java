@@ -1,5 +1,6 @@
 package com.hmx.category.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.category.dto.HmxCategoryContentDto;
 import com.hmx.category.dto.HmxCategoryDto;
 import com.hmx.category.entity.HmxCategory;
@@ -91,6 +92,7 @@ public class CategoryContentController {
      * @return
      */
     @PostMapping(value = "/add",consumes = "application/json")
+    @Operation("内容添加")
     public ResultBean categoryAdd(@RequestBody TransModel transModel){
             ResultBean resultBean = new ResultBean();
         boolean flag=true;
@@ -143,6 +145,7 @@ public class CategoryContentController {
      * @return
      */
     @PostMapping(value = "/edit",consumes = "application/json")
+    @Operation("内容修改")
     public ResultBean categoryUpdate(@RequestBody TransModel transModel){
         Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
@@ -176,6 +179,7 @@ public class CategoryContentController {
      * @return
      */
     @PostMapping(value = "/deleteContent")
+    @Operation("内容删除")
     public ResultBean delete(String ids){
         Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
@@ -205,6 +209,7 @@ public class CategoryContentController {
      * @return
      */
     @GetMapping("/getCategoryContentById")
+    @Operation("内容详情查询")
     public ResultBean categoryContentInfo(Integer categoryContentId, Model model){
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
@@ -233,6 +238,7 @@ public class CategoryContentController {
      * @return
      */
     @GetMapping("/categoryContentTable")
+    @Operation("获取内容列表")
     public Map<String,Object> categoryContentTable(HmxCategoryContentDto hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
         Map<String,Object> map = new HashMap<>();
         ResultBean resultBean = new ResultBean();
@@ -273,6 +279,7 @@ public class CategoryContentController {
      * @return
      */
     @GetMapping("/search")
+    @Operation("内容搜索")
     public Map<String,Object> search(String contentValue, PageBean<Map<String,Object>> page, Model model){
 
         Map<String,Object> map = new HashMap<>();

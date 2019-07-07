@@ -1,16 +1,14 @@
-package com.hmx.aop.entity;
+package com.hmx.log.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * Created by songjinbao on 2019/7/5.
+ * Created by Administrator on 2019/7/7.
  */
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class SysLog implements Serializable {
     private Long id;
+
+    private String userId;
 
     private String username; //用户名
 
@@ -22,7 +20,7 @@ public class SysLog implements Serializable {
 
     private String ip; //ip地址
 
-    private Date createDate; //操作时间
+    private long createDate; //操作时间
     //创建getter和setter方法
 
 
@@ -74,11 +72,19 @@ public class SysLog implements Serializable {
         this.ip = ip;
     }
 
-    public Date getCreateDate() {
+    public long getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(long createDate) {
         this.createDate = createDate;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

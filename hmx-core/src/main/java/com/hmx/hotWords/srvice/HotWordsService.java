@@ -81,4 +81,13 @@ public interface HotWordsService {
      * @return
      */
     PageBean<HotWords> list(PageBean<HotWords> page, HotWordsDto hotWordsDto);
+
+
+    /**
+     * 获取查询排行榜
+     * @param page
+     * @param hotWordsDto
+     * @return
+     */
+    PageBean<HotWords> rankList(PageBean<HotWords> page, HotWordsDto hotWordsDto);
 }

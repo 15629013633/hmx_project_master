@@ -1,6 +1,7 @@
 package com.hmx.system.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.hmx.aop.Operation;
 import com.hmx.system.dto.CommentDto;
 import com.hmx.system.entity.Comment;
 import com.hmx.system.entity.CommentModel;
@@ -34,6 +35,7 @@ public class CommentController {
      * @return
      */
     @GetMapping("/AllList")
+    @Operation("获取评论分页列表")
     public ResultBean list(CommentDto commentDto, PageBean<CommentModel> page, Model model){
         page = commentService.getPage(page, commentDto);
         List<CommentModel> list = page.getPage();
@@ -54,6 +56,7 @@ public class CommentController {
      * @return
      */
     @PostMapping("/shieldCommon")
+    @Operation("屏蔽评论")
     public ResultBean shieldCommon(String ids){
 
         ResultBean resultBean = new ResultBean();
@@ -81,6 +84,7 @@ public class CommentController {
      * @return
      */
     @PostMapping("/openCommon")
+    @Operation("开放评论")
     public ResultBean openCommon(String ids){
 
         ResultBean resultBean = new ResultBean();

@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.system.dto.MesgPushDto;
 import com.hmx.system.entity.MesgPush;
 import com.hmx.system.service.MesgPushService;
@@ -37,6 +38,7 @@ public class MesgPushController {
      * @return
      */
     @GetMapping("/tagListPage")
+    @Operation("获取推送消息列表")
     public ResultBean tagListPage(MesgPushDto mesgPushDto, PageBean<MesgPush> page, Model model){
         page = mesgPushService.getPage(page, mesgPushDto);
         List<MesgPush> list = page.getPage();
@@ -80,6 +82,7 @@ public class MesgPushController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("添加推送消息")
     public ResultBean add(MesgPushDto mesgPushDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -104,6 +107,7 @@ public class MesgPushController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("修改推送消息")
     public ResultBean edit(MesgPushDto mesgPushDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -130,6 +134,7 @@ public class MesgPushController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("删除推送消息")
     public ResultBean delete(String ids, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -156,6 +161,7 @@ public class MesgPushController {
      * @return
      */
     @PostMapping("/jpush")
+    @Operation("推送消息")
     public ResultBean jpush(String ids, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();

@@ -1,5 +1,6 @@
 package com.hmx.category.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.category.dto.HmxCategoryDto;
 import com.hmx.category.entity.HmxCategory;
 import com.hmx.category.service.HmxCategoryService;
@@ -53,6 +54,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("分类添加")
     public Result<Object> categoryAdd(HmxCategoryDto hmxcategoryDto, HttpServletRequest request){
         Result<Object> result = new Result<>();
         boolean flag=true;
@@ -77,6 +79,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/getCategoryByid")
+    @Operation("分类详情查询")
     //public String categoryInfo(@PathVariable(name="id",required=true) Integer categoryId, Model model){
     public ResultBean categoryInfo(Integer categoryId, Model model){
         ResultBean resultBean = new ResultBean();
@@ -98,6 +101,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("分类更新")
     public Result<Object> categoryUpdate(HmxCategoryDto hmxcategoryDto,Model model){
         Result<Object> result = new Result<>();
         boolean flag=true;
@@ -125,6 +129,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("分类删除")
     public Result<Object> categoryDelete(String categoryIds,Model model){
         Result<Object> result = new Result<>();
         boolean flag=true;
@@ -152,6 +157,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/categoryTable")
+    @Operation("获取分类信息列表")
     public Map<String,Object> categoryTable(HmxCategoryDto hmxcategoryDto, PageBean<Map<String,Object>> page, Model model){
         Map<String,Object> map = new HashMap<>();
         ResultBean resultBean = new ResultBean();
@@ -179,6 +185,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/categoryAll")
+    @Operation("获取所有分类")
     public ResultBean categoryAll(HmxCategoryDto hmxCategoryDto,Model model){
         ResultBean resultBean = new ResultBean();
         hmxCategoryDto.setState(DataState.正常.getState());

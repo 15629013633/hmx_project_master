@@ -1,4 +1,4 @@
-package com.hmx.aop;
+package com.hmx.base.controller;
 
 import com.hmx.user.entity.HmxUser;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
- * Created by songjinbao on 2019/7/5.
+ * Created by Administrator on 2019/7/7.
  */
 public class BaseController {
     /**

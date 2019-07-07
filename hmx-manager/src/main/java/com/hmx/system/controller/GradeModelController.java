@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.system.dto.GradeModelDto;
 import com.hmx.system.entity.GradeModel;
 import com.hmx.system.entity.Tagtab;
@@ -36,6 +37,7 @@ public class GradeModelController {
      * @return
      */
     @GetMapping("/listPage")
+    @Operation("获取等级分页列表")
     public ResultBean tagListPage(GradeModelDto gradeModelDto, PageBean<GradeModel> page, Model model){
         page = gradeModelService.getPage(page, gradeModelDto);
         List<GradeModel> list = page.getPage();
@@ -57,6 +59,7 @@ public class GradeModelController {
      * @return
      */
     @GetMapping("/gradeList")
+    @Operation("获取等级不分页列表")
     public ResultBean tagList(GradeModelDto gradeModelDto, PageBean<GradeModel> page, Model model){
         page.setPageNum(1);
         page.setPageSize(100);
@@ -80,6 +83,7 @@ public class GradeModelController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("添加等级")
     public ResultBean add(GradeModelDto gradeModelDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -108,6 +112,7 @@ public class GradeModelController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("修改等级")
     public ResultBean edit(GradeModelDto gradeModelDto, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();
@@ -138,6 +143,7 @@ public class GradeModelController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("删除等级")
     public ResultBean delete(String ids, HttpServletRequest request){
 
         ResultBean resultBean = new ResultBean();

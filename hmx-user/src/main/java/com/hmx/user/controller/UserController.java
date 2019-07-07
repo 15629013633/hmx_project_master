@@ -12,7 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.hmx.aop.Operation;
+import com.hmx.base.controller.BaseController;
 import com.hmx.user.dto.HmxUserDto;
 import com.hmx.user.entity.UserModel;
 import com.hmx.utils.sms.SMSHelper;
@@ -49,7 +52,7 @@ import com.hmx.verifylog.service.HmxVerifylogService;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
 
 	@Autowired
 	private HmxUserService hmxUserService;
@@ -326,6 +329,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/login")
+	@Operation("测试log,登录")
 	public ResultBean login(@ModelAttribute HmxUser hmxUser,HttpServletRequest request){
 		try {
 			String password = hmxUser.getPassword();
@@ -349,6 +353,7 @@ public class UserController {
 			String token = jwtUtil.createJWT(simpleUser);
 			UserModel userModel = new UserModel();
 			BeanUtils.copyProperties(user, userModel);
+			setAccount(user);
 			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token).put("user",userModel);
 		} catch (Exception e) {
 			LogHelper.logger().error("登录失败", e);

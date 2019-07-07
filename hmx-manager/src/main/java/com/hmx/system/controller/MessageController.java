@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.system.dto.MessageDto;
 import com.hmx.system.entity.Message;
 import com.hmx.system.service.MessageService;
@@ -34,6 +35,7 @@ public class MessageController {
      * @return
      */
     @GetMapping("/AllList")
+    @Operation("获取消息列表")
     public ResultBean list(MessageDto messageDto, PageBean<Message> page, Model model, Integer type){
         if(0 == type){
             type = 4;

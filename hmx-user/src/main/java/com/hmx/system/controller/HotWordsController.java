@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.aop.Operation;
 import com.hmx.hotWords.dto.HotWordsDto;
 import com.hmx.hotWords.entity.HotWords;
 import com.hmx.hotWords.srvice.HotWordsService;
@@ -32,14 +33,36 @@ public class HotWordsController {
      */
     @GetMapping("/list")
     public ResultBean list(HotWordsDto hotWordsDto, PageBean<HotWords> page, Model model){
+        hotWordsDto.setType(0);
         page = hotWordsService.list(page, hotWordsDto);
         List<HotWords> list = page.getPage();
         if(list == null || list.size() <= 0){
             if(page.getPageNum() == 1){
-                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+                return new ResultBean().setCode(Config.CONTENT_NULL).put("contentPage", page).setContent("暂无数据");
             }
             else{
-                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+                return new ResultBean().setCode(Config.PAGE_NULL).put("contentPage", page).setContent("没有更多数据了");
+            }
+        }
+        return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
+    }
+
+    /**
+     * 热词列表
+     * @param hotWordsDto
+     * @return
+     */
+    @GetMapping("/rankList")
+    public ResultBean rankList(HotWordsDto hotWordsDto, PageBean<HotWords> page, Model model){
+        //hotWordsDto.setType(0);
+        page = hotWordsService.rankList(page, hotWordsDto);
+        List<HotWords> list = page.getPage();
+        if(list == null || list.size() <= 0){
+            if(page.getPageNum() == 1){
+                return new ResultBean().setCode(Config.CONTENT_NULL).put("contentPage", page).setContent("暂无数据");
+            }
+            else{
+                return new ResultBean().setCode(Config.PAGE_NULL).put("contentPage", page).setContent("没有更多数据了");
             }
         }
         return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");

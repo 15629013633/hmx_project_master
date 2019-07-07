@@ -1,14 +1,12 @@
-package com.hmx.hotWords.entity;
-
+package com.hmx.log.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Administrator on 2019/5/2.
+ * Created by Administrator on 2019/7/7.
  */
-public class HotWordsExample {
+public class SysLogExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -19,7 +17,7 @@ public class HotWordsExample {
 
     private Integer offset;
 
-    public HotWordsExample() {
+    public SysLogExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -131,50 +129,30 @@ public class HotWordsExample {
 
 
 
+//        public Criteria andScoreIdEqualTo(Integer value) {
+//            addCriterion("score_id =", value, "scoreId");
+//            return (Criteria) this;
+//        }
 
-        public Criteria andHotWordIdIsNull() {
-            addCriterion("hot_word_id is null");
+//        public Criteria andStatusEqualTo(Integer value) {
+//            addCriterion("status =", value, "status");
+//            return (Criteria) this;
+//        }
+
+//        public Criteria andUserPhoneEqualTo(String value) {
+//            addCriterion("userPhone =", value, "userPhone");
+//            return (Criteria) this;
+//        }
+
+        public Criteria andContentIdEqualTo(String value) {
+            addCriterion("userId =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andHotWordIdNotNull() {
-            addCriterion("hot_word_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHotWordIdEqualTo(Integer value) {
-            addCriterion("hot_word_id =", value, "hotWordId");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(Integer value) {
-            addCriterion("type =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleEqualTo(String value) {
-            addCriterion("title =", value, "title");
-            return (Criteria) this;
-        }
-
-        public Criteria andTitleLikeTo(String title) {
-            addCriterion("title like ", title, "title");
-            return (Criteria) this;
-        }
-
-
-        public Criteria andHotWordIdIn(List<Integer> values) {
-            addCriterion("hot_word_id in", values, "hotWordId");
-            return (Criteria) this;
-        }
-
-
-
-
-        public Criteria andCreateDateEqualTo(Date value) {
-            addCriterion("create_date =", value, "createDate");
-            return (Criteria) this;
-        }
+//        public Criteria andScoreIdIn(List<Integer> values) {
+//            addCriterion("score_id in", values, "scoreId");
+//            return (Criteria) this;
+//        }
 
     }
 

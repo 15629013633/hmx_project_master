@@ -3,8 +3,8 @@ package com.hmx.category.controller;
 import java.io.*;
 import java.util.*;
 
-import com.hmx.aop.BaseController;
 import com.hmx.aop.Operation;
+import com.hmx.base.controller.BaseController;
 import com.hmx.system.entity.SearchModel;
 import com.hmx.user.entity.HmxUser;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -51,12 +51,12 @@ public class CategoryContentController extends BaseController {
 	 * @return
      */
 	@GetMapping("/getContentById")
-	@Operation("测试log,getContentById")
-	public ResultBean getCategoryContentById(Integer categoryContentId, HttpSession httpSession){
-		httpSession.setAttribute("user","songjinbao");
-		HmxUser user = new HmxUser();
-		user.setUserPhone("13076949806");
-		setAccount(user);
+	@Operation("获取内容详情")
+	public ResultBean getCategoryContentById(Integer categoryContentId){
+//		HmxUser hmxUser = new HmxUser();
+//		hmxUser.setUserName("songjinbao");
+//		hmxUser.setUserPhone("13076949806");
+//		setAccount(hmxUser);
 		if(categoryContentId == null){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容编号不能为空");
 		}

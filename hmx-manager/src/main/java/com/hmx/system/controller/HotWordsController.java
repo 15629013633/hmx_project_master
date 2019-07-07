@@ -1,6 +1,7 @@
 package com.hmx.system.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.hmx.aop.Operation;
 import com.hmx.hotWords.dto.HotWordsDto;
 import com.hmx.hotWords.entity.HotWords;
 import com.hmx.hotWords.srvice.HotWordsService;
@@ -36,8 +37,9 @@ public class HotWordsController {
      * @return
      */
     @PostMapping("/add")
+    @Operation("添加热词")
     public ResultBean add(HotWordsDto hotWordsDto, HttpServletRequest request){
-
+        hotWordsDto.setType(0);
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
         if(StringUtils.isEmpty(hotWordsDto.getTitle())){
@@ -68,8 +70,9 @@ public class HotWordsController {
      * @return
      */
     @PostMapping("/edit")
+    @Operation("修改热词")
     public ResultBean edit(HotWordsDto hotWordsDto, HttpServletRequest request){
-
+        hotWordsDto.setType(0);
         ResultBean resultBean = new ResultBean();
         boolean flag=true;
         if(0 == hotWordsDto.getHotWordId()){
@@ -104,6 +107,7 @@ public class HotWordsController {
      * @return
      */
     @PostMapping("/delete")
+    @Operation("删除热词")
     public ResultBean delete(String ids){
 
         ResultBean resultBean = new ResultBean();
@@ -131,8 +135,32 @@ public class HotWordsController {
      * @return
      */
     @GetMapping("/list")
+    @Operation("获取热词列表")
     public ResultBean list(HotWordsDto hotWordsDto, PageBean<HotWords> page, Model model){
+        hotWordsDto.setType(0);
         page = hotWordsService.list(page, hotWordsDto);
+        List<HotWords> list = page.getPage();
+        if(list == null || list.size() <= 0){
+            if(page.getPageNum() == 1){
+                return new ResultBean().setCode(Config.CONTENT_NULL).setContent("暂无数据");
+            }
+            else{
+                return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
+            }
+        }
+        return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
+    }
+
+    /**
+     * 热词列表
+     * @param hotWordsDto
+     * @return
+     */
+    @GetMapping("/rankList")
+    @Operation("获取热词列表")
+    public ResultBean rankList(HotWordsDto hotWordsDto, PageBean<HotWords> page, Model model){
+        //hotWordsDto.setType(0);
+        page = hotWordsService.rankList(page, hotWordsDto);
         List<HotWords> list = page.getPage();
         if(list == null || list.size() <= 0){
             if(page.getPageNum() == 1){
