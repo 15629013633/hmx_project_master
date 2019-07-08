@@ -95,7 +95,7 @@ public class ThumbsUpController {
     public ResultBean getThumbsByInfo(ThumbsUpDto thumbsUpDto, HttpServletRequest request){
         Map<String, Object> result = new HashMap<>();
         ResultBean resultBean = new ResultBean();
-        result.put("thumbsUp",result);
+        result.put("thumbsUp",null);
         resultBean.setResult(result);
         boolean flag=true;
         if(StringUtils.isEmpty(thumbsUpDto.getUserPhone())){
@@ -109,7 +109,7 @@ public class ThumbsUpController {
         if(flag){
             List<ThumbsUp> thumbsUpList = thumbsUpService.selectByuserPhoneAndContentId(thumbsUpDto.getUserPhone(),thumbsUpDto.getContentId());
             if(null != thumbsUpList && thumbsUpList.size() > 0){
-
+                //return new ResultBean().put("thumbsUp", thumbsUpList.get(0)).setCode(Config.SUCCESS_CODE).setContent("查询成功");
                 result.put("thumbsUp",thumbsUpList.get(0));
                 resultBean.setResult(result);
             }
@@ -118,7 +118,7 @@ public class ThumbsUpController {
     }
 
     /**
-     * 某个用户关于某内容是否点赞
+     * 某个内容点赞数
      * @param thumbsUpDto
      * @return
      */
@@ -126,7 +126,7 @@ public class ThumbsUpController {
     public ResultBean getThumbsCount(ThumbsUpDto thumbsUpDto, HttpServletRequest request){
         Map<String, Object> result = new HashMap<>();
         ResultBean resultBean = new ResultBean();
-        result.put("count",result);
+        result.put("count",0);
         resultBean.setResult(result);
         boolean flag=true;
         if(null == thumbsUpDto.getContentId() || thumbsUpDto.getContentId() == 0){
