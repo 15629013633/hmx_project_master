@@ -73,4 +73,6 @@ public interface HmxCategoryContentMapper{
     Integer countContentTable(Map<String, Object> parameter);
 
     List<Map<String,Object>> selectContentTable(Map<String, Object> parameter);
+
+    List<Map<String,Object>> maxBromUnm(Map<String, Object> parameter);
 }

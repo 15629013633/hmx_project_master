@@ -136,4 +136,11 @@ public interface HmxCategoryContentService {
 	List<RcmbModel> getHomeInfo();
 
 	List<HmxCategoryContent> selectNewest(HmxCategoryContentDto hmxCategoryContentDto);
+
+	/**
+	 * 获取每种类型的内容最多浏览量的数据
+	 * @param categoryType
+	 * @return
+     */
+	List<Map<String,Object>> getContentRankNum(Integer categoryType);
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.hmx.user.dao.UserModelMapper">
   <resultMap id="BaseResultMap" type="com.hmx.user.entity.po.UserModel">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
     <result column="updtae_time" jdbcType="VARCHAR" property="updtaeTime" />
@@ -13,6 +13,8 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="valid" jdbcType="BIT" property="valid" />
     <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="userAliase" jdbcType="VARCHAR" property="userAliase" />
+    <result column="headPic" jdbcType="VARCHAR" property="headPic" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, create_time, create_user, update_user, updtae_time, cell_phone, name, password, 
-    username, valid, organization_id
+    username, valid, organization_id,userAliase,headPic
   </sql>
   <select id="selectByExample" parameterType="com.hmx.user.entity.po.UserModelExample" resultMap="BaseResultMap">
     select
@@ -112,12 +114,11 @@
     </selectKey>
     insert into sys_user (create_time, create_user, update_user, 
       updtae_time, cell_phone, name, 
-      password, username, valid, 
-      organization_id)
-    values (#{createTime,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, 
+      password, username, valid, organization_id,userAliase,headPic)
+    values (#{createTime,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
       #{updtaeTime,jdbcType=VARCHAR}, #{cellPhone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{valid,jdbcType=BIT}, 
-      #{organizationId,jdbcType=INTEGER})
+      #{organizationId,jdbcType=INTEGER},#{userAliase,jdbcType=VARCHAR},#{headPic,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hmx.user.entity.po.UserModel">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -155,6 +156,12 @@
       <if test="organizationId != null">
         organization_id,
       </if>
+      <if test="userAliase != null">
+        userAliase,
+      </if>
+      <if test="headPic != null">
+        headPic,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="createTime != null">
@@ -187,10 +194,16 @@
       <if test="organizationId != null">
         #{organizationId,jdbcType=INTEGER},
       </if>
+      <if test="userAliase != null">
+        #{userAliase,jdbcType=VARCHAR},
+      </if>
+      <if test="headPic != null">
+        #{headPic,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hmx.user.entity.po.UserModelExample" resultType="java.lang.Long">
-    select count(*) from sys_user
+  <select id="countByExample" parameterType="com.hmx.user.entity.po.UserModelExample" resultType="java.lang.Integer">
+    select count(1) from sys_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -202,7 +215,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=INTEGER},
       </if>
       <if test="record.createUser != null">
         create_user = #{record.createUser,jdbcType=VARCHAR},
@@ -231,6 +244,12 @@
       <if test="record.organizationId != null">
         organization_id = #{record.organizationId,jdbcType=INTEGER},
       </if>
+      <if test="record.userAliase != null">
+        userAliase = #{record.userAliase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headPic != null">
+        headPic = #{record.headPic,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,7 +258,7 @@
   <update id="updateByExample" parameterType="map">
     update sys_user
     set id = #{record.id,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=INTEGER},
       create_user = #{record.createUser,jdbcType=VARCHAR},
       update_user = #{record.updateUser,jdbcType=VARCHAR},
       updtae_time = #{record.updtaeTime,jdbcType=VARCHAR},
@@ -248,7 +267,9 @@
       password = #{record.password,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
       valid = #{record.valid,jdbcType=BIT},
-      organization_id = #{record.organizationId,jdbcType=INTEGER}
+      organization_id = #{record.organizationId,jdbcType=INTEGER},
+    userAliase = #{record.userAliase,jdbcType=VARCHAR},
+    headPic = #{record.headPic,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,7 +278,7 @@
     update sys_user
     <set>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=INTEGER},
       </if>
       <if test="createUser != null">
         create_user = #{createUser,jdbcType=VARCHAR},
@@ -286,12 +307,18 @@
       <if test="organizationId != null">
         organization_id = #{organizationId,jdbcType=INTEGER},
       </if>
+      <if test="userAliase != null">
+        userAliase = #{userAliase,jdbcType=VARCHAR},
+      </if>
+      <if test="headPic != null">
+        headPic = #{headPic,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hmx.user.entity.po.UserModel">
     update sys_user
-    set create_time = #{createTime,jdbcType=VARCHAR},
+    set create_time = #{createTime,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       update_user = #{updateUser,jdbcType=VARCHAR},
       updtae_time = #{updtaeTime,jdbcType=VARCHAR},
@@ -300,7 +327,9 @@
       password = #{password,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       valid = #{valid,jdbcType=BIT},
-      organization_id = #{organizationId,jdbcType=INTEGER}
+      organization_id = #{organizationId,jdbcType=INTEGER},
+      userAliase = #{record.userAliase,jdbcType=VARCHAR},
+    headPic = #{record.headPic,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

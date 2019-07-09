@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface UserModelMapper {
-    long countByExample(UserModelExample example);
+    int countByExample(UserModelExample example);
 
     int deleteByExample(UserModelExample example);
 

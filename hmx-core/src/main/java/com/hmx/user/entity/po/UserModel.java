@@ -3,7 +3,7 @@ package com.hmx.user.entity.po;
 public class UserModel {
     private Integer id;
 
-    private String createTime;
+    private long createTime;
 
     private String createUser;
 
@@ -23,6 +23,10 @@ public class UserModel {
 
     private Integer organizationId;
 
+    private String userAliase;
+
+    private String headPic;
+
     public Integer getId() {
         return id;
     }
@@ -31,12 +35,12 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 
     public String getCreateUser() {
@@ -109,5 +113,21 @@ public class UserModel {
 
     public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
+    }
+
+    public String getUserAliase() {
+        return userAliase;
+    }
+
+    public void setUserAliase(String userAliase) {
+        this.userAliase = userAliase;
+    }
+
+    public String getHeadPic() {
+        return headPic;
+    }
+
+    public void setHeadPic(String headPic) {
+        this.headPic = headPic;
     }
 }

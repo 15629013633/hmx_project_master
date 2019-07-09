@@ -1,4 +1,4 @@
-package com.hmx.managemant;
+package com.hmx.managemant.controller;
 
 import com.hmx.user.dto.HmxUserDto;
 import com.hmx.user.entity.HmxUser;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
+ * 客户端，PC端用户控制层
  * Created by songjinbao on 2019/4/25.
  */
 @RestController

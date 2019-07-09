@@ -476,6 +476,16 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 	where cc.category_content_id = #{categoryContentId} and cc.state=0
    </select>
    <!-- ↑ -->
+
+
+    <!-- 获取内容最高浏览量 -->
+    <select id="maxBromUnm" resultType="Map" parameterType="map">
+
+        select c.*,m.category_type from hmx_category_content c, hmx_category m where c.browse_num =(select max(t.browse_num) as num from hmx_category_content t  where
+        t.category_id in(select y. category_id from hmx_category y where y.category_type=#{categoryType})
+        )  and c. category_id=m.category_id
+
+    </select>
    
    <!-- 内容列表 ↓ -->
    <select id="selectCategoryContentTable" resultType="Map">

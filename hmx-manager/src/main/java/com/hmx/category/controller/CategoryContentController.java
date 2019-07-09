@@ -4,6 +4,7 @@ import com.hmx.aop.Operation;
 import com.hmx.category.dto.HmxCategoryContentDto;
 import com.hmx.category.dto.HmxCategoryDto;
 import com.hmx.category.entity.HmxCategory;
+import com.hmx.category.entity.HmxCategoryContent;
 import com.hmx.category.entity.HmxCategoryContentTrans;
 import com.hmx.category.service.HmxCategoryContentService;
 import com.hmx.category.service.HmxCategoryService;
@@ -358,6 +359,26 @@ public class CategoryContentController {
         }
         indexSearch.close();
         //=============测试end=======
+    }
+
+    /**
+     * 获取每种类型的内容最多浏览量的数据
+     * @param categoryType
+     * @param model
+     * @return
+     */
+    @GetMapping("/getContentRankNum")
+    @Operation("获取内容浏览量")
+    public ResultBean getContentRankNum(Integer categoryType, Model model){
+        ResultBean resultBean = new ResultBean();
+        List<Map<String,Object>> mapList = hmxCategoryContentService.getContentRankNum(categoryType);
+        resultBean.put("content",mapList);
+        if(null != mapList && mapList.size() > 0){
+            resultBean.setCode(Config.SUCCESS_CODE).setContent("获取到内容浏览量");
+        }else {
+            resultBean.setCode(Config.SUCCESS_CODE).setContent("未获取到内容浏览量");
+        }
+        return resultBean;
     }
 
     public static  void  main(String[] arg0){

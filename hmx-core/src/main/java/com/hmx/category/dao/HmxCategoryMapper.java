@@ -56,4 +56,5 @@ public interface HmxCategoryMapper{
     List<Map<String,Object>> selectCategoryTable(Map<String,Object> parameter);
     int countCategoryTable(Map<String,Object> parameter);
 
+    List<Map<String,Object>> selectCategoryTypes(Map<String, Object> categoryParameter);
 }

@@ -354,6 +354,11 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
    select IFNULL(max(sort),0) from hmx_category where state=0
    </select>
    <!-- ↑ -->
+
+    <!-- -->
+    <select id="selectCategoryTypes" resultType="Map" parameterType="map">
+        select y.category_type as categoryType from hmx_category y group by category_type
+    </select>
    
    <!-- 分类列表信息查询 ↓ -->
    <select id="selectCategoryTable" resultType="Map">

@@ -1088,6 +1088,37 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		return hmxCategoryContentMapper.selectNewestByExample(hmxCategoryContentExample);
 	}
 
+	@Override
+	public List<Map<String,Object>> getContentRankNum(Integer categoryType) {
+		List<Map<String,Object>> hmxCategoryContentList = new ArrayList<>();
+		Map<String,Object> parameter = new HashMap<String,Object>();
+		if(null != categoryType && categoryType != 0){
+			parameter.put("categoryType", categoryType);
+			List<Map<String,Object>> tempList = hmxCategoryContentMapper.maxBromUnm(parameter);
+			if(null != tempList && tempList.size() > 0){
+				hmxCategoryContentList.add(tempList.get(0));
+			}
+		}else {
+			//获取分类有多少种
+			Map<String,Object> categoryParameter = new HashMap<String,Object>();
+			List<Map<String,Object>> categoryList = hmxCategoryMapper.selectCategoryTypes(categoryParameter);
+			if(null != categoryList && categoryList.size() > 0){
+				for(Map<String,Object> map : categoryList){
+					Integer cateType = Integer.valueOf(map.get("categoryType")+"");
+					//获取内每个类型内容的最高浏览量
+					Map<String,Object> temparameter = new HashMap<String,Object>();
+					temparameter.put("categoryType",cateType);
+					List<Map<String,Object>> tempList = hmxCategoryContentMapper.maxBromUnm(temparameter);
+					if(null != tempList && tempList.size() > 0){
+						hmxCategoryContentList.add(tempList.get(0));
+					}
+				}
+			}
+		}
+
+		return hmxCategoryContentList;
+	}
+
 	/**
 	 * 轮播图组装
 	 * @param rcmbModelList
