@@ -6,13 +6,11 @@ import com.hmx.system.service.MessageService;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -200,6 +198,28 @@ public class MessageController {
             }
         }
         return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");
+    }
+
+    /**
+     * 获取用户信息
+     * @param messageDto
+     * @return
+     */
+    @GetMapping("/getMessageInfo")
+    public ResultBean getMessageInfo(MessageDto messageDto, HttpServletRequest request){
+        if(null == messageDto.getMessageId() || messageDto.getMessageId() == 0){
+            return new ResultBean().setCode(Config.FAIL_MOBILE_EMPTY).setContent("消息id不能为空");
+        }
+        try {
+            Message message = messageService.info(messageDto.getMessageId());
+            if(null == message){
+                return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("没有查询到消息");
+            }
+            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("查询成功").put("message",message);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResultBean().setCode(Config.FAIL_CODE).setContent("查询失败");
+        }
     }
 
 
