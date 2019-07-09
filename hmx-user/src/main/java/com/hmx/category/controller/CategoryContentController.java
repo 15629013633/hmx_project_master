@@ -113,6 +113,7 @@ public class CategoryContentController extends BaseController {
 	 */
 	@GetMapping("/search")
 	public ResultBean search(String contentValue, PageBean<Map<String,Object>> page, Model model){
+		int pageNum = page.getPageNum();
 		if(StringUtils.isEmpty(contentValue)){
 			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("搜索内容字段不能为空");
 		}
@@ -143,56 +144,30 @@ public class CategoryContentController extends BaseController {
 			}
 		}
 		if(null != page && page.getPage() != null){
+//			page.getPage().clear();
+//			page.setPage(resultList);
+//			page.setPageNum(1);
+//			page.setPageSize(10);
+//			page.setTotalNum(resultList.size());
+
 			page.getPage().clear();
-			page.setPage(resultList);
-			page.setPageNum(1);
-			page.setPageSize(10);
-			page.setTotalNum(resultList.size());
+			int startIndex = (pageNum - 1) * page.getPageSize();
+			int endIndex = startIndex + page.getPageSize();
+
+			if(endIndex >= resultList.size()){
+				endIndex = resultList.size();
+			}
+
+			if(startIndex >= endIndex){
+				page.setPage(new ArrayList<Map<String,Object>>());
+			}else {
+				page.setPage(resultList.subList(startIndex,endIndex));
+			}
 		}
 		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
 	}
 
-	/**
-	 * 高级搜索
-	 * @param hmxCategoryContentDto
-	 * @param page
-	 * @param model
-	 * @return
-	 */
-//	@GetMapping("/seniorSearch")
-//	public ResultBean seniorSearch(HmxCategoryContentDto hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
-//
-//		Map<String,Object> map = new HashMap<>();
-//		if(null == hmxCategoryContentDto.getCategoryId() || 0 == hmxCategoryContentDto.getCategoryId()){
-//			return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("分类id不能为空");
-//		}
-//		//从文本和标题中查  实际上目前只从标题中查了
-//		page = hmxCategoryContentService.seniorSearch(page, hmxCategoryContentDto);
-//		//从pdf中查询关键字
-//		try {
-//			//slectStr(contentValue,page);
-//		}catch (Exception e){
-//			e.printStackTrace();
-//		}
-//
-//		List<Map<String,Object>> list = page.getPage();
-//		List<Map<String,Object>> resultList = new ArrayList<Map<String,Object>>();
-//
-//		if(null != list && list.size() > 0){
-//			for(Map<String,Object> map1 : list){
-//				String categoryContentId = map1.get("categoryContentId")+"";
-//				if(!StringUtils.isEmpty(categoryContentId)){
-//					Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(Integer.valueOf(categoryContentId),"pc");
-//					resultList.add(resultMap);
-//				}
-//			}
-//		}
-//		if(null != page && page.getPage() != null){
-//			page.getPage().clear();
-//			page.setPage(resultList);
-//		}
-//		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容成功");
-//	}
+
 
 	/**
 	 * 高级搜索
@@ -203,8 +178,6 @@ public class CategoryContentController extends BaseController {
 	 */
 	@GetMapping("/seniorSearch")
 	public ResultBean seniorSearch(SearchModel searchModel, PageBean<Map<String,Object>> page, Model model){
-		System.out.println("pageSize：----" + page.getPageSize());
-		System.out.println("pageNum：----" + page.getPageNum());
 		int pageNum = page.getPageNum();
 		Map<String,Object> map = new HashMap<>();
 		if((null == searchModel.getCategoryId() || 0 == searchModel.getCategoryId())
@@ -240,16 +213,9 @@ public class CategoryContentController extends BaseController {
 			System.out.println("清理之后pageNum：----" + pageNum);
 			int startIndex = (pageNum - 1) * page.getPageSize();
 			int endIndex = startIndex + page.getPageSize();
-			System.out.println("startIndex：----" + startIndex);
-			System.out.println("endIndex：----" + endIndex);
-			System.out.println("pageSize：===========" + page.getPageSize());
-			System.out.println("resultList.size：===========" + resultList.size());
 			if(endIndex >= resultList.size()){
 				endIndex = resultList.size();
 			}
-			System.out.println("page.getPage内容：" + page.getPage().size());
-			System.out.println("高级搜索分页起始值：" + startIndex);
-			System.out.println("高级搜索分页结束值：" + endIndex);
 			if(startIndex >= endIndex){
 				page.setPage(new ArrayList<Map<String,Object>>());
 			}else {

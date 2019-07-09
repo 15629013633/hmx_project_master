@@ -822,8 +822,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 	@Override
 	public PageBean<Map<String, Object>> search(PageBean<Map<String, Object>> page, String contentValue) {
 		Map<String,Object> parameter = new HashMap<String,Object>();
-		parameter.put("offset", page.getStartOfPage());
-		parameter.put("limit", page.getPageSize());
+//		parameter.put("offset", page.getStartOfPage());
+		parameter.put("limit", page.getPageSize()*2);
 		parameter.put("state", DataState.正常.getState());
 		parameter.put("title", contentValue);
 		//统计搜索关键字次数
