@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 用户阅读消息记录控制层
+ * 用户阅读系统消息记录控制层
  * Created by Administrator on 2019/6/12.
  */
 @RestController
