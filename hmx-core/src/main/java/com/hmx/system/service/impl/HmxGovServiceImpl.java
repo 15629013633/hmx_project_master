@@ -56,7 +56,7 @@ public class HmxGovServiceImpl implements HmxGovService {
                 idArray.add(id);
             }
             HmxGovExample hmxGovExample = new HmxGovExample();
-            hmxGovExample.or().andCommentIdIn( idArray );
+            hmxGovExample.or().andIdIn( idArray );
 
             int ret = hmxGovMapper.deleteByExample( hmxGovExample );
             return ret > 0;
@@ -156,6 +156,11 @@ public class HmxGovServiceImpl implements HmxGovService {
                         hmxCategoryContentDto.setCategoryTitle(hmxGov.getCategoryTitle());
                         hmxCategoryContentDto.setCategoryContent(hmxGov.getCategoryContent());
                         hmxCategoryContentDto.setCreateTime(new Date());
+                        hmxCategoryContentDto.setIsPublish(0);
+                        hmxCategoryContentDto.setIsShowHomePage(0);
+                        hmxCategoryContentDto.setUserLevel(0);
+                        hmxCategoryContentDto.setSort(0);
+                        hmxCategoryContentDto.setState(1);
                         int num = hmxCategoryContentMapper.insert(hmxCategoryContentDto);
                         if(num > 0){
                             Integer contentId = hmxCategoryContentDto.getCategoryContentId();
