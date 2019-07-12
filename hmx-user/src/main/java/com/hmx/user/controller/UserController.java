@@ -301,7 +301,7 @@ public class UserController extends BaseController {
 //			if(isHmxUser != null){
 //				return new ResultBean().setCode(Config.FAIL_CODE).setContent("该手机号已经被注册");
 //			}
-			Boolean isSend = smsSendOut.SMSSending(userPhone,code);
+//			Boolean isSend = smsSendOut.SMSSending(userPhone,code);
 			boolean flag = SMSHelper.sendSms(userPhone,code);
 
 			if(!flag){
