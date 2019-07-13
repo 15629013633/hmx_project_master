@@ -53,6 +53,8 @@ public class ThumbsUpController {
             }else{
                 resultBean.setCode(Config.SUCCESS_CODE).setContent("点赞成功");
             }
+        }else {
+            resultBean.setCode(Config.FAIL_CODE).setContent("点赞失败");
         }
         return resultBean;
     }
@@ -82,6 +84,8 @@ public class ThumbsUpController {
             }else{
                 resultBean.setCode(Config.SUCCESS_CODE).setContent("删除成功");
             }
+        }else {
+            resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
         }
         return resultBean;
     }
@@ -111,8 +115,12 @@ public class ThumbsUpController {
             if(null != thumbsUpList && thumbsUpList.size() > 0){
                 //return new ResultBean().put("thumbsUp", thumbsUpList.get(0)).setCode(Config.SUCCESS_CODE).setContent("查询成功");
                 result.put("thumbsUp",thumbsUpList.get(0));
-                resultBean.setResult(result);
+                resultBean.setResult(result).setCode(Config.SUCCESS_CODE);
+            }else {
+                resultBean.setResult(result).setCode(Config.SUCCESS_CODE);
             }
+        }else {
+            resultBean.setResult(result).setCode(Config.SUCCESS_CODE);
         }
         return resultBean;
     }
@@ -136,7 +144,9 @@ public class ThumbsUpController {
         if(flag){
             int count = thumbsUpService.getThumbsCount(thumbsUpDto);
             result.put("count",count);
-            resultBean.setResult(result);
+            resultBean.setResult(result).setCode(Config.SUCCESS_CODE);
+        }else {
+            resultBean.setResult(result).setCode(Config.SUCCESS_CODE);
         }
         return resultBean;
     }
