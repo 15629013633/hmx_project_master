@@ -21,7 +21,7 @@ import java.util.*;
  * Created by Administrator on 2019/7/17.
  */
 public class ALiYunSignUtils {
-    public static String Format = "xml";                                        //返回值的类型，支持JSON与XML
+    public static String Format = "json";                                        //返回值的类型，支持JSON与XML
     public static String Version = "2016-11-01";                                //API版本号
     public static String Signature = "";                                        //签名结果字符串
     public static String SignatureMethod = "HMAC-SHA1";                         //签名方式
@@ -74,6 +74,8 @@ public class ALiYunSignUtils {
         String StringToSign = "GET" + "&" +
                 percentEncode("/") + "&" +
                 percentEncode(CQString.toString().substring(1));
+        System.out.println("StringToSign:" + StringToSign);
+
         //3 计算待签名字符串StringToSign的HMAC值
         String key = AccessKeySecret + "&";
         SecretKey secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA1");
@@ -181,7 +183,7 @@ public class ALiYunSignUtils {
         String signResult = getSignature(Action, DomainName);
         System.out.println(signResult);
         //System.out.println(getSignature222(Action, DomainName,NotifyUrl,NeedStatusNotify));
-        String url = "http://live.aliyuncs.com/?"
+        String url = "https://live.aliyuncs.com/?"
                 + "Format=" + Format
                 + "&Version=" + Version
                 + "&Signature=" + signResult
@@ -189,9 +191,9 @@ public class ALiYunSignUtils {
                 + "&SignatureNonce=" + SignatureNonce
                 + "&SignatureVersion=" +SignatureVersion
                 + "&AccessKeyId=" + AccessKeyId
-                + "&Timestamp=" + Timestamp;
-//                + "&Action=" + Action
-//                + "&DomainName=" + DomainName;
+                + "&Timestamp=" + Timestamp
+                + "&Action=" + Action
+                + "&DomainName=" + DomainName;
                 //+ "&NeedStatusNotify="+NeedStatusNotify
                 //+ "&AppName=" + AppName
                 //+ "&StreamName=" + StreamName
