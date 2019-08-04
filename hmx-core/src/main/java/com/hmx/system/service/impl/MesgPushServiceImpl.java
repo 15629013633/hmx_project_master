@@ -7,10 +7,13 @@ import com.hmx.images.dao.HmxImagesMapper;
 import com.hmx.images.entity.HmxImages;
 import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.system.dao.MesgPushMapper;
+import com.hmx.system.dao.UserRecordMapper;
 import com.hmx.system.dto.MesgPushDto;
 import com.hmx.system.dto.UserRecordDto;
 import com.hmx.system.entity.MesgPush;
 import com.hmx.system.entity.MesgPushExample;
+import com.hmx.system.entity.UserRecord;
+import com.hmx.system.entity.UserRecordExample;
 import com.hmx.system.service.MesgPushService;
 import com.hmx.utils.Jpush.JpushClientUtil;
 import com.hmx.utils.result.PageBean;
@@ -36,6 +39,9 @@ public class MesgPushServiceImpl implements MesgPushService {
 
     @Autowired
     private HmxImagesMapper hmxImagesMapper;
+
+    @Autowired
+    private UserRecordMapper userRecordMapper;
 
 
     @Override
@@ -272,6 +278,22 @@ public class MesgPushServiceImpl implements MesgPushService {
             return page;
         }
         List<Map<String,Object>> data = mesgPushMapper.selectMesgTable(parameter);
+        if(null != data && data.size() > 0){
+            for(Map<String,Object> map : data){
+                String contentId = map.get("contentId").toString();
+                UserRecordExample userRecordExample = new UserRecordExample();
+                UserRecordExample.Criteria where = userRecordExample.createCriteria();
+                where.andContentIdEqualTo(Integer.valueOf(contentId));
+                where.andUserIdEqualTo(userRecordDto.getUserId());
+                List<UserRecord> list = userRecordMapper.selectByExample(userRecordExample);
+                if(null != list && list.size() > 0){
+                    map.put("status",1);
+                }else{
+                    map.put("status",0);
+                }
+            }
+
+        }
         page.setPage(data);
         return page;
     }

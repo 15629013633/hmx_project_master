@@ -70,11 +70,11 @@ public class UploadVideoDemo {
     		/* 图片文件扩展名（可选）取值范围：png，jpg，jpeg */
     		String[] extArray = fileName.split("\\.");
     		String ext = extArray[extArray.length-1].toLowerCase();
-    		boolean flag = imageExt(ext.trim(),imageExt);
-    		if(!flag){
-    			resultMap.put("content", "图片格式不正确，暂时只支持"+imageExt+"格式!");
-    			return resultMap;
-    		}
+//    		boolean flag = imageExt(ext.trim(),imageExt);
+//    		if(!flag){
+//    			resultMap.put("content", "图片格式不正确，暂时只支持"+imageExt+"格式!");
+//    			return resultMap;
+//    		}
     		request.setImageExt(ext);
     		/* 图片标题（可选）长度不超过128个字节，UTF8编码 */
     		//request.setTitle("图片标题");

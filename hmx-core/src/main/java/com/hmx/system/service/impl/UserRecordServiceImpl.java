@@ -34,6 +34,7 @@ public class UserRecordServiceImpl implements UserRecordService {
         if(null != list && list.size() > 0){//已经阅读过则不插入
             return true;
         }
+        userRecord.setCreateTime(System.currentTimeMillis());
         return userRecordMapper.insertSelective( userRecord ) > 0;
     }
 

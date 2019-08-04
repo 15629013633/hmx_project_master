@@ -303,6 +303,7 @@
           EXISTS(select 1 from hmx_userrecord u where u.userId=#{userId} and m.contentId=u.contentId)
         </if>
 
+        <!--查询未读消息 -->
         <if test="msgType == 2">
           NOT EXISTS(select 1 from hmx_userrecord u where u.userId=#{userId} and m.contentId=u.contentId)
         </if>

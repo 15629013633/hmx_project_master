@@ -1,6 +1,12 @@
 package com.hmx.system.test;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.hmx.live.entity.LiveModel;
+import com.hmx.live.entity.LiveStreamOnlineInfo;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.util.StringUtils;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Mac;
@@ -112,6 +118,7 @@ public class ALiYunSignUtils {
                 replace("%7E", "~") : null;
     }
     private static String getSignature(String action, String domainName, String appName, String streamName, String endTime, String startTime) throws UnsupportedEncodingException {
+        SignatureNonce = System.currentTimeMillis()+"";
         Map map = new HashMap();
         map.put("Format", Format);
         map.put("Version", Version);
@@ -169,20 +176,36 @@ public class ALiYunSignUtils {
     }
     public static void main(String[] args) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException {
         // TODO Auto-generated method stub
-        //String Action = "SetLiveStreamsNotifyUrlConfig";
+//        String Action = "DescribeLiveStreamsOnlineList";
+//        String DomainName = "zb.ahich.cn";
+//        String signResult = getSignature(Action, DomainName);
+//        SignatureNonce = System.currentTimeMillis()+"";
+//        System.out.println(signResult);
+//        String url = "https://live.aliyuncs.com/?"
+//                + "Format=" + Format
+//                + "&Version=" + Version
+//                + "&Signature=" + signResult
+//                + "&SignatureMethod=" + SignatureMethod
+//                + "&SignatureNonce=" + SignatureNonce
+//                + "&SignatureVersion=" +SignatureVersion
+//                + "&AccessKeyId=" + AccessKeyId
+//                + "&Timestamp=" + Timestamp
+//                + "&Action=" + Action
+//                + "&DomainName=" + DomainName;
+//        System.out.println(url);
+//        String result = HttpRequestUtil.doGet(url);
+//        System.out.println("result=" + result);
+        //添加录制回调
+        String liveImput = getLiveInput();
+        System.out.println("liveImput=" + liveImput);
+    }
+
+    public static String getLiveInput()throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException{
+        SignatureNonce = System.currentTimeMillis()+"";
         String Action = "DescribeLiveStreamsOnlineList";
-        //String Action = "AddLiveRecordNotifyConfig";
         String DomainName = "zb.ahich.cn";
-//        String DomainName = "zb.0898zlb.com";
-//        String NotifyUrl = "http://crown.free.idcfengye.com/System/LiveSet/zbCallBack";
-//        boolean NeedStatusNotify = true;
-        //String AppName = "xzlive";
-        //String StreamName = "xz_1234";
-        //String EndTime = "2018-09-28T16:36:00Z";
-        //String StartTime = "2018-09-26T16:36:00Z";
         String signResult = getSignature(Action, DomainName);
         System.out.println(signResult);
-        //System.out.println(getSignature222(Action, DomainName,NotifyUrl,NeedStatusNotify));
         String url = "https://live.aliyuncs.com/?"
                 + "Format=" + Format
                 + "&Version=" + Version
@@ -194,22 +217,57 @@ public class ALiYunSignUtils {
                 + "&Timestamp=" + Timestamp
                 + "&Action=" + Action
                 + "&DomainName=" + DomainName;
-                //+ "&NeedStatusNotify="+NeedStatusNotify
-                //+ "&AppName=" + AppName
-                //+ "&StreamName=" + StreamName
-                //+ "&EndTime="+"2018-09-28T16:36:00Z"
-                //+ "&StartTime="+"2018-09-26T16:36:00Z"
-
-
-
-
-//                + "&NotifyUrl="+"http://crown.free.idcfengye.com/System/LiveSet/zbCallBack";
         System.out.println(url);
         String result = HttpRequestUtil.doGet(url);
-        System.out.println("result=" + result);
-        //添加录制回调
+//        System.out.println("result=" + result);
+        return result;
+    }
 
+    public static LiveModel liveList() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException{
 
+        String result = getLiveInput();
+        LiveModel liveModel = new LiveModel();
+        if(!StringUtils.isEmpty(result)){
+            JSONObject object = JSON.parseObject(result);
+            Integer PageNum = object.getIntValue("PageNum");
+            Integer PageSize = object.getIntValue("PageSize");
+            Integer TotalNum = object.getIntValue("TotalNum");
+            Integer TotalPage = object.getIntValue("TotalPage");
+            String RequestId = object.getString("RequestId");
+
+            liveModel.setPageNum(PageNum);
+            liveModel.setPageSize(PageSize);
+            liveModel.setRequestId(RequestId);
+            liveModel.setTotalNum(TotalNum);
+            liveModel.setTotalPage(TotalPage);
+            Map<String,ArrayList<LiveStreamOnlineInfo>> map = new HashMap<String,ArrayList<LiveStreamOnlineInfo>>();
+            liveModel.setOnlineInfo(map);
+            String OnlineInfo = object.get("OnlineInfo").toString();
+            if(!StringUtils.isEmpty(OnlineInfo)){
+                JSONObject objectIngo = JSON.parseObject(OnlineInfo);
+                String onlineInfo = objectIngo.getString("LiveStreamOnlineInfo");
+                if(!StringUtils.isEmpty(onlineInfo) && onlineInfo.length() > 15){
+                    JSONArray array = JSON.parseArray(onlineInfo);
+                    if(null != array && array.size() > 0){
+                        ArrayList<LiveStreamOnlineInfo> infoList = new ArrayList<>();
+
+                        for(Object obj : array){
+                            LiveStreamOnlineInfo info = new LiveStreamOnlineInfo();
+                            JSONObject jsonObject = (JSONObject)obj;
+                            info.setAppName(jsonObject.get("AppName")+"");
+                            info.setDomainName(jsonObject.get("DomainName")+"");
+                            info.setPublishTime(jsonObject.get("PublishTime")+"");
+                            info.setPublishUrl(jsonObject.get("PublishUrl")+"");
+                            info.setStreamName(jsonObject.get("StreamName")+"");
+                            infoList.add(info);
+
+                        }
+                        map.put("LiveStreamOnlineInfo",infoList);
+                    }
+                }
+            }
+        }
+        return liveModel;
     }
 
     private static String getSignature222(String action, String domainName, String NotifyUrl,boolean NeedStatusNotify) throws UnsupportedEncodingException {

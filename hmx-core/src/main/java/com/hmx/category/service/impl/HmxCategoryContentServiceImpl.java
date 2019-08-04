@@ -666,6 +666,10 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 					}
 				}else if("pc".equals(type)){
 					if(file.getFileUrl().endsWith("html")){
+						//自己测试用start
+						file.setFileUrl(file.getFileUrl().replace("http://www.sskj.art:8080","http://120.79.169.165:80"));
+						//自己测试用end
+
 						filesList.add(file);
 					}
 				}
@@ -674,6 +678,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		resultMap.put("filesList",filesList);
 		if(null != hmxFilesList && hmxFilesList.size() > 0){
 			fileUrl = hmxFilesList.get(0).getFileUrl();
+			//自己测试用start
+			fileUrl = fileUrl.replace("http://www.sskj.art:8080","http://120.79.169.165:80");
+			//自己测试用end
 		}
 		HmxImagesExample hmxImagesExample = new HmxImagesExample();
 		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
