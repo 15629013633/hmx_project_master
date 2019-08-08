@@ -39,8 +39,10 @@ public class CategoryContentController extends BaseController {
 
 	//window下
 	//private static final String txtFileDir = "E:\\fileTest\\txtFile";
-	//linux下
-	private static final String txtFileDir = "/home/back/txtFile";
+	//linux下--测试环境
+//	private static final String txtFileDir = "/home/back/txtFile";
+	//linux下--生产环境
+	private static final String txtFileDir = "/home/hmx/txtFile";
 
 	@Autowired
 	private HmxCategoryContentService hmxCategoryContentService;
