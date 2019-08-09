@@ -51,14 +51,23 @@ imageType: default
 #默认png
 imageExt: png,jpg,jpeg,gif
 videoExt: MP4,MP3,FLV,HLS,TS,3GP,MPG,MPEG,MPE,DAT,VOB,ASF,AVI,WMV,ASF,FLV,F4V,RM,RMVB,MOV,MKV,M3U8,DV,GIF,M2T,M4V,MJ2,MJPEG,MTS,OGG,QT,SWF,WEBM
-#阿里文件上传：pdf,epub
-oss: 
-  endpoint: http://oss-cn-hangzhou.aliyuncs.com
-  accessKeyId: LTAIk9cA9ccLsyak
-  accessKeySecret: LN0d98MfMdc8WJb8qsBmlEaTNLaoq6
-  bucketName: zhonghuazhu
-  ossIsFormal: false
-  physicsrootpath: C:\\files
-  serverip: https://zhonghuazhu.oss-cn-hangzhou.aliyuncs.com
+#阿里文件上传：pdf,epub  --测试环境
+#oss:
+#  endpoint: http://oss-cn-hangzhou.aliyuncs.com
+#  accessKeyId: LTAIk9cA9ccLsyak
+#  accessKeySecret: LN0d98MfMdc8WJb8qsBmlEaTNLaoq6
+#  bucketName: zhonghuazhu
+#  ossIsFormal: false
+#  physicsrootpath: C:\\files
+#  serverip: https://zhonghuazhu.oss-cn-hangzhou.aliyuncs.com
+#阿里文件上传：pdf,epub  --生产环境
+oss:
+  endpoint:     http://oss-cn-hangzhou.aliyuncs.com
+  accessKeyId: LTAIfeQo2pX120Qx
+  accessKeySecret: Jcivacpj41iXupfCYl4ReeEXv3qTkU
+  bucketName:   aqhmx
+  ossisFormal:    false
+  physicsrootpath:  c:\\files
+  serverip:   https://aqhmx.oss-cn-hangzhou.aliyuncs.com
 
     

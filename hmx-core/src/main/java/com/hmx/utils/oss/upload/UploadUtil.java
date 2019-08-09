@@ -38,11 +38,17 @@ public class UploadUtil {
 //	private static final String htmlDir = "E:\\fileTest\\htmlFile";
 	//private static final String txtFileDir = "E:\\fileTest\\txtFile\\";
 
-	//linux部署
-	private static final String pdfDir = "/home/back/pdfFile/";
-	private static final String htmlDir = "/usr/local/tomcat/webapps/ROOT/htmlFile";
-	private static final String txtFileDir = "/home/back/txtFile/";
-	private static final String ipPort = "http://www.sskj.art:8080/";
+	//linux部署--测试环境
+//	private static final String pdfDir = "http://120.79.169.165/home/back/pdfFile/";
+//	private static final String htmlDir = "/usr/local/tomcat/webapps/ROOT/htmlFile";
+//	private static final String txtFileDir = "/home/back/txtFile/";
+//	private static final String ipPort = "http://www.sskj.art:8080/";
+
+	//linux部署--生产环境
+	private static final String pdfDir = "http://47.98.248.104/home/hmx/pdfFile/";
+	private static final String htmlDir = "/home/hmx/htmlFile";
+	private static final String txtFileDir = "/home/hmx/txtFile/";
+	private static final String ipPort = "http://www.zghmx.cn/";
 
 	@Value("${oss.endpoint}")
 	public String endpoint;

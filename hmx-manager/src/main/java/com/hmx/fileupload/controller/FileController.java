@@ -68,6 +68,7 @@ public class FileController {
             String virtualPath = "";
             if(null != pdfFile){
                 virtualPath = uploadUtil.uploadFile( pdfFile , contentFlow, fileTypeStr );
+                uploadpdf(epubFile,module,fileType,fileTypeStr);
             }
             if(epubFile != null){
                 virtualPath = uploadEpub(epubFile,module,fileType,fileTypeStr);
@@ -82,6 +83,10 @@ public class FileController {
             e.printStackTrace();
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常:"+ e.getMessage() );
         }
+    }
+
+    public String uploadpdf(MultipartFile file,String module,Integer fileType,List<String> fileTypeStr){
+        return uploadEpub(file,module,fileType,fileTypeStr);
     }
 
     public String uploadEpub(MultipartFile file,String module,Integer fileType,List<String> fileTypeStr){
