@@ -677,10 +677,10 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 
                 <!-- 时长条件start -->
                 <if test="minDuration != null">
-                    v.duration &gt;= #{minDuration} and
+                    cast(v.duration as signed) &gt;= #{minDuration} and
                 </if>
                 <if test="maxDuration != null">
-                    v.duration &lt;= #{maxDuration} and
+                    cast(v.duration as signed) &lt;= #{maxDuration} and
                 </if>
                 <!-- 时长条件end -->
 
@@ -772,10 +772,10 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 
                 <!-- 时长条件start -->
                 <if test="minDuration != null">
-                    v.duration &gt;= #{minDuration} and
+                    cast(v.duration as signed) &gt;= #{minDuration} and
                 </if>
                 <if test="maxDuration != null">
-                    v.duration &lt;= #{maxDuration} and
+                    cast(v.duration as signed) &lt;= #{maxDuration} and
                 </if>
                 <!-- 时长条件end -->
 
