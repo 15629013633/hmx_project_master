@@ -36,19 +36,19 @@ public class FileController {
     /**
      * @param pdfFile 文件
      * @param module 自定义文件储存文件夹
-     * @param fileType 文件上传类型 1图片类型(pdf) 2大文件类型(epub)
+     * @param fileType 文件上传类型 1为pdf 2为图片
 //     * @param contentFlow 内容流水号
      * @return
      */
     @RequestMapping("/upload")
     @ResponseBody
-   public ResultBean fileUpload(MultipartFile pdfFile , MultipartFile epubFile,@RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
+   public ResultBean fileUpload(MultipartFile pdfFile , MultipartFile imageFile,@RequestParam Integer fileType,@RequestParam String contentFlow, @RequestParam( required = false) String module ){
         if(fileType == null){
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不能为空");
         }
-       if ( pdfFile == null && epubFile == null) {
-            return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("上传文件不能为空");
-        }
+//       if ( pdfFile == null && epubFile == null) {
+//            return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("上传文件不能为空");
+//        }
         if(StringUtils.isEmpty(contentFlow)){
             return new ResultBean().setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水哈contentFlow不能为空");
         }
@@ -67,11 +67,12 @@ public class FileController {
         try {
             String virtualPath = "";
             if(null != pdfFile){
-                virtualPath = uploadUtil.uploadFile( pdfFile , contentFlow, fileTypeStr );
-                uploadpdf(epubFile,module,fileType,fileTypeStr);
+                virtualPath = uploadUtil.uploadFile( pdfFile , contentFlow, fileTypeStr,fileType+"" );
+                //uploadpdf(epubFile,module,fileType,fileTypeStr);
             }
-            if(epubFile != null){
-                virtualPath = uploadEpub(epubFile,module,fileType,fileTypeStr);
+
+            if(null != imageFile){
+                virtualPath = uploadUtil.uploadFile( imageFile , contentFlow, fileTypeStr, fileType+"");
             }
 
             if ( StringUtils.isEmpty( virtualPath ) ) {

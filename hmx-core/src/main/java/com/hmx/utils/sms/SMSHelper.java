@@ -175,4 +175,8 @@ public class SMSHelper {
         }
         return result;
     }
+
+    public static void main(String[] args) {
+        sendSms("13076949806","123457");
+    }
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import com.hmx.utils.oss.upload.UploadConfig;
 
 public enum UploadFileType {
-	图片类型(1, UploadConfig.IMAGETYPE),
-	大文件类型(2, UploadConfig.FILETYPE),
+	pdf类型(1, UploadConfig.IMAGETYPE),
+	图片类型(2, UploadConfig.FILETYPE),
 	;
 	
 	private Integer state;

@@ -66,10 +66,10 @@ public class UserController extends BaseController {
 	@Autowired
 	private SMSSendOut smsSendOut;
 	
-	@GetMapping("/{id}")
+	@GetMapping("/getById")
 	@NeedLogin
-	public ResultBean getUserInfo(@PathVariable Integer id){
-		HmxUser user = hmxUserService.info(id);
+	public ResultBean getUserInfo(String id){
+		HmxUser user = hmxUserService.info(Integer.valueOf(id));
 		return new ResultBean().put("user", user);
 	}
 
