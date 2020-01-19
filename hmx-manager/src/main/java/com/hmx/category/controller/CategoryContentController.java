@@ -96,6 +96,7 @@ public class CategoryContentController {
     @Operation("内容添加")
     public ResultBean categoryAdd(@RequestBody TransModel transModel){
             ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         try {
             HmxCategoryContentDto hmxCategoryContentDto = transModel.getContent();
@@ -111,18 +112,18 @@ public class CategoryContentController {
 //                flag=false;
 //            }
             if(hmxCategoryContentDto.getCategoryId() == null){
-                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联首页分类不能为空");
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("关联分类不能为空");
                 flag=false;
             }
-            if(0 == hmxCategoryContentDto.getMode()){
-                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容必须有一种展现方式");
-                flag=false;
-            }
+//            if(0 == hmxCategoryContentDto.getMode()){
+//                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容必须有一种展现方式");
+//                flag=false;
+//            }
             if(StringUtils.isEmpty(hmxCategoryContentDto.getContentFlow())){
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容流水号不能为空");
                 flag=false;
             }
-            printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
+//            printValues(hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList,"add");
             if(flag){
                 Map<String,Object> resultMap = hmxCategoryContentService.categoryContentAdd(hmxCategoryContentDto,hmxMovieDtoList,hmxImagesDtoList,hmxFilesDtoList);
                 flag=Boolean.parseBoolean(resultMap.get("flag").toString());
@@ -135,6 +136,7 @@ public class CategoryContentController {
             }
         }catch (Exception e){
             resultBean.setCode(Config.FAIL_CODE);
+            resultBean.setContent("操作失败");
             e.printStackTrace();
         }
 
@@ -148,8 +150,8 @@ public class CategoryContentController {
     @PostMapping(value = "/edit",consumes = "application/json")
     @Operation("内容修改")
     public ResultBean categoryUpdate(@RequestBody TransModel transModel){
-        Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         HmxCategoryContentDto hmxCategoryContentDto = transModel.getContent();
         List<HmxMovieDto> hmxMovieDtoList = transModel.getMovieList();
@@ -166,8 +168,6 @@ public class CategoryContentController {
                 //result.setMsg("失败");
                 return resultBean;
             }else{
-                result.setStatus(10000);
-                result.setMsg("成功");
                 resultBean.setCode(Config.SUCCESS_CODE).setContent("编辑成功");
                 return resultBean;
             }
@@ -182,8 +182,8 @@ public class CategoryContentController {
     @PostMapping(value = "/deleteContent")
     @Operation("内容删除")
     public ResultBean delete(String ids){
-        Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         if(StringUtils.isEmpty(ids)){
             resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容主键不能为空");
@@ -192,12 +192,10 @@ public class CategoryContentController {
         if(flag){
             flag = hmxCategoryContentService.deleteByIdArray(ids);
             if(!flag){
-                resultBean.setCode(Config.FAIL_CODE).setContent("编辑失败");
+                resultBean.setCode(Config.FAIL_CODE).setContent("删除失败");
                 return resultBean;
             }else{
-                result.setStatus(10000);
-                result.setMsg("成功");
-                resultBean.setCode(Config.SUCCESS_CODE).setContent("编辑成功");
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("删除成功");
                 return resultBean;
             }
         }
@@ -213,6 +211,7 @@ public class CategoryContentController {
     @Operation("内容详情查询")
     public ResultBean categoryContentInfo(Integer categoryContentId, Model model){
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         if(categoryContentId == null){
             resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("内容编号不能为空");
@@ -225,7 +224,7 @@ public class CategoryContentController {
             }else{
                 resultBean.setCode(Config.SUCCESS_CODE).setContent("查询内容详情成功");
             }
-            resultBean.put("categoryContentInfo", resultMap);
+            resultBean.put("content", resultMap);
         }
         model.addAttribute("resultBean", resultBean);
         return resultBean;
@@ -240,9 +239,10 @@ public class CategoryContentController {
      */
     @GetMapping("/categoryContentTable")
     @Operation("获取内容列表")
-    public Map<String,Object> categoryContentTable(HmxCategoryContentDto hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
-        Map<String,Object> map = new HashMap<>();
+    public ResultBean categoryContentTable(HmxCategoryContentDto hmxCategoryContentDto, PageBean<Map<String,Object>> page, Model model){
+//        Map<String,Object> map = new HashMap<>();
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content","");
         page = hmxCategoryContentService.selectCategoryContentTable(page, hmxCategoryContentDto);
         List<Map<String,Object>> list = page.getPage();
         if(list == null || list.size() <= 0){
@@ -255,9 +255,7 @@ public class CategoryContentController {
         }else{
             resultBean.setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
         }
-        map.put("rows", page.getPage());
-        map.put("total", page.getTotalNum());
-        return map;
+        return new ResultBean().put("content", page);
     }
 
     public void printValues(List<HmxMovieDto> hmxMovieDtoList, List<HmxImagesDto> hmxImagesDtoList,List<HmxFilesDto> hmxFilesDtoList,String type){

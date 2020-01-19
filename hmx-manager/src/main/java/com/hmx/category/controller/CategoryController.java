@@ -31,22 +31,22 @@ public class CategoryController {
     private HmxCategoryService hmxCategoryService;
 
 
-    @RequestMapping("/init")
-    public ModelAndView init() {
-        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/category/list");
-        modelAndView.addObject("category",hmxCategoryList);
-        return modelAndView;
-    }
-
-    @RequestMapping("/initAdd")
-    public ModelAndView initAdd(HttpServletRequest request, @RequestParam(value = "id", required = false) Integer categoryId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("category",categoryId == null ? new HmxCategory() : hmxCategoryService.info(categoryId));
-        modelAndView.setViewName("/category/eidt");
-        return modelAndView;
-    }
+//    @RequestMapping("/init")
+//    public ModelAndView init() {
+//        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("/category/list");
+//        modelAndView.addObject("category",hmxCategoryList);
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping("/initAdd")
+//    public ModelAndView initAdd(HttpServletRequest request, @RequestParam(value = "id", required = false) Integer categoryId) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("category",categoryId == null ? new HmxCategory() : hmxCategoryService.info(categoryId));
+//        modelAndView.setViewName("/category/eidt");
+//        return modelAndView;
+//    }
 
     /**
      * 首页分类添加
@@ -185,7 +185,7 @@ public class CategoryController {
         }else{
             resultBean.setCode(Config.SUCCESS_CODE).setContent("查询分类列表成功");
         }
-        return new ResultBean().put("content", page).setCode(Config.SUCCESS_CODE).setContent("查询列表成功");
+        return resultBean.put("content", page);
     }
     /**
      * 查询所有分类信息列表

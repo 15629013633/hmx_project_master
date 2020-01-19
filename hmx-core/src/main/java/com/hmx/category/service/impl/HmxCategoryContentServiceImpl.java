@@ -128,9 +128,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			hmxFilesExample.or().andCategoryContentIdIn(idArray);
 			hmxFilesMapper.deleteByExample(hmxFilesExample);
 			//3删除视频
-			HmxMovieExample hmxMovieExample = new HmxMovieExample();
-			hmxMovieExample.or().andCategoryContentIdIn(idArray);
-			hmxMovieMapper.deleteByExample(hmxMovieExample);
+//			HmxMovieExample hmxMovieExample = new HmxMovieExample();
+//			hmxMovieExample.or().andCategoryContentIdIn(idArray);
+//			hmxMovieMapper.deleteByExample(hmxMovieExample);
 
 			HmxCategoryContentExample hmxCategoryContentExample = new HmxCategoryContentExample();
 			hmxCategoryContentExample.or().andCategoryContentIdIn( idArray );
@@ -327,11 +327,11 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			}
 			int categoryId = hmxCategoryContentDto.getCategoryContentId();
 			//1将视频信息维护到movie表
-			for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
-				hmxMovieDto.setCreateTime(date);
-				hmxMovieDto.setCategoryContentId(categoryId);
-				hmxMovieMapper.insert(hmxMovieDto);
-			}
+//			for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
+//				hmxMovieDto.setCreateTime(date);
+//				hmxMovieDto.setCategoryContentId(categoryId);
+//				hmxMovieMapper.insert(hmxMovieDto);
+//			}
 			//2将图片信息维护到images表
 			for(HmxImagesDto hmxImagesDto : hmxImagesDtoList){
 				hmxImagesDto.setCreateTime(date);
@@ -372,17 +372,17 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			}
 			Integer categoryId = hmxCategoryContentDto.getCategoryContentId();
 			//1更新视频信息
-			for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
-				HmxMovie hmxMovie = hmxMovieMapper.selectByPrimaryKey(hmxMovieDto.getMovieId());
-				if(null == hmxMovie){
-					hmxMovieDto.setCreateTime(new Date());
-					hmxMovieDto.setCategoryContentId(categoryId);
-					hmxMovieMapper.insert(hmxMovieDto);
-				}else {
-					hmxMovieMapper.updateByPrimaryKeySelective(hmxMovieDto);
-				}
-
-			}
+//			for(HmxMovieDto hmxMovieDto : hmxMovieDtoList){
+//				HmxMovie hmxMovie = hmxMovieMapper.selectByPrimaryKey(hmxMovieDto.getMovieId());
+//				if(null == hmxMovie){
+//					hmxMovieDto.setCreateTime(new Date());
+//					hmxMovieDto.setCategoryContentId(categoryId);
+//					hmxMovieMapper.insert(hmxMovieDto);
+//				}else {
+//					hmxMovieMapper.updateByPrimaryKeySelective(hmxMovieDto);
+//				}
+//
+//			}
 			//2更新图片信息
 			for(HmxImagesDto hmxImagesDto : hmxImagesDtoList){
 				HmxImages images = hmxImagesMapper.selectByPrimaryKey(hmxImagesDto.getImageId());
@@ -446,43 +446,43 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setSourceId(hmxCategoryContent.getSourceId());
 		hmxCategoryContentTrans.setSourceTitle(hmxCategoryContent.getSourceTitle());
 		hmxCategoryContentTrans.setUserLevel(hmxCategoryContent.getUserLevel());
-		String tagName = "";
-		//获取标签信息
-		if(!StringUtils.isEmpty(hmxCategoryContent.getTagId())){
-			String[] tagIdsArr = hmxCategoryContent.getTagId().split(",");
-			for(String tagId : tagIdsArr){
-				if(CommonUtils.isInteger(tagId)){
-					Tagtab tagtab = tagtabService.info(Integer.valueOf(tagId));
-					if(null != tagtab){
-						tagName += tagtab.getTagName() + ",";
-					}
-				}
-
-			}
-		}
-		if(tagName.endsWith(",")){
-			tagName = tagName.substring(0,tagName.length() - 1);
-		}
-		hmxCategoryContentTrans.setTagId(hmxCategoryContent.getTagId());
-		hmxCategoryContentTrans.setTagName(tagName);
+//		String tagName = "";
+//		//获取标签信息
+//		if(!StringUtils.isEmpty(hmxCategoryContent.getTagId())){
+//			String[] tagIdsArr = hmxCategoryContent.getTagId().split(",");
+//			for(String tagId : tagIdsArr){
+//				if(CommonUtils.isInteger(tagId)){
+//					Tagtab tagtab = tagtabService.info(Integer.valueOf(tagId));
+//					if(null != tagtab){
+//						tagName += tagtab.getTagName() + ",";
+//					}
+//				}
+//
+//			}
+//		}
+//		if(tagName.endsWith(",")){
+//			tagName = tagName.substring(0,tagName.length() - 1);
+//		}
+//		hmxCategoryContentTrans.setTagId(hmxCategoryContent.getTagId());
+//		hmxCategoryContentTrans.setTagName(tagName);
     	//查询视频信息
-		String movieIds = "";
-		HmxMovieExample hmxMovieExample = new HmxMovieExample();
-		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
-		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
-		hmxMovieExample.setOrderByClause("serie");
-		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
-		if(hmxMovieList != null && hmxMovieList.size() > 0){
-			hmxCategoryContentTrans.setMovieList(hmxMovieList);
-			for(HmxMovie movie : hmxMovieList){
-				movieIds += movie.getVideoId()+",";
-			}
-		}
+//		String movieIds = "";
+//		HmxMovieExample hmxMovieExample = new HmxMovieExample();
+//		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
+//		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
+//		hmxMovieExample.setOrderByClause("serie");
+//		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
+//		if(hmxMovieList != null && hmxMovieList.size() > 0){
+//			hmxCategoryContentTrans.setMovieList(hmxMovieList);
+//			for(HmxMovie movie : hmxMovieList){
+//				movieIds += movie.getVideoId()+",";
+//			}
+//		}
 
-		if(!StringUtils.isEmpty(movieIds) && movieIds.endsWith(movieIds)){
-			movieIds = movieIds.substring(0,(movieIds.length() - 1));
-		}
-		hmxCategoryContentTrans.setMovieId(movieIds);
+//		if(!StringUtils.isEmpty(movieIds) && movieIds.endsWith(movieIds)){
+//			movieIds = movieIds.substring(0,(movieIds.length() - 1));
+//		}
+//		hmxCategoryContentTrans.setMovieId(movieIds);
 		//查询内容下的pdf的url
 		String fileUrl = "";
 		HmxFilesExample hmxFilesExample = new HmxFilesExample();
@@ -502,20 +502,8 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
 		if(null != hmxImagesList && hmxImagesList.size() > 0){
 			hmxCategoryContentTrans.setImagesList(hmxImagesList);
-//			for(HmxImages images : hmxImagesList){
-//				if(!StringUtils.isEmpty(images.getImageUrl())){
-//					imageUrl= images.getImageUrl();
-//				}
-//				if(!StringUtils.isEmpty(images.getVerticalImage())){
-//					verticalImage = images.getVerticalImage();
-//				}
-//				if(StringUtils.isEmpty(images.getTransImage())){
-//					transImage = images.getTransImage();
-//				}
-//			}
-
 		}
-		hmxCategoryContentTrans.setContentImages(imageUrl);
+//		hmxCategoryContentTrans.setContentImages(imageUrl);
 //		hmxCategoryContentTrans.setVerticalImage(verticalImage);
 //		hmxCategoryContentTrans.setTransImage(transImage);
 		return hmxCategoryContentTrans;
@@ -550,6 +538,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 		if(!StringUtils.isEmpty(hmxCategoryContentDto.getSubTitle())){
 			parameter.put("subTitle", hmxCategoryContentDto.getSubTitle());
+		}
+		if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
+			parameter.put("title", hmxCategoryContentDto.getCategoryContent());
 		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
@@ -727,6 +718,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 		if(null != hmxCategoryContentDto.getContentType() && 0 != hmxCategoryContentDto.getContentType()){
 			parameter.put("contentType", hmxCategoryContentDto.getContentType());
+		}
+		if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
+			parameter.put("title", hmxCategoryContentDto.getCategoryContent());
 		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTableByPc(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);

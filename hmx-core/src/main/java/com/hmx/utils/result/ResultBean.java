@@ -41,7 +41,7 @@ public class ResultBean {
 	private boolean timeOut = false;
 
 	public ResultBean() {
-		
+
 	}
 	
 	public ResultBean( Integer code,boolean timeOut) {

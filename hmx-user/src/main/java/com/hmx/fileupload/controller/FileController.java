@@ -54,7 +54,7 @@ public class FileController {
 			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不正确");
 		}
 		try {
-			String virtualPath = uploadUtil.uploadFile( file , path, fileTypeStr );
+			String virtualPath = uploadUtil.uploadFile( file , path, fileTypeStr,fileType+"");
 			
 			if ( StringUtils.isEmpty( virtualPath ) ) {
 				return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常");

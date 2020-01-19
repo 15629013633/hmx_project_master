@@ -11,7 +11,7 @@ public class HmxCategoryContent{
     private String subTitle;   //副标题
     private String contentDesc;   //内容简介
     private String categoryContent;
-    private Integer contentType;
+    private Integer contentType;//1普通新闻  2连接  3图片
     private String contentImages;
     private Integer movieId;
     private Integer musicId;
