@@ -7,7 +7,7 @@ import java.util.Date;
 public class HmxCategory{
     private Integer categoryId;
     private String categoryName;
-    private Integer categoryType;
+    private Integer categoryType;//1一级分类 2首页分类  3首页轮播图分类 4首页普通二级分类
     private Integer sort;
     private Integer isClose;
     private Date createTime;

@@ -60,20 +60,20 @@ public class CategoryContentController {
 //		return modelAndView;
 //	}
 
-    @RequestMapping("/init")
-    @ResponseBody
-    public List<HmxCategory> init() {
-        //ModelAndView modelAndView = new ModelAndView();
-        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-        return hmxCategoryList;
-    }
-
-    @RequestMapping("/selectPic")
-    public ModelAndView selectPic() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/categoryContent/list");
-        return modelAndView;
-    }
+//    @RequestMapping("/init")
+//    @ResponseBody
+//    public List<HmxCategory> init() {
+//        //ModelAndView modelAndView = new ModelAndView();
+//        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
+//        return hmxCategoryList;
+//    }
+//
+//    @RequestMapping("/selectPic")
+//    public ModelAndView selectPic() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("/categoryContent/list");
+//        return modelAndView;
+//    }
 
 //    @RequestMapping("/editInit")
 //    public ModelAndView editInit(Integer id) {

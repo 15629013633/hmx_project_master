@@ -55,24 +55,29 @@ public class CategoryController {
      */
     @PostMapping("/add")
     @Operation("分类添加")
-    public Result<Object> categoryAdd(HmxCategoryDto hmxcategoryDto, HttpServletRequest request){
-        Result<Object> result = new Result<>();
+    public ResultBean categoryAdd(HmxCategoryDto hmxcategoryDto, HttpServletRequest request){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         if(StringUtils.isEmpty(hmxcategoryDto.getCategoryName())){
-            result.setStatus(Config.FAIL_FIELD_EMPTY);
-            result.setMsg("分类名称不能为空");
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY);
+            resultBean.setContent("分类名称不能为空");
             flag=false;
         }
         if(flag){
             Map<String,Object> resultMap = hmxCategoryService.categoryAdd(hmxcategoryDto,request);
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
-                result.setStatus(Config.FAIL_CODE);
+                resultBean.setCode(Config.FAIL_CODE);
+                resultBean.setContent(resultMap.get("content")+"");
+                //result.setStatus(Config.FAIL_CODE);
             }else{
-                result.setStatus(Config.SUCCESS_CODE);
+                resultBean.setCode(Config.SUCCESS_CODE);
+                resultBean.setContent("操作成功");
+               // result.setStatus(Config.SUCCESS_CODE);
             }
         }
-        return result;
+        return resultBean;
     }
     /**
      * 首页分类信息查找
@@ -91,7 +96,7 @@ public class CategoryController {
             resultBean.setCode(Config.SUCCESS_CODE);
             resultBean.setContent("查询分类信息成功");
         }
-        resultBean.put("hmxCategory", hmxCategory);
+        resultBean.put("content", hmxCategory);
         model.addAttribute("resultBean", resultBean);
         return resultBean;
     }
@@ -102,24 +107,27 @@ public class CategoryController {
      */
     @PostMapping("/edit")
     @Operation("分类更新")
-    public Result<Object> categoryUpdate(HmxCategoryDto hmxcategoryDto,Model model){
-        Result<Object> result = new Result<>();
+    public ResultBean categoryUpdate(HmxCategoryDto hmxcategoryDto,Model model){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         if(hmxcategoryDto.getCategoryId() == null){
-            result.setStatus(Config.FAIL_FIELD_EMPTY);
-            result.setMsg("分类编号不能为空");
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY);
+            resultBean.setContent("分类编号不能为空");
             flag=false;
         }
         if(flag){
             Map<String,Object> resultMap = hmxCategoryService.categoryUpdate(hmxcategoryDto);
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
-                result.setStatus(Config.FAIL_CODE);
+                resultBean.setCode(Config.FAIL_CODE);
+                resultBean.setContent(resultMap.get("content")+"");
             }else{
-                result.setStatus(Config.SUCCESS_CODE);
+                resultBean.setCode(Config.SUCCESS_CODE);
+                resultBean.setContent("操作成功");
             }
         }
-        return result;
+        return resultBean;
     }
 
     /**
@@ -130,27 +138,31 @@ public class CategoryController {
      */
     @PostMapping("/delete")
     @Operation("分类删除")
-    public Result<Object> categoryDelete(String categoryIds,Model model){
-        Result<Object> result = new Result<>();
+    public ResultBean categoryDelete(String categoryIds,Model model){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
         boolean flag=true;
         if(StringUtils.isEmpty(categoryIds)){
-            result.setStatus(Config.FAIL_FIELD_EMPTY);
-            result.setMsg("分类编号不能为空");
+            resultBean.setCode(Config.FAIL_FIELD_EMPTY);
+            resultBean.setContent("分类编号不能为空");
             flag=false;
         }
         if(flag){
             Map<String,Object> resultMap = hmxCategoryService.categoryDelete(categoryIds);
             flag=Boolean.parseBoolean(resultMap.get("flag").toString());
             if(!flag){
-                result.setStatus(Config.FAIL_CODE);
+                resultBean.setCode(Config.FAIL_CODE);
+                resultBean.setContent(resultMap.get("content")+"");
             }else{
-                result.setStatus(Config.SUCCESS_CODE);
+                resultBean.setCode(Config.SUCCESS_CODE);
+                resultBean.setContent("操作成功");
             }
         }
-        return result;
+        return resultBean;
     }
     /**
      * 分类列表信息
+     * parentId 为0则查询所有一级分类    不为0则查某个一级分类下的所有二级分类
      * @param hmxcategoryDto
      * @param page
      * @param model
@@ -158,8 +170,8 @@ public class CategoryController {
      */
     @GetMapping("/categoryTable")
     @Operation("获取分类信息列表")
-    public Map<String,Object> categoryTable(HmxCategoryDto hmxcategoryDto, PageBean<Map<String,Object>> page, Model model){
-        Map<String,Object> map = new HashMap<>();
+    public ResultBean categoryTable(HmxCategoryDto hmxcategoryDto, PageBean<Map<String,Object>> page, Model model){
+//        Map<String,Object> map = new HashMap<>();
         ResultBean resultBean = new ResultBean();
         page = hmxCategoryService.selectCategoryTable(page, hmxcategoryDto);
         List<Map<String,Object>> list = page.getPage();
@@ -173,9 +185,7 @@ public class CategoryController {
         }else{
             resultBean.setCode(Config.SUCCESS_CODE).setContent("查询分类列表成功");
         }
-        map.put("rows", page.getPage());
-        map.put("total", page.getTotalNum());
-        return map;
+        return new ResultBean().put("content", page).setCode(Config.SUCCESS_CODE).setContent("查询列表成功");
     }
     /**
      * 查询所有分类信息列表

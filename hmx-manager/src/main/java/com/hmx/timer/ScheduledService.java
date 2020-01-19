@@ -66,7 +66,7 @@ public class ScheduledService {
      */
     //以毫秒为单位
     //@Scheduled(fixedRate = 600000)  //10分钟
-    @Scheduled(initialDelay = 60000*2,fixedRate = 60000)  //1分钟
+    //@Scheduled(initialDelay = 60000*2,fixedRate = 60000)  //1分钟
     public void scheduled(){
         System.out.println("内容状态更新定时任务");
         HmxCategoryContentDto hmxCategoryContentDto = new HmxCategoryContentDto();
@@ -97,7 +97,7 @@ public class ScheduledService {
      * 每10分钟去数据库坐一次更新，入库时间超过8小时的则将状态更新为正常
      */
     //以毫秒为单位
-    @Scheduled(initialDelay = 60000*2,fixedRate = 60000*30)  //第一次延时2分钟执行，然后每30分钟执行一次
+    //@Scheduled(initialDelay = 60000*2,fixedRate = 60000*30)  //第一次延时2分钟执行，然后每30分钟执行一次
     public void scheduledViode(){
         System.out.println("视频播放地址更新定时任务");
 
@@ -177,7 +177,7 @@ public class ScheduledService {
      */
     //以毫秒为单位
     //@Scheduled(initialDelay = 60000*1,fixedRate = 60000)  //1分钟
-    @Scheduled(cron = "0 0 10 * * *")
+    //@Scheduled(cron = "0 0 10 * * *")
     public void scheduledPushJg(){
         //从系统中查询一条最新的消息，去极光消息表里面比对这条内容是否推送过，没有推送过则推送
         System.out.println("定时任务--开始推送极光消息");
