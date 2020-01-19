@@ -56,14 +56,6 @@ public class FileController {
         if(fileTypeStr == null){
             return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不正确");
         }
-//        String fileOriginalName = file.getOriginalFilename().trim();
-//        String fileName = file.getName();
-//        System.out.println("fileOriginalName=" + fileOriginalName);
-//        System.out.println("fileName=" + fileName);
-//        //上传的epub文件不用转成html
-//        if(fileOriginalName.endsWith("epub")){
-//            return uploadEpub(file,module,fileType,fileTypeStr);
-//        }
         try {
             String virtualPath = "";
             if(null != pdfFile){
