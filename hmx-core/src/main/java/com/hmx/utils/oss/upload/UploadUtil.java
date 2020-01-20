@@ -35,14 +35,14 @@ import com.hmx.utils.oss.upload.exception.UploadException;
 public class UploadUtil {
 
 	//window测试
-	private static final String pdfDir = "F:\\fileTest\\file\\pdfFile\\";
-	private static final String imageDir = "F:\\fileTest\\file\\imageFile\\";
+//	private static final String pdfDir = "F:\\fileTest\\file\\pdfFile\\";
+//	private static final String imageDir = "F:\\fileTest\\file\\imageFile\\";
 //	private static final String htmlDir = "E:\\fileTest\\htmlFile";
 	//private static final String txtFileDir = "E:\\fileTest\\txtFile\\";
 
 	//linux部署--测试环境
-//	private static final String pdfDir = "http://120.79.169.165/home/back/pdfFile/";
-//	private static final String htmlDir = "/usr/local/tomcat/webapps/ROOT/htmlFile";
+	private static final String pdfDir = "/home/file/pdfFile/";
+	private static final String imageDir = "/home/file/imageFile/";
 //	private static final String txtFileDir = "/home/back/txtFile/";
 //	private static final String ipPort = "http://www.sskj.art:8080/";
 
@@ -261,15 +261,15 @@ public class UploadUtil {
 	
 	/**
 	 * 上传社区相关图片等
-	 * @param file
-	 *            文件对象
-	 * @param path
-	 *            文件存放路径
-	 * @param fileType
-	 *            文件类型
-	 * @param fileMaxSize
-	 *            文件最大 限制
-	 * @param fileMinSize
+//	 * @param file
+//	 *            文件对象
+//	 * @param path
+//	 *            文件存放路径
+//	 * @param fileType
+//	 *            文件类型
+//	 * @param fileMaxSize
+//	 *            文件最大 限制
+//	 * @param fileMinSize
 	 *            文件最小限制
 	 * @return 文件名 + 文件路径
 	 * @throws FileIsNullException
