@@ -115,15 +115,15 @@ public class UserModelController {
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("户名id不能为空");
                 flag=false;
             }
-//            if(StringUtils.isEmpty(userModel.getUsername())){
-//                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("用户名不能为空");
-//                flag=false;
-//            }
+            if(StringUtils.isEmpty(userModel.getUsername())){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("用户名不能为空");
+                flag=false;
+            }
 
             if(flag){
                 userModel.setCreateTime(System.currentTimeMillis());
                 //默认密码是123456
-                userModel.setPassword(MD5Util.encode(userModel.getPassword()));
+//                userModel.setPassword(MD5Util.encode(userModel.getPassword()));
                 flag = userModelService.update(userModel);
                 if(!flag){
                     resultBean.setCode(Config.FAIL_CODE).setContent("修改失败");
@@ -154,10 +154,10 @@ public class UserModelController {
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("户名id不能为空");
                 flag=false;
             }
-            if(StringUtils.isEmpty(userModel.getUsername())){
-                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("用户名不能为空");
-                flag=false;
-            }
+//            if(StringUtils.isEmpty(userModel.getUsername())){
+//                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("用户名不能为空");
+//                flag=false;
+//            }
 
             if(flag){
                 userModel.setCreateTime(System.currentTimeMillis());
