@@ -5,6 +5,8 @@ import com.hmx.files.dto.HmxFilesDto;
 import com.hmx.files.entity.HmxFiles;
 import com.hmx.files.entity.HmxFilesExample;
 import com.hmx.files.service.HmxFilesService;
+import com.hmx.images.dao.HmxImagesMapper;
+import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.utils.oss.upload.UploadUtil;
 import com.hmx.utils.result.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +25,11 @@ import java.util.List;
 @Transactional
 public class HmxFilesServiceImpl implements HmxFilesService{
 
-    @Autowired
+    @Resource
     private HmxFilesMapper hmxFilesMapper;
+
+    @Resource
+    private HmxImagesMapper hmxImagesMapper;
     @Override
     public Boolean insert(HmxFiles hmxFiles) {
         return hmxFilesMapper.insertSelective( hmxFiles ) > 0;
@@ -119,7 +125,7 @@ public class HmxFilesServiceImpl implements HmxFilesService{
     @Transactional
     public boolean deleteByFileUrl(String fileUrl) {
         boolean flag = false;
-        if(fileUrl.endsWith("html")){
+        //if(fileUrl.endsWith("html")){
             try {
                 flag = UploadUtil.deleteByFileUrl(fileUrl);
             }catch (Exception e){
@@ -127,15 +133,23 @@ public class HmxFilesServiceImpl implements HmxFilesService{
                 e.printStackTrace();
             }
 
-        }else {//删除epub
-            flag = true;
-        }
+//        }else {//删除epub
+//            flag = true;
+//        }
 
         if(true){
-            HmxFilesExample hmxFilesExample = new HmxFilesExample();
-            HmxFilesExample.Criteria where = hmxFilesExample.createCriteria();
-            where.andFileUrlEqualTo( fileUrl );
-            hmxFilesMapper.deleteByExample(hmxFilesExample);
+            if(fileUrl.endsWith("pdf")||fileUrl.endsWith("PDF")){//删除pdf
+                HmxFilesExample hmxFilesExample = new HmxFilesExample();
+                HmxFilesExample.Criteria where = hmxFilesExample.createCriteria();
+                where.andFileUrlEqualTo( fileUrl );
+                hmxFilesMapper.deleteByExample(hmxFilesExample);
+            }else {//删除图片
+                HmxImagesExample hmxImagesExample = new HmxImagesExample();
+                HmxImagesExample.Criteria where = hmxImagesExample.createCriteria();
+                where.andImageUrlEqualTo(fileUrl);
+                hmxImagesMapper.deleteByExample(hmxImagesExample);
+            }
+
             flag = true;
         }
         return  flag;

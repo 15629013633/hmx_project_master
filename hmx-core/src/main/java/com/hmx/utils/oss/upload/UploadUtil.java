@@ -44,14 +44,14 @@ public class UploadUtil {
 	private static final String pdfDir = "/home/file/pdfFile/";
 	private static final String imageDir = "/home/file/imageFile/";
 //	private static final String txtFileDir = "/home/back/txtFile/";
-//	private static final String ipPort = "http://www.sskj.art:8080/";
+	private static final String ipPort = "http://120.24.222.160";
 
 	//linux部署--生产环境
 //	private static final String pdfDir = "http://120.24.222.160/home/file/pdfFile/";
 //	private static final String imageDir = "http://120.24.222.160/home/file/imageFile/";
 	/*private static final String htmlDir = "/home/hmx/htmlFile";
 	private static final String txtFileDir = "/home/hmx/txtFile/";*/
-	private static final String ipPort = "http://www.zghmx.cn/";
+//	private static final String ipPort = "http://www.zghmx.cn/";
 
 	@Value("${oss.endpoint}")
 	public String endpoint;
@@ -161,7 +161,7 @@ public class UploadUtil {
 
 			file.transferTo(new File(realPath));
 			System.out.println( "文件上传成功  PATH : " + realPath);
-			return realPath;
+			return ipPort + realPath;
 
 		} catch (FileIsNullException e1) {
 			throw new UploadException(e1.getMessage());

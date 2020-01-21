@@ -106,6 +106,7 @@ public class FileController {
      */
     @PostMapping(value = "/delete")
     public ResultBean delete(String fileUrl){
+        System.out.println("fileUrl:" + fileUrl);
         Result<Object> result = new Result<>();
         ResultBean resultBean = new ResultBean();
         boolean flag=true;

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Pageable;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,10 +46,10 @@ public class UserModelController {
 
     private final String defaultPass = "123456";
 
-    @Autowired
+    @Resource
     private HmxUserMapper hmxUserMapper;
 
-    @Autowired
+    @Resource
     private RoleMapper roleDao;
 
     @Autowired
@@ -72,6 +73,7 @@ public class UserModelController {
     @Operation("系统用户添加")
     public ResultBean add(@ModelAttribute UserModel userModel){
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content","");
         boolean flag=true;
         try {
             if(StringUtils.isEmpty(userModel.getUsername())){
@@ -106,6 +108,7 @@ public class UserModelController {
     @Operation("系统用户修改")
     public ResultBean edit(@ModelAttribute UserModel userModel){
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content","");
         boolean flag=true;
         try {
             if(null == userModel.getId() || userModel.getId() == 0){
@@ -120,7 +123,7 @@ public class UserModelController {
             if(flag){
                 userModel.setCreateTime(System.currentTimeMillis());
                 //默认密码是123456
-                //userModel.setPassword(MD5Util.encode(defaultPass));
+                userModel.setPassword(MD5Util.encode(userModel.getPassword()));
                 flag = userModelService.update(userModel);
                 if(!flag){
                     resultBean.setCode(Config.FAIL_CODE).setContent("修改失败");
@@ -144,16 +147,17 @@ public class UserModelController {
     @Operation("系统用户密码重置")
     public ResultBean restPass(@ModelAttribute UserModel userModel){
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content","");
         boolean flag=true;
         try {
             if(null == userModel.getId() || userModel.getId() == 0){
                 resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("户名id不能为空");
                 flag=false;
             }
-//            if(StringUtils.isEmpty(userModel.getUsername())){
-//                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("用户名不能为空");
-//                flag=false;
-//            }
+            if(StringUtils.isEmpty(userModel.getUsername())){
+                resultBean.setCode(Config.FAIL_FIELD_EMPTY).setContent("用户名不能为空");
+                flag=false;
+            }
 
             if(flag){
                 userModel.setCreateTime(System.currentTimeMillis());
@@ -182,6 +186,7 @@ public class UserModelController {
     @Operation("系统用户删除")
     public ResultBean delete(String ids){
         ResultBean resultBean = new ResultBean();
+        resultBean.put("content","");
         boolean flag=true;
         try {
             if(StringUtils.isEmpty(ids)){
@@ -223,7 +228,7 @@ public class UserModelController {
                 return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
             }
         }
-        return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");
+        return new ResultBean().put("content", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");
     }
 
     /**
@@ -242,7 +247,7 @@ public class UserModelController {
             if(null == model){
                 return new ResultBean().setCode(Config.USER_NULL).setContent("通过该手机号没有查到用户信息");
             }
-            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("查询到用户").put("user",model);
+            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("查询到用户").put("content",model);
         }catch (Exception e){
             e.printStackTrace();
             return new ResultBean().setCode(Config.FAIL_CODE).setContent("查询失败");

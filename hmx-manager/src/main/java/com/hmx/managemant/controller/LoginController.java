@@ -93,7 +93,8 @@ public class LoginController extends BaseController {
             account.setUserPhone(user.getCellPhone());
             setAccount(account);
             resultBean.setCode(Config.SUCCESS_CODE);
-            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token).put("user",user);
+//            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("token", token).put("user",user);
+            return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功").put("content",user);
             //return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("登录成功");
         } catch (Exception e) {
             resultBean.setCode(Config.FAIL_CODE);

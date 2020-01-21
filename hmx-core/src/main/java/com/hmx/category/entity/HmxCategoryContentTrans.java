@@ -41,6 +41,7 @@ public class HmxCategoryContentTrans {
     private Integer userLevel;    //内容级别，与用户级别对应   默认0
 //    private String transImage;   //横图
 //    private String verticalImage;   //竖图
+    private String categoryName;
     private List<HmxMovie> movieList = new ArrayList<>();
     private List<HmxImages> imagesList = new ArrayList<>();
     private List<HmxFiles> filesList = new ArrayList<>();
@@ -304,5 +305,13 @@ public class HmxCategoryContentTrans {
 
     public void setUserLevel(Integer userLevel) {
         this.userLevel = userLevel;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

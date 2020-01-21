@@ -50,7 +50,7 @@ public class UserController {
                 return new ResultBean().setCode(Config.PAGE_NULL).setContent("没有更多数据了");
             }
         }
-        return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");
+        return new ResultBean().put("content", page).setCode(Config.SUCCESS_CODE).setContent("查询消息列表成功");
     }
 
     //修改用户等级

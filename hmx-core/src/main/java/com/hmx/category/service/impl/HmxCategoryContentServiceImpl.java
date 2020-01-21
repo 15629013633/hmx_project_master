@@ -446,6 +446,11 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		hmxCategoryContentTrans.setSourceId(hmxCategoryContent.getSourceId());
 		hmxCategoryContentTrans.setSourceTitle(hmxCategoryContent.getSourceTitle());
 		hmxCategoryContentTrans.setUserLevel(hmxCategoryContent.getUserLevel());
+
+		//获取分类信息
+		HmxCategory hmxCategory = hmxCategoryMapper.selectByPrimaryKey(hmxCategoryContent.getCategoryId());
+
+		hmxCategoryContentTrans.setCategoryName(hmxCategory.getCategoryName());
 //		String tagName = "";
 //		//获取标签信息
 //		if(!StringUtils.isEmpty(hmxCategoryContent.getTagId())){
