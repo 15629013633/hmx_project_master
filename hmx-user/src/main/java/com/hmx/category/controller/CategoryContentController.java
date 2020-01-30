@@ -64,9 +64,9 @@ public class CategoryContentController extends BaseController {
 		}
 		Map<String,Object> resultMap = hmxCategoryContentService.selectContentInfoByContentId(categoryContentId,"pc");
 		if(resultMap == null){
-			return new ResultBean().setCode(Config.FAIL_CODE).put("categoryContentInfo", resultMap).setContent("没有查找到内容详情信息");
+			return new ResultBean().setCode(Config.FAIL_CODE).put("content", resultMap).setContent("没有查找到内容详情信息");
 		}
-		return new ResultBean().setCode(Config.SUCCESS_CODE).put("categoryContentInfo", resultMap).setContent("获取内容详情成功");
+		return new ResultBean().setCode(Config.SUCCESS_CODE).put("content", resultMap).setContent("获取内容详情成功");
 	}
 	
 	/**
@@ -82,13 +82,13 @@ public class CategoryContentController extends BaseController {
 		List<Map<String,Object>> list = page.getPage();
 		if(list == null || list.size() <= 0){
 			if(page.getPageNum() == 1){
-				return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("暂无数据");
+				return new ResultBean().put("content", page).setCode(Config.SUCCESS_CODE).setContent("暂无数据");
    	    	}
    	    	else{
-   	    		return new ResultBean().setCode(Config.SUCCESS_CODE).put("contentPage", page).setContent("没有更多数据了");
+   	    		return new ResultBean().setCode(Config.SUCCESS_CODE).put("content", page).setContent("没有更多数据了");
    	    	}
 		}
-		return new ResultBean().put("contentPage", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
+		return new ResultBean().put("content", page).setCode(Config.SUCCESS_CODE).setContent("查询内容列表成功");
 	}
 	/**
 	 * 查询排行榜信息

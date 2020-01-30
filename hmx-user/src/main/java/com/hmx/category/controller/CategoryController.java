@@ -82,7 +82,7 @@ public class CategoryController {
 		}
 	}
 
-	@GetMapping("/allCategory")
+	@GetMapping("/getCategory")
 	/**
 	 * parentId 为0则查询所有一级分类    不为0则查某个一级分类下的所有二级分类
 	 */
@@ -90,9 +90,9 @@ public class CategoryController {
 		//查询分类
 		List<HmxCategory> categoryList = hmxCategoryService.list(hmxCategoryDto);
 		if(categoryList == null || categoryList.size() <= 0){
-			return new ResultBean().setCode(Config.FAIL_CODE).put("categoryList", categoryList).setContent("没有查找到分类信息");
+			return new ResultBean().setCode(Config.FAIL_CODE).put("content", categoryList).setContent("没有查找到分类信息");
 		}
-		return new ResultBean().setCode(Config.SUCCESS_CODE).put("categoryList", categoryList).setContent("查询首页信息成功");
+		return new ResultBean().setCode(Config.SUCCESS_CODE).put("content", categoryList).setContent("查询首页信息成功");
 	}
 
 	@GetMapping("/allTopCategory")

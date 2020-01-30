@@ -630,58 +630,58 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 //			resultMap.put("tagName",tagName);
     	}
 		//查询内容下的视频信息
-		String movieIds = "";
-		HmxMovieExample hmxMovieExample = new HmxMovieExample();
-		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
-		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
-		hmxMovieExample.setOrderByClause("serie");
-		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
-		resultMap.put("videoList",hmxMovieList);
-
-		if(hmxMovieList != null && hmxMovieList.size() > 0){
-			for(HmxMovie movie : hmxMovieList){
-				movieIds += movie.getVideoId()+",";
-			}
-		}
-
-		if(!StringUtils.isEmpty(movieIds) && movieIds.endsWith(movieIds)){
-			movieIds = movieIds.substring(0,(movieIds.length() - 1));
-		}
-		resultMap.put("videoId",movieIds);
+//		String movieIds = "";
+//		HmxMovieExample hmxMovieExample = new HmxMovieExample();
+//		//hmxMovieExample.or().andCategoryContentIdIn(idArray);
+//		hmxMovieExample.or().andCategoryContentIdEqualTo(categoryContentId+"");
+//		hmxMovieExample.setOrderByClause("serie");
+//		List<HmxMovie> hmxMovieList = hmxMovieMapper.selectByExample(hmxMovieExample);
+//		resultMap.put("videoList",hmxMovieList);
+//
+//		if(hmxMovieList != null && hmxMovieList.size() > 0){
+//			for(HmxMovie movie : hmxMovieList){
+//				movieIds += movie.getVideoId()+",";
+//			}
+//		}
+//
+//		if(!StringUtils.isEmpty(movieIds) && movieIds.endsWith(movieIds)){
+//			movieIds = movieIds.substring(0,(movieIds.length() - 1));
+//		}
+//		resultMap.put("videoId",movieIds);
 		//查询内容下的pdf的url
 		String fileUrl = "";
 		HmxFilesExample hmxFilesExample = new HmxFilesExample();
 		hmxFilesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxFiles> hmxFilesList = hmxFilesMapper.selectByExample(hmxFilesExample);
-		List<HmxFiles> filesList = new ArrayList<>();
-		if(null != hmxFilesList && hmxFilesList.size() > 0){
-			for(HmxFiles file : hmxFilesList){
-				if("app".equals(type)){
-					if(file.getFileUrl().endsWith("epub")){
-						filesList.add(file);
-					}
-				}else if("pc".equals(type)){
-					if(file.getFileUrl().endsWith("html")){
-						//自己测试用start
-						file.setFileUrl(file.getFileUrl().replace("http://www.sskj.art:8080","http://120.79.169.165:80"));
-						//自己测试用end
-
-						filesList.add(file);
-					}
-				}
-			}
-		}
-		resultMap.put("filesList",filesList);
+//		List<HmxFiles> filesList = new ArrayList<>();
+//		if(null != hmxFilesList && hmxFilesList.size() > 0){
+//			for(HmxFiles file : hmxFilesList){
+//				if("app".equals(type)){
+//					if(file.getFileUrl().endsWith("epub")){
+//						filesList.add(file);
+//					}
+//				}else if("pc".equals(type)){
+//					if(file.getFileUrl().endsWith("html")){
+//						//自己测试用start
+//						file.setFileUrl(file.getFileUrl().replace("http://www.sskj.art:8080","http://120.79.169.165:80"));
+//						//自己测试用end
+//
+//						filesList.add(file);
+//					}
+//				}
+//			}
+//		}
+//		resultMap.put("filesList",filesList);
 		if(null != hmxFilesList && hmxFilesList.size() > 0){
 			fileUrl = hmxFilesList.get(0).getFileUrl();
 			//自己测试用start
-			fileUrl = fileUrl.replace("http://www.sskj.art:8080","http://120.79.169.165:80");
+			//fileUrl = fileUrl.replace("http://www.sskj.art:8080","http://120.79.169.165:80");
 			//自己测试用end
 		}
 		HmxImagesExample hmxImagesExample = new HmxImagesExample();
 		hmxImagesExample.or().andCategoryContentIdEqualTo(categoryContentId);
 		List<HmxImages> hmxImagesList = hmxImagesMapper.selectByExample(hmxImagesExample);
-		resultMap.put("imagesList",hmxImagesList);
+//		resultMap.put("imagesList",hmxImagesList);
 		resultMap.put("fileUrl",fileUrl);
 		//add at 20190608  临时为前端给这个字段加上内容
 		if(null != hmxImagesList && hmxImagesList.size() > 0){
