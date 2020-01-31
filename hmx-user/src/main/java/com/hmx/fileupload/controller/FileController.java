@@ -30,40 +30,42 @@ public class FileController {
 	@Autowired
 	private UploadUtil uploadUtil;
 	/**
-	 * @param file
+	 * @param imageFile
 	 * @param module
 	 * @return
 	 */
 	@RequestMapping("/upload")
 	@ResponseBody
-	public ResultBean fileUpload( @RequestParam MultipartFile file ,@RequestParam Integer fileType, @RequestParam( required = false) String module ){
-		if ( file == null ) {
-			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件为空");
+	public ResultBean fileUpload( @RequestParam MultipartFile imageFile ,@RequestParam( required = false) String module ){
+		if ( imageFile == null ) {
+			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件内容不能为空").put("content", "");
 		}
-		String path =  "";
-		if ( StringUtils.isEmpty( module ) ) {
-			path =  File.separator+"files"+File.separator+"default"+File.separator;
-		}else{
-			path =  File.separator+"files"+File.separator+module+File.separator;
-		}
-		if(fileType == null){
-			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件不能为空");
-		}
-		List<String> fileTypeStr = UploadFileType.getName(fileType);
-		if(fileTypeStr == null){
-			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不正确");
-		}
+//		String path =  "";
+//		if ( StringUtils.isEmpty( module ) ) {
+//			path =  File.separator+"files"+File.separator+"default"+File.separator;
+//		}else{
+//			path =  File.separator+"files"+File.separator+module+File.separator;
+//		}
+//		if(fileType == null){
+//			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件不能为空");
+//		}
+		List<String> fileTypeStr = UploadFileType.getName(2);
+//		if(fileTypeStr == null){
+//			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件类型不正确");
+//		}
 		try {
-			String virtualPath = uploadUtil.uploadFile( file , path, fileTypeStr,fileType+"");
-			
+			//String virtualPath = uploadUtil.uploadFile( file , path, fileTypeStr,fileType+"");
+			String timeStamp = System.currentTimeMillis()+"";
+			String contentFlow = timeStamp.substring(timeStamp.length()-13,timeStamp.length());
+			String virtualPath = uploadUtil.uploadFile( imageFile , contentFlow, fileTypeStr,"2" );
 			if ( StringUtils.isEmpty( virtualPath ) ) {
-				return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常");
+				return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常").put("content", "");
 			}
-			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("上传成功").put("virtualPath", virtualPath);
+			return new ResultBean().setCode(Config.SUCCESS_CODE).setContent("上传成功").put("content", virtualPath);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常:"+ e.getMessage() );
+			return new ResultBean().setCode(Config.UPLOAD_ERROR).setContent("文件上传异常:"+ e.getMessage() ).put("content", "");
 		}
 	} 
 }

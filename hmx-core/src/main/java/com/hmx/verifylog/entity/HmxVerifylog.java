@@ -7,7 +7,7 @@ import java.util.Date;
 public class HmxVerifylog{
     private Integer verifyLogId;
     private Integer verifyType;
-    private String verifyCode;
+    private String verifyCode;   //验证码
     private String verifyObject;   //手机号
     private Date addTime;
     private Integer isVerify;
