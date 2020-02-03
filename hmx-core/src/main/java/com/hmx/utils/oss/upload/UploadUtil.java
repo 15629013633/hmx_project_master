@@ -41,9 +41,10 @@ public class UploadUtil {
 	//private static final String txtFileDir = "E:\\fileTest\\txtFile\\";
 
 	//linux部署--测试环境
-	private static final String pdfDir = "/home/file/pdfFile/";
-	private static final String imageDir = "/home/file/imageFile/";
-//	private static final String txtFileDir = "/home/back/txtFile/";
+	private static final String pdfDir = "/root/www/file/pdfFile/";
+	private static final String imageDir = "/root/www/file/imageFile/";
+	private static final String pdfDir_nginx = "/file/pdfFile/";
+	private static final String imageDir_nginx = "/file/imageFile/";
 	private static final String ipPort = "http://120.24.222.160";
 
 	//linux部署--生产环境
@@ -153,15 +154,21 @@ public class UploadUtil {
 			LogHelper.logger().debug( "文件通过检查 开始写入");
 			String newName = contentFlow + "." + suffix;
 			String realPath = "";
+			String nginxPath = "";
 			if("1".equals(fileType)){//pdf
 				realPath = pdfDir + newName;
+				nginxPath = pdfDir_nginx + newName;
 			}else if("2".equals(fileType)){//图片
 				realPath = imageDir + newName;
+				nginxPath = imageDir_nginx + newName;
 			}
 
 			file.transferTo(new File(realPath));
-			System.out.println( "文件上传成功  PATH : " + realPath);
-			return ipPort + realPath;
+			String savePath = ipPort+realPath;
+			String dbPath = ipPort + nginxPath;
+			System.out.println( "文件上传成功  存储PATH : " + savePath);
+			System.out.println( "文件上传成功  数据库保存PATH : " + dbPath);
+			return dbPath;
 
 		} catch (FileIsNullException e1) {
 			throw new UploadException(e1.getMessage());
