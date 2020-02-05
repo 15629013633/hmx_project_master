@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hmx.system.dao.SysManageMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.SysManage" >
+    <id column="sys_id" property="sysId" jdbcType="INTEGER" />
+    <result column="home_title" property="homeTitle" jdbcType="VARCHAR" />
+    <result column="home_pic" property="homePic" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+      	<if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+          </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    sys_id,home_title,home_pic
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.SysManageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hmx_sysInfo
+    <!--<where>-->
+      <!--<trim suffixOverrides="and">-->
+        <!--<if test="title != null">-->
+          <!--title like concat("%",#{title},"%")-->
+        <!--</if>-->
+      <!--</trim>-->
+    <!--</where>-->
+
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hmx_sysInfo
+    where sys_id = #{sysId,jdbcType=INTEGER}
+  </select>
+
+  <!--<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.system.entity.SysManageExample" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from hmx_sysInfo-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</select>-->
+  
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+    <!--delete from hmx_tag-->
+    <!--where tag_id = #{tagId,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  
+  <!--<delete id="deleteByExample" parameterType="com.hmx.system.entity.TagtabExample" >-->
+    <!--delete from hmx_tag-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</delete>-->
+  
+  
+  <insert id="insert" parameterType="com.hmx.system.entity.SysManage" keyProperty="sysId" useGeneratedKeys="true">
+    insert into hmx_sysInfo  (home_title,home_pic)
+    values (#{homeTitle,jdbcType=VARCHAR},#{homePic,jdbcType=VARCHAR})
+  </insert>
+
+  
+  
+
+  
+  <update  id="updateByExample" parameterType="map" >
+    update hmx_sysInfo
+    set
+    sys_id = #{sysId,jdbcType=INTEGER},
+    home_title = #{homeTitle,jdbcType=VARCHAR},
+    home_pic = #{homePic,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <!--<select id="countByExample" parameterType="com.hmx.system.entity.TagtabExample" resultType="java.lang.Integer" >-->
+    <!--select count(*) from hmx_tag-->
+    <!--<if test="_parameter != null" >-->
+      <!--<include refid="Example_Where_Clause" />-->
+    <!--</if>-->
+  <!--</select>-->
+  
+  <update  id="updateByPrimaryKeySelective" parameterType="com.hmx.system.entity.SysManage" >
+    update hmx_sysInfo
+    <set >
+      <if test="sysId != null" >
+        sys_id = #{sysId,jdbcType=INTEGER} ,
+      </if>
+      <if test="homeTitle != null" >
+        home_title = #{homeTitle,jdbcType=VARCHAR} ,
+      </if>
+      <if test="homePic != null" >
+        home_pic = #{homePic,jdbcType=VARCHAR} ,
+      </if>
+
+    </set >
+    where sys_id = #{sysId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.hmx.system.entity.SysManage" >
+    update hmx_sysInfo
+    set
+    sys_id = #{sysId,jdbcType=INTEGER},
+    home_title = #{homeTitle,jdbcType=VARCHAR},
+    home_pic = #{homePic,jdbcType=VARCHAR},
+    where sys_id = #{sysId,jdbcType=INTEGER}
+  </update>
+   
+   
+</mapper>
