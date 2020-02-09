@@ -6,11 +6,14 @@ package com.hmx.movie.dao;
 import com.hmx.movie.entity.HmxMovie;
 import com.hmx.movie.entity.HmxMovieExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * Dao interface
  */
+@Mapper
 public interface HmxMovieMapper{
 
     int countByExample(HmxMovieExample example);

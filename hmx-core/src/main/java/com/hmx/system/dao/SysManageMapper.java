@@ -2,11 +2,13 @@ package com.hmx.system.dao;
 
 import com.hmx.system.entity.SysManage;
 import com.hmx.system.entity.SysManageExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
+@Mapper
 public interface SysManageMapper {
     int countByExample(SysManageExample example);
 

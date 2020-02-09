@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmx.system.dao.AreaMapper">
+  <resultMap id="BaseResultMap" type="com.hmx.system.entity.AreaModel">
+    <id column="area_id" property="areaId" jdbcType="INTEGER"  />
+    <result column="provice" property="provice" jdbcType="VARCHAR" />
+    <result column="city"  property="city" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    area_id,provice,city
+  </sql>
+  <sql id="Base_Where_Clause" >
+    where 1=1
+    <if test="provice != null and provice != ''">
+      and provice = #{provice}
+    </if>
+    <if test="city != null and city != ''">
+      and city = #{city}
+    </if>
+  </sql>
+
+  <sql id="Base_id_Where_Clause" >
+    where 1=1 and area_id = #{areaId}
+  </sql>
+
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from hmx_area
+    <include refid="Base_Where_Clause" />
+  </select>
+  <select id="selectPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hmx_area
+    <include refid="Base_Where_Clause" />
+
+    <if test="orderByClause != null and orderByClause != ''" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+
+  <insert id="insert" parameterType="com.hmx.system.entity.AreaModel" keyProperty="areaId" useGeneratedKeys="true">
+    insert into hmx_area  (area_id,provice,city)
+    values (#{areaId,jdbcType=INTEGER}, #{provice,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR})
+  </insert>
+
+  <update  id="update" parameterType="com.hmx.system.entity.AreaModel" >
+    update hmx_area
+    set
+    provice = #{provice,jdbcType=VARCHAR},
+    city = #{city,jdbcType=VARCHAR}
+    <include refid="Base_id_Where_Clause" />
+  </update>
+
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from hmx_area
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </delete>
+
+</mapper>

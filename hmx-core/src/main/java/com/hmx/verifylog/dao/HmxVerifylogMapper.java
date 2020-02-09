@@ -6,11 +6,14 @@ package com.hmx.verifylog.dao;
 import com.hmx.verifylog.entity.HmxVerifylog;
 import com.hmx.verifylog.entity.HmxVerifylogExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * Dao interface
  */
+@Mapper
 public interface HmxVerifylogMapper{
 
     int countByExample(HmxVerifylogExample example);

@@ -3,9 +3,12 @@ package com.hmx.user.dao;
 import com.hmx.user.entity.po.UserModel;
 import com.hmx.user.entity.po.UserModelExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+@Mapper
 public interface UserModelMapper {
     int countByExample(UserModelExample example);
 

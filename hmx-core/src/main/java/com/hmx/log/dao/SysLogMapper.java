@@ -2,6 +2,7 @@ package com.hmx.log.dao;
 
 import com.hmx.log.entity.SysLog;
 import com.hmx.log.entity.SysLogExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2019/7/7.
  */
+@Mapper
 public interface SysLogMapper {
     int countByExample(SysLogExample example);
 

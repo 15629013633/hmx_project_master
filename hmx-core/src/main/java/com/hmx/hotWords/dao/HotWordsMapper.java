@@ -2,6 +2,7 @@ package com.hmx.hotWords.dao;
 
 import com.hmx.hotWords.entity.HotWords;
 import com.hmx.hotWords.entity.HotWordsExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2019/5/2.
  */
+@Mapper
 public interface HotWordsMapper {
     int countByExample(HotWordsExample example);
 

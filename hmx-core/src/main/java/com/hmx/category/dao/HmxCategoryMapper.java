@@ -6,11 +6,13 @@ import com.hmx.category.entity.HmxCategoryExample;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * Dao interface
  */
+@Mapper
 public interface HmxCategoryMapper{
 
     int countByExample(HmxCategoryExample example);

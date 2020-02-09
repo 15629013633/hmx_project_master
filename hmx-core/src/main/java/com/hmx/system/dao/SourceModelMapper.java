@@ -2,6 +2,7 @@ package com.hmx.system.dao;
 
 import com.hmx.system.entity.SourceModel;
 import com.hmx.system.entity.SourceModelExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2019/5/30.
  */
+@Mapper
 public interface SourceModelMapper {
     int countByExample(SourceModelExample example);
 

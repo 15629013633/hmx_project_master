@@ -1,6 +1,7 @@
 package com.hmx.utils.result;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -91,6 +92,15 @@ public class PageBean<T> implements Serializable{
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	/**
+	 * 设置分页起始和每页数量
+	 * @param params
+	 */
+	public void setLimitAndOffset(HashMap<String, Object> params) {
+		params.put("limit",this.getPageSize());
+		params.put("offset",this.getStartOfPage());
 	}
 }
 

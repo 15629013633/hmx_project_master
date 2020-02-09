@@ -6,9 +6,11 @@ import com.hmx.user.entity.po.RoleExample;
 import java.util.List;
 
 import com.hmx.user.entity.po.RolePermission;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+@Mapper
 public interface RoleMapper {
     long countByExample(RoleExample example);
 

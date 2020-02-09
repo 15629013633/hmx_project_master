@@ -2,6 +2,7 @@ package com.hmx.system.dao;
 
 import com.hmx.system.entity.GradeModel;
 import com.hmx.system.entity.GradeModelExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2019/6/20.
  */
+@Mapper
 public interface GradeModelMapper {
     int countByExample(GradeModelExample example);
 

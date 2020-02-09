@@ -6,12 +6,14 @@ import com.hmx.user.entity.HmxUserExample;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
  * Dao interface
  */
+@Mapper
 public interface HmxUserMapper
 {
 

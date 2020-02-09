@@ -2,6 +2,7 @@ package com.hmx.system.dao;
 
 import com.hmx.system.entity.Tagtab;
 import com.hmx.system.entity.TagtabExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by songjinbao on 2019/5/30.
  */
+@Mapper
 public interface TagtabMapper {
     int countByExample(TagtabExample example);
 

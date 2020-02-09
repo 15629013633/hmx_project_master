@@ -2,6 +2,8 @@ package com.hmx.images.dao;
 
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.hmx.images.entity.HmxImages;
@@ -10,6 +12,7 @@ import com.hmx.images.entity.HmxImagesExample;
 /**
  * Dao interface
  */
+@Mapper
 public interface HmxImagesMapper{
 
     int countByExample(HmxImagesExample example);

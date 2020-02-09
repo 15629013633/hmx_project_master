@@ -2,6 +2,7 @@ package com.hmx.files.dao;
 
 import com.hmx.files.entity.HmxFiles;
 import com.hmx.files.entity.HmxFilesExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * 文件
  * Created by Administrator on 2019/4/26.
  */
+@Mapper
 public interface HmxFilesMapper {
     int countByExample(HmxFilesExample example);
 
