@@ -21,4 +21,6 @@ public interface BaseServie<T> {
 
     void delete(Integer id) throws Exception;
 
+    T getObjectById(Integer id) throws Exception;
+
 }

@@ -47,6 +47,13 @@
     </if>
   </select>
 
+  <select id="getObjectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from hmx_area where area_id = #{areaId,jdbcType=INTEGER}
+
+  </select>
+
   <insert id="insert" parameterType="com.hmx.system.entity.AreaModel" keyProperty="areaId" useGeneratedKeys="true">
     insert into hmx_area  (area_id,provice,city)
     values (#{areaId,jdbcType=INTEGER}, #{provice,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR})

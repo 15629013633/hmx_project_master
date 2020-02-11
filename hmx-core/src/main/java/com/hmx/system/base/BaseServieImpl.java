@@ -35,4 +35,9 @@ public class BaseServieImpl<T> implements BaseServie<T> {
         baseMapper.delete(id);
     }
 
+    @Override
+    public T getObjectById(Integer id) throws Exception {
+        return baseMapper.getObjectById(id);
+    }
+
 }

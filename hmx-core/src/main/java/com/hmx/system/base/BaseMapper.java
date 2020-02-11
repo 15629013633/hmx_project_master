@@ -62,4 +62,11 @@ public interface BaseMapper<T> {
      * @return
      */
     List<T> selectByParam(Object obj);
+
+    /**
+     * 根据主键查找对象
+     * @param id
+     * @return
+     */
+    T getObjectById(Integer id);
 }

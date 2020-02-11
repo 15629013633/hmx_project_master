@@ -1,22 +1,22 @@
 package com.hmx.system.controller;
 
 import com.hmx.aop.Operation;
+import com.hmx.redis.RedisUtil;
 import com.hmx.system.entity.AreaModel;
 import com.hmx.system.service.AreaService;
 import com.hmx.utils.result.Config;
 import com.hmx.utils.result.PageBean;
 import com.hmx.utils.result.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/area")
@@ -24,6 +24,63 @@ public class AreaController {
 
     @Resource
     private AreaService areaService;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @RequestMapping(value = "/getById")
+    public ResultBean hello(Integer areaId){
+
+//
+//        //查询缓存中是否存在
+//        boolean hasKey = redisUtil.exists(areaId+"");
+//
+//
+//
+//        redisTemplate.opsForValue().set("你好啊","你好啊!!!");
+//        ValueOperations vo = redisTemplate.opsForValue();
+//        vo.set("所有的博客","aaaaa");
+//
+//        ValueOperations operations = redisTemplate.opsForValue();
+//        Object result = operations.get("所有的博客");
+
+
+//        return new Result(200,"获取成功",result);
+
+        boolean key1 = redisUtil.exists("所有的博客");
+        if(key1){
+            Object object = redisUtil.get("所有的博客");
+            System.out.println(object.toString());
+        }
+
+        AreaModel areaModel = null;
+        //查询缓存中是否存在
+        boolean hasKey = redisUtil.exists(areaId+"");
+
+        if(hasKey){
+            //获取缓存
+            Object object =  redisUtil.get(areaId+"");
+            areaModel = (AreaModel)object;
+            System.out.println("从缓存获取的数据");
+//            str = object.toString();
+        }else{
+            //从数据库中获取信息
+            System.out.println("从缓存获取的数据");
+
+            try {
+                areaModel = areaService.getObjectById(areaId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            str = areaModel.getAreaId()+"";
+            //数据插入缓存（set中的参数含义：key值，user对象，缓存存在时间10（long类型），时间单位）
+            redisUtil.set(areaId+"",areaModel,10L,TimeUnit.MINUTES);
+            System.out.println("数据插入缓存" + areaId);
+        }
+        return new ResultBean().put("content", areaModel).setCode(Config.SUCCESS_CODE).setContent("查询成功");
+    }
 
     /**
      * 获取所有地区
