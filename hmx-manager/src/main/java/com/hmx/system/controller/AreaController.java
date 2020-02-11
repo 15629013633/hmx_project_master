@@ -30,6 +30,7 @@ public class AreaController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
     @RequestMapping(value = "/getById")
     public ResultBean hello(Integer areaId){
 
