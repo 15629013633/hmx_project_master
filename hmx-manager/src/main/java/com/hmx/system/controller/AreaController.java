@@ -1,5 +1,6 @@
 package com.hmx.system.controller;
 
+import com.hmx.annotations.NeedLogin;
 import com.hmx.aop.Operation;
 import com.hmx.redis.RedisUtil;
 import com.hmx.system.entity.AreaModel;
@@ -31,6 +32,7 @@ public class AreaController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+//    @NeedLogin
     @RequestMapping(value = "/getById")
     public ResultBean hello(Integer areaId){
 

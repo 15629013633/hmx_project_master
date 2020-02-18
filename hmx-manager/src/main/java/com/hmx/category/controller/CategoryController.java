@@ -1,5 +1,6 @@
 package com.hmx.category.controller;
 
+import com.hmx.annotations.NeedLogin;
 import com.hmx.aop.Operation;
 import com.hmx.category.dto.HmxCategoryDto;
 import com.hmx.category.entity.HmxCategory;
@@ -85,6 +86,7 @@ public class CategoryController {
      */
     @GetMapping("/getCategoryByid")
     @Operation("分类详情查询")
+    @NeedLogin
     //public String categoryInfo(@PathVariable(name="id",required=true) Integer categoryId, Model model){
     public ResultBean categoryInfo(Integer categoryId, Model model){
         ResultBean resultBean = new ResultBean();

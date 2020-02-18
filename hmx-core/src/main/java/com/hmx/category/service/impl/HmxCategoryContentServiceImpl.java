@@ -321,6 +321,17 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			hmxCategoryContentDto.setCreateTime(date);
 			hmxCategoryContentDto.setNewTime(date);
 			hmxCategoryContentDto.setState(0);
+			hmxCategoryContentDto.setVersion(0);
+			//获取分类下排序最大值
+			Map<String,Object> parameter = new HashMap<String,Object>();
+			parameter.put("categoryId", hmxCategoryContentDto.getCategoryId());
+			int maxSort = hmxCategoryContentMapper.maxSort(parameter);
+			if(0 == maxSort){
+				maxSort = 1;
+			}else{
+				maxSort = maxSort + 1;
+			}
+			hmxCategoryContentDto.setSort(maxSort);
 			if(!insert(hmxCategoryContentDto)){
 				resultMap.put("content", "添加内容失败");
 	    		return resultMap;
@@ -366,6 +377,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		try {
 			hmxCategoryContentDto.setNewTime(new Date());
 			hmxCategoryContentDto.setState(0);
+			hmxCategoryContentDto.setIsPublish(0);//修改的内容发布状态要重新置为未发布
 			if(!update(hmxCategoryContentDto)){
 				resultMap.put("content", "编辑内容失败");
 	    		return resultMap;
@@ -451,6 +463,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		HmxCategory hmxCategory = hmxCategoryMapper.selectByPrimaryKey(hmxCategoryContent.getCategoryId());
 
 		hmxCategoryContentTrans.setCategoryName(hmxCategory.getCategoryName());
+		hmxCategoryContentTrans.setCategoryParentId(hmxCategory.getParentId());
 //		String tagName = "";
 //		//获取标签信息
 //		if(!StringUtils.isEmpty(hmxCategoryContent.getTagId())){
@@ -546,6 +559,9 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 		if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
 			parameter.put("title", hmxCategoryContentDto.getCategoryContent());
+		}
+		if(!StringUtils.isEmpty(hmxCategoryContentDto.getIsPublish())){
+			parameter.put("isPublish", hmxCategoryContentDto.getIsPublish());
 		}
     	Integer count = hmxCategoryContentMapper.countCategoryContentTable(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
@@ -727,6 +743,7 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		if(!StringUtils.isEmpty(hmxCategoryContentDto.getCategoryContent())){
 			parameter.put("title", hmxCategoryContentDto.getCategoryContent());
 		}
+		parameter.put("isPublish", 1);
     	Integer count = hmxCategoryContentMapper.countCategoryContentTableByPc(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){
@@ -1123,6 +1140,116 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 		}
 
 		return hmxCategoryContentList;
+	}
+
+	@Override
+	@Transactional
+	public Map<String, Object> setTop(Integer contentId,Integer categoryId) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("flag", false);
+		try {
+			//查询分类下是否有置顶的
+			Integer contentTopId = hmxCategoryContentMapper.getContentTop(categoryId);
+			if(null != contentTopId && contentTopId != 0){
+				hmxCategoryContentMapper.removeContentTop(contentTopId);
+			}
+			hmxCategoryContentMapper.setContentTop(contentId);
+			resultMap.put("flag",true);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
+	@Override
+	@Transactional
+	public Map<String, Object> upAndDown(Integer contentId, Integer categoryId, Integer sort, Integer type) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("flag", false);
+		try {
+			Map<String,Object> parameter = new HashMap<String,Object>();
+			Map<String,Object> parameter0 = new HashMap<String,Object>();
+			Map<String,Object> parameter1 = new HashMap<String,Object>();
+			int upContentId = 0;
+			int upSort = 0;
+			int downContentId = 0;
+			int downSort = 0;
+			parameter.put("sort",sort);
+			parameter.put("categoryId",categoryId);
+
+			if(1 == type){//上移
+
+				HmxCategoryContent content = hmxCategoryContentMapper.selectMinSort(parameter);
+				if(null != content){
+					upContentId = contentId;
+					downSort = content.getSort();
+					downContentId = content.getCategoryContentId();
+					upSort = sort;
+				}else{
+					resultMap.put("flag",true);
+					return resultMap;
+				}
+
+			}
+			if(2 == type){//下移
+				HmxCategoryContent content = hmxCategoryContentMapper.selectMaxSort(parameter);
+				if(null != content){
+					upContentId = contentId;
+					downSort = content.getSort();
+					downContentId = content.getCategoryContentId();
+					upSort = sort;
+				}else {
+					resultMap.put("flag",true);
+					return resultMap;
+				}
+
+			}
+
+			parameter0.put("contentId", upContentId);
+			parameter0.put("sort", downSort);
+			parameter1.put("contentId", downContentId);
+			parameter1.put("sort", upSort);
+			hmxCategoryContentMapper.upAndDown(parameter0);
+			hmxCategoryContentMapper.upAndDown(parameter1);
+			resultMap.put("flag",true);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
+	@Override
+	@Transactional
+	public Map<String, Object> publish(String ids) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("flag", false);
+		try {
+			String[] idsArr = ids.split(",");
+			for(String id : idsArr){
+				hmxCategoryContentMapper.publishNew(Integer.valueOf(id));
+			}
+			resultMap.put("flag",true);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+
+	@Override
+	@Transactional
+	public Map<String, Object> unPublish(String ids) {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("flag", false);
+		try {
+			String[] idsArr = ids.split(",");
+			for(String id : idsArr){
+				hmxCategoryContentMapper.unPublishNew(Integer.valueOf(id));
+			}
+			resultMap.put("flag",true);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return resultMap;
 	}
 
 	/**

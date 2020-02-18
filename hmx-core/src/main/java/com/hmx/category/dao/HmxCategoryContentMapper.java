@@ -77,4 +77,31 @@ public interface HmxCategoryContentMapper{
     List<Map<String,Object>> selectContentTable(Map<String, Object> parameter);
 
     List<Map<String,Object>> maxBromUnm(Map<String, Object> parameter);
+    int maxSort(Map<String, Object> parameter);
+
+    void setContentTop(Integer contentId);
+
+    Integer getContentTop(Integer categoryId);
+
+    void removeContentTop(int contentTopId);
+
+    void upAndDown(Map<String, Object> parameter);
+
+    void publishNew(Integer contentId);
+
+    void unPublishNew(Integer valueOf);
+
+    /**
+     * 查询某个分类下比某个sort更大的数据中的最小排序的数据记录
+     * @param parameter
+     * @return
+     */
+    HmxCategoryContent selectMinSort(Map<String, Object> parameter);
+
+    /**
+     * 查询某个分类下比某个sort更小的数据中的最大排序的数据记录
+     * @param parameter
+     * @return
+     */
+    HmxCategoryContent selectMaxSort(Map<String, Object> parameter);
 }

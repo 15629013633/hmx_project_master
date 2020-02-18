@@ -14,6 +14,7 @@ import java.util.List;
 public class HmxCategoryContentTrans {
     private Integer categoryContentId;
     private Integer categoryId;
+    private Integer categoryParentId;
     private String categoryTitle;
     private String categoryContent;
     private Integer contentType;
@@ -313,5 +314,13 @@ public class HmxCategoryContentTrans {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Integer getCategoryParentId() {
+        return categoryParentId;
+    }
+
+    public void setCategoryParentId(Integer categoryParentId) {
+        this.categoryParentId = categoryParentId;
     }
 }

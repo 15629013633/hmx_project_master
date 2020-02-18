@@ -394,9 +394,6 @@ createid = #{createid,jdbcType=INTEGER},
       <if test="version != null" >
         version = #{version,jdbcType=INTEGER} ,
       </if>
-      <if test="version == null" >
-        version = version+1 ,
-      </if>
       <if test="createid != null" >
         createid = #{createid,jdbcType=INTEGER} ,
       </if>
@@ -486,6 +483,53 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
         )  and c. category_id=m.category_id
 
     </select>
+
+    <!-- 获取某个分类下内容最大序号值 -->
+    <select id="maxSort" resultType="Integer" parameterType="map">
+      select max(t.sort) as sort from hmx_category_content t where t.category_id=#{categoryId}
+    </select>
+
+    <!-- 获取分类下置顶内容的id -->
+    <select id="getContentTop" resultType="Integer" parameterType="Integer">
+      select t.category_content_id from hmx_category_content t where t.category_id=#{categoryId} and t.version=1
+    </select>
+
+    <!-- 设置某个内容为置顶 -->
+    <select id="setContentTop" resultType="Integer" parameterType="Integer">
+      update hmx_category_content set version=1 where category_content_id=#{contentId}
+    </select>
+
+    <!-- 删除某个内容置顶标志 -->
+    <select id="removeContentTop" resultType="Integer" parameterType="Integer">
+      update hmx_category_content set version=0 where category_content_id=#{contentTopId}
+    </select>
+
+    <!-- 给内容设置排序 -->
+    <select id="upAndDown" resultType="Integer" parameterType="map">
+      update hmx_category_content set sort=#{sort} where category_content_id=#{contentId}
+    </select>
+
+    <!-- 设置某个内容为上架 -->
+    <select id="publishNew" resultType="Integer" parameterType="Integer">
+      update hmx_category_content set isPublish=1 where category_content_id=#{contentId}
+    </select>
+
+    <!-- 设置某个内容为下架 -->
+    <select id="unPublishNew" resultType="Integer" parameterType="Integer">
+      update hmx_category_content set isPublish=0 where category_content_id=#{contentId}
+    </select>
+
+    <!--查询某个分类下比某个sort更小的数据中的最大排序的数据记录 -->
+    <select id="selectMaxSort" resultType="com.hmx.category.entity.HmxCategoryContent">
+        select * from hmx_category_content c where c.sort=(select max(sort) from hmx_category_content t
+         where t.category_id=#{categoryId} and t.sort &lt; #{sort}) and c.category_id=#{categoryId}
+    </select>
+
+    <!--查询某个分类下比某个sort更大的数据中的最小排序的数据记录 -->
+    <select id="selectMinSort" resultType="com.hmx.category.entity.HmxCategoryContent">
+        select * from hmx_category_content c where c.sort=(select min(sort) from hmx_category_content t
+         where t.category_id=#{categoryId} and t.sort &gt; #{sort}) and c.category_id=#{categoryId}
+    </select>
    
    <!-- 内容列表 ↓ -->
    <select id="selectCategoryContentTable" resultType="Map">
@@ -550,7 +594,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
 
 		</trim>
 	</where>
-	ORDER BY cc.sort DESC,cc.create_time DESC
+	ORDER BY cc.version desc,cc.sort DESC,cc.create_time DESC
 		<if test="limit != null" >
 	      <if test="offset != null" >
 	        limit ${offset}, ${limit}
@@ -908,7 +952,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
             </if>
 		</trim>
 	</where>
-	ORDER BY cc.sort DESC,cc.create_time DESC
+	ORDER BY cc.version DESC,cc.sort DESC,cc.create_time DESC
 		<if test="limit != null" >
 	      <if test="offset != null" >
 	        limit ${offset}, ${limit}

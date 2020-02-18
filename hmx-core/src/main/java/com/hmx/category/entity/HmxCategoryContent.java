@@ -19,7 +19,7 @@ public class HmxCategoryContent{
     private Date createTime;
     private Date newTime;
     private Integer state;
-    private Integer version;
+    private Integer version;    //1表示置頂
     private Integer createid;
 	private Integer mode;      //内容展现方式    1普通类型   2轮播图类型  3首页大图类型
 	private String contentFlow; //内容流水号   由前端生成的一个唯一非0开头的数字字符串

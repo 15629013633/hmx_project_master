@@ -15,6 +15,7 @@
   	<result column="createid" property="createid" jdbcType="INTEGER" />
   	<result column="parentId" property="parentId" jdbcType="INTEGER" />
   	<result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+  	<result column="linkUrl" property="linkUrl" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Example_Where_Clause" >
@@ -77,7 +78,7 @@
   </sql>
   
   <sql id="Base_Column_List" >
-    category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId,imageUrl
+    category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId,imageUrl,linkUrl
   </sql>
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hmx.category.entity.HmxCategoryExample" >
@@ -128,9 +129,9 @@
   
   
   <insert id="insert" parameterType="com.hmx.category.entity.HmxCategory" keyProperty="categoryId" useGeneratedKeys="true">
-    insert into hmx_category  (category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId,imageUrl)
+    insert into hmx_category  (category_id,category_name,category_type,sort,is_close,create_time,new_time,state,version,createid,parentId,imageUrl,linkUrl)
     values (#{categoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryType,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{isClose,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
-    #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR})
+    #{version,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR})
   </insert>
   
   
@@ -173,6 +174,9 @@
         <if test="imageUrl != null" >
             imageUrl,
         </if>
+        <if test="linkUrl != null" >
+            linkUrl,
+        </if>
 
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -212,6 +216,9 @@
         <if test="imageUrl != null" >
             #{imageUrl,jdbcType=VARCHAR},
         </if>
+        <if test="linkUrl != null" >
+            #{linkUrl,jdbcType=VARCHAR},
+        </if>
 
     </trim>
   </insert>
@@ -229,7 +236,8 @@ state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
       parentId = #{parentId,jdbcType=INTEGER},
-      imageUrl = #{imageUrl,jdbcType=VARCHAR}
+      imageUrl = #{imageUrl,jdbcType=VARCHAR},
+      linkUrl = #{linkUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -284,6 +292,10 @@ createid = #{createid,jdbcType=INTEGER},
         <if test="imageUrl != null" >
             imageUrl = #{imageUrl,jdbcType=VARCHAR} ,
         </if>
+        <if test="linkUrl != null" >
+            linkUrl = #{linkUrl,jdbcType=VARCHAR} ,
+        </if>
+
     </set >
     where category_id = #{categoryId,jdbcType=INTEGER}
   </update>
@@ -302,7 +314,8 @@ state = #{state,jdbcType=INTEGER},
 version = #{version,jdbcType=INTEGER},
 createid = #{createid,jdbcType=INTEGER},
 parentId = #{parentId,jdbcType=INTEGER},
-imageUrl = #{imageUrl,jdbcType=VARCHAR}
+imageUrl = #{imageUrl,jdbcType=VARCHAR},
+linkUrl = #{linkUrl,jdbcType=VARCHAR}
     where category_id = #{categoryId,jdbcType=INTEGER}
   </update>
   
@@ -364,7 +377,7 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
    <select id="selectCategoryTable" resultType="Map">
    select category_id as 'categoryId',category_name as 'categoryName',
           sort as 'sort',is_close as 'isClose',create_time as 'createTime',
-          new_time as 'newTime',createid as 'createid',category_type as 'categoryType',parentId as 'parentId',imageUrl as 'imageUrl'
+          new_time as 'newTime',createid as 'createid',category_type as 'categoryType',parentId as 'parentId',imageUrl as 'imageUrl',linkUrl as 'linkUrl'
     from hmx_category
 	<where>
 		<trim suffixOverrides="and">
@@ -385,6 +398,15 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
             </if>
             <if test="imageUrl != null">
                 imageUrl = #{imageUrl} and
+            </if>
+            <if test="linkUrl != null">
+                linkUrl = #{linkUrl} and
+            </if>
+            <if test="categoryType != null" >
+                category_type = #{categoryType} and
+            </if>
+            <if test="categoryTypeExit10 != null" >
+                category_type != 10 and
             </if>
 		  <if test="categoryName != null">
 		   category_name like concat('%',#{categoryName},'%') and 
@@ -423,6 +445,15 @@ imageUrl = #{imageUrl,jdbcType=VARCHAR}
             </if>
             <if test="imageUrl != null" >
                 imageUrl = #{imageUrl} and
+            </if>
+            <if test="linkUrl != null" >
+                linkUrl = #{linkUrl} and
+            </if>
+            <if test="categoryType != null" >
+                category_type = #{categoryType} and
+            </if>
+            <if test="categoryTypeExit10 != null" >
+                category_type != 10 and
             </if>
 		  <if test="categoryName != null">
 		   category_name like concat('%',#{categoryName},'%') and 

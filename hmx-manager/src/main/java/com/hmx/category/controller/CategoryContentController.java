@@ -51,41 +51,6 @@ public class CategoryContentController {
     private HmxCategoryService hmxCategoryService;
 
 
-//	@RequestMapping("/init")
-//	public ModelAndView init() {
-//		ModelAndView modelAndView = new ModelAndView();
-//		List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-//		modelAndView.setViewName("/categoryContent/list");
-//		modelAndView.addObject("category",hmxCategoryList);
-//		return modelAndView;
-//	}
-
-//    @RequestMapping("/init")
-//    @ResponseBody
-//    public List<HmxCategory> init() {
-//        //ModelAndView modelAndView = new ModelAndView();
-//        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-//        return hmxCategoryList;
-//    }
-//
-//    @RequestMapping("/selectPic")
-//    public ModelAndView selectPic() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("/categoryContent/list");
-//        return modelAndView;
-//    }
-
-//    @RequestMapping("/editInit")
-//    public ModelAndView editInit(Integer id) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        List<HmxCategory> hmxCategoryList = hmxCategoryService.list(new HmxCategoryDto());
-//        HmxCategoryContent hmxCategoryContent = hmxCategoryContentService.selectCategoryContentById(id);
-//        modelAndView.setViewName("/categoryContent/eidt");
-//        modelAndView.addObject("category",hmxCategoryList);
-//        modelAndView.addObject("hmxCategoryContent",hmxCategoryContent == null? new HmxCategoryContent() : hmxCategoryContent);
-//        return modelAndView;
-//    }
-
     /**
      * 分类内容添加
      * 会添加的内容包含：文本信息，内容基本信息，
@@ -95,7 +60,7 @@ public class CategoryContentController {
     @PostMapping(value = "/add",consumes = "application/json")
     @Operation("内容添加")
     public ResultBean categoryAdd(@RequestBody TransModel transModel){
-            ResultBean resultBean = new ResultBean();
+        ResultBean resultBean = new ResultBean();
         resultBean.put("content", "");
         boolean flag=true;
         try {
@@ -375,6 +340,131 @@ public class CategoryContentController {
             resultBean.setCode(Config.SUCCESS_CODE).setContent("获取到内容浏览量");
         }else {
             resultBean.setCode(Config.SUCCESS_CODE).setContent("未获取到内容浏览量");
+        }
+        return resultBean;
+    }
+
+    /**
+     * 置顶接口
+     * @return
+     */
+    @PostMapping(value = "/setTop")
+    @Operation("内容置顶")
+    public ResultBean setTop(Integer contentId,Integer categoryId){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
+        boolean flag=true;
+        if(0 == contentId ){
+            resultBean.setCode(Config.FAIL_CODE).setContent("置顶失败，内容id不能为空");
+            flag = false;
+        }
+        if(0 == categoryId ){
+            resultBean.setCode(Config.FAIL_CODE).setContent("置顶失败，分类id不能为空");
+            flag = false;
+        }
+        if(flag){
+            Map<String,Object> resultMap = null;
+            resultMap = hmxCategoryContentService.setTop(contentId,categoryId);
+
+            flag=Boolean.parseBoolean(resultMap.get("flag").toString());
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("置顶设置失败");
+                return resultBean;
+            }else{
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("置顶设置成功");
+                return resultBean;
+            }
+        }
+        return resultBean;
+    }
+
+    /**
+     * 上移下移接口
+     * type 1 为上移
+     * type 2 为下移
+     * @return
+     */
+    @PostMapping(value = "/upAndDown")
+    @Operation("内容修改")
+    public ResultBean upAndDown(Integer contentId,Integer categoryId,Integer sort,Integer type){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
+        boolean flag=true;
+        if(contentId == 0 || categoryId == 0 || sort == 0 || type == 0){
+            resultBean.setCode(Config.FAIL_CODE).setContent("参数为空校验不通过");
+            flag = false;
+        }
+        if(flag){
+            Map<String,Object> resultMap = hmxCategoryContentService.upAndDown(contentId,categoryId,sort,type);
+
+            flag=Boolean.parseBoolean(resultMap.get("flag").toString());
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("排序失败");
+                return resultBean;
+            }else{
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("排序成功");
+                return resultBean;
+            }
+        }
+        return resultBean;
+    }
+
+    /**
+     * 内容上架
+     * @return
+     */
+    @PostMapping(value = "/publish")
+    @Operation("内容置顶")
+    public ResultBean publish(String ids){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
+        boolean flag=true;
+        if(StringUtils.isEmpty(ids) ){
+            resultBean.setCode(Config.FAIL_CODE).setContent("内容id不能为空");
+            flag = false;
+        }
+        if(flag){
+            Map<String,Object> resultMap = null;
+            resultMap = hmxCategoryContentService.publish(ids);
+
+            flag=Boolean.parseBoolean(resultMap.get("flag").toString());
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("上架失败");
+                return resultBean;
+            }else{
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("上架成功");
+                return resultBean;
+            }
+        }
+        return resultBean;
+    }
+
+    /**
+     * 内容下架接口
+     * @return
+     */
+    @PostMapping(value = "/unPublish")
+    @Operation("内容下架")
+    public ResultBean unPublish(String ids){
+        ResultBean resultBean = new ResultBean();
+        resultBean.put("content", "");
+        boolean flag=true;
+        if(StringUtils.isEmpty(ids) ){
+            resultBean.setCode(Config.FAIL_CODE).setContent("内容id不能为空");
+            flag = false;
+        }
+        if(flag){
+            Map<String,Object> resultMap = null;
+            resultMap = hmxCategoryContentService.unPublish(ids);
+
+            flag=Boolean.parseBoolean(resultMap.get("flag").toString());
+            if(!flag){
+                resultBean.setCode(Config.FAIL_CODE).setContent("下架失败");
+                return resultBean;
+            }else{
+                resultBean.setCode(Config.SUCCESS_CODE).setContent("下架成功");
+                return resultBean;
+            }
         }
         return resultBean;
     }

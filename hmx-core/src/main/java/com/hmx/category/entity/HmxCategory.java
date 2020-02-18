@@ -7,7 +7,7 @@ import java.util.Date;
 public class HmxCategory{
     private Integer categoryId;
     private String categoryName;
-    private Integer categoryType;//1一级分类 2首页分类  3首页轮播图分类 4首页普通二级分类
+    private Integer categoryType;//1一级分类 2首页分类  3首页轮播图分类 4首页普通二级分类  10发现分类
     private Integer sort;
     private Integer isClose;
     private Date createTime;
@@ -17,6 +17,7 @@ public class HmxCategory{
     private Integer createid;
     private Integer parentId;      //一级分类的id
 	private String imageUrl;
+	private String linkUrl;
 
     public HmxCategory() {
 		super();
@@ -135,5 +136,13 @@ public class HmxCategory{
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public String getLinkUrl() {
+		return linkUrl;
+	}
+
+	public void setLinkUrl(String linkUrl) {
+		this.linkUrl = linkUrl;
 	}
 }

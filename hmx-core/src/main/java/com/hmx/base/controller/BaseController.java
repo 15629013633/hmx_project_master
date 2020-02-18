@@ -32,7 +32,8 @@ public class BaseController {
         if (account != null) {
             session.setAttribute(ACCOUNT, account);
             //session过期时间设置，以秒为单位，即在没有活动30分钟后，session将失效
-            session.setMaxInactiveInterval(30 * 60);
+//            session.setMaxInactiveInterval(30 * 60);
+            session.setMaxInactiveInterval(120);
         }
     }
 }

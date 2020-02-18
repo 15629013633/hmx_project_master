@@ -12,6 +12,8 @@ import com.hmx.movie.dto.HmxMovieDto;
 import com.hmx.system.entity.SearchModel;
 import com.hmx.utils.result.PageBean;
 import com.hmx.category.dto.HmxCategoryContentDto;
+import org.omg.CORBA.INTERNAL;
+
 /**
  *  HmxCategoryContentService interface
  *
@@ -143,4 +145,32 @@ public interface HmxCategoryContentService {
 	 * @return
      */
 	List<Map<String,Object>> getContentRankNum(Integer categoryType);
+
+	/**
+	 * 置顶设置
+	 * @param contentId
+	 * @return
+	 */
+	Map<String, Object> setTop(Integer contentId,Integer categoryId);
+
+	/**
+	 * contentId,categoryId,sort,type
+	 * 两条内容互相交换排序
+	 * @return
+	 */
+	Map<String, Object> upAndDown(Integer contentId, Integer categoryId, Integer sort, Integer type);
+
+	/**
+	 * 内容发布
+	 * @param ids
+	 * @return
+	 */
+	Map<String, Object> publish(String ids);
+
+	/**
+	 * 内容下架
+	 * @param ids
+	 * @return
+	 */
+	Map<String, Object> unPublish(String ids);
 }

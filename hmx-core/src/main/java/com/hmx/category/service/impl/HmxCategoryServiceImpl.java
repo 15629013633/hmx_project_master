@@ -479,6 +479,11 @@ import javax.servlet.http.HttpServletRequest;
 		}else if(null != hmxCategoryDto.getParentId() && hmxCategoryDto.getParentId() == 0){ //查询所有一级分类
 			parameter.put("parentId", hmxCategoryDto.getParentId());
 		}
+		if(StringUtils.isEmpty(hmxCategoryDto.getCategoryType())){
+			parameter.put("categoryTypeExit10", "-1");
+		}else{
+			parameter.put("categoryType", hmxCategoryDto.getCategoryType());
+		}
     	Integer count = hmxCategoryMapper.countCategoryTable(parameter);
 	    Boolean haveData = page.setTotalNum((int)(long)count);
 	    if(!haveData){
