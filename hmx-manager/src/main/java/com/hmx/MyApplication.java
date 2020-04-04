@@ -6,7 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @MapperScan(value = {"com.hmx.*.dao"})
@@ -22,4 +25,6 @@ public class MyApplication extends SpringBootServletInitializer{
 		// TODO Auto-generated method stub
 		return super.configure(builder);
 	}
+
+
 }

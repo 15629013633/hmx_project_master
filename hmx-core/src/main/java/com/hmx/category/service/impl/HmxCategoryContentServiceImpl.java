@@ -325,13 +325,14 @@ import com.hmx.category.dao.HmxCategoryContentMapper;
 			//获取分类下排序最大值
 			Map<String,Object> parameter = new HashMap<String,Object>();
 			parameter.put("categoryId", hmxCategoryContentDto.getCategoryId());
-			int maxSort = hmxCategoryContentMapper.maxSort(parameter);
-			if(0 == maxSort){
-				maxSort = 1;
+			String maxSort = hmxCategoryContentMapper.maxSort(parameter);
+			int max_Sort = 1;
+			if(StringUtils.isEmpty(maxSort)){
+				max_Sort = 1;
 			}else{
-				maxSort = maxSort + 1;
+				max_Sort = Integer.valueOf(maxSort) + 1;
 			}
-			hmxCategoryContentDto.setSort(maxSort);
+			hmxCategoryContentDto.setSort(max_Sort);
 			if(!insert(hmxCategoryContentDto)){
 				resultMap.put("content", "添加内容失败");
 	    		return resultMap;

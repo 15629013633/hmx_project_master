@@ -485,7 +485,7 @@ sub_title = #{subTitle,jdbcType=VARCHAR},
     </select>
 
     <!-- 获取某个分类下内容最大序号值 -->
-    <select id="maxSort" resultType="Integer" parameterType="map">
+    <select id="maxSort" resultType="String" parameterType="map">
       select max(t.sort) as sort from hmx_category_content t where t.category_id=#{categoryId}
     </select>
 
