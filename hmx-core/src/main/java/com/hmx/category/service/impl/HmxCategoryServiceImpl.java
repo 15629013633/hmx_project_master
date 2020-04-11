@@ -14,6 +14,7 @@ import com.hmx.images.dto.HmxImagesDto;
 import com.hmx.images.entity.HmxImages;
 import com.hmx.images.entity.HmxImagesExample;
 import com.hmx.user.entity.HmxUser;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
