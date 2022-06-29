@@ -139,7 +139,7 @@
 			  <dependency>
 				  <groupId>org.apache.pdfbox</groupId>
 				  <artifactId>pdfbox</artifactId>
-				  <version>1.8.13</version>
+				  <version>1.8.16</version>
 			  </dependency>
 
 			  <!--极光推送需要的依赖包-->
